@@ -1,0 +1,11 @@
+#!/bin/bash
+
+trap '{ echo ;echo "Cancel system upgrading..."; exit 1; }' INT
+while true; do
+	read -p "Should be 'startx' be executed? [y/n] " answer
+	case $answer in
+		[y]* ) sudo pacman -Syu; trizen -Syu; startx; break;;
+		[n]* ) sudo pacman -Syu; trizen -Syu; break;;
+		* ) echo "Bruh! Yes or no???";;
+	esac
+done

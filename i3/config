@@ -1,0 +1,433 @@
+# i3 config file (v4)
+# vim: filetype=i3config
+#
+# Please see https://i3wm.org/docs/userguide.html for a complete reference!
+#
+# This config file uses keycodes (bindsym) and was written for the QWERTY
+# layout.
+#
+# To get a config file with the same key positions, but for your current
+# layout, use the i3-config-wizard
+#
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:Hack Nerd Font Bold 12
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+#font pango:DejaVu Sans Mono 8
+
+# The combination of xss-lock, nm-applet and pactl is a popular choice, so
+# they are included here as an example. Modify as you see fit.
+
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+#exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+#exec --no-startup-id nm-applet
+
+# ----- Startup -----
+exec --no-startup-id xwallpaper --no-randr --focus <enter_path>
+# razer
+exec --no-startup-id polychromatic-tray-applet 
+exec redshift-gtk -c ~/.config/redshift/redshift.conf
+exec --no-startup-id rambox
+exec --no-startup-id discord
+exec --no-startup-id spotify
+# music visualizer :D
+exec glava --desktop
+
+exec_always --no-startup-id picom 
+exec_always --no-startup-id "~/.config/polybar/launch.sh 1"
+exec_always --no-startup-id flashfocus
+
+# popups
+popup_during_fullscreen smart
+
+# for gaps
+for_window [class=".*"] border pixel 0
+gaps outer 10
+gaps inner 10
+
+# ----- pulseaudio -----
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -2% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+# change song
+bindsym XF86AudioNext exec --no-startup-id "playerctl --player=sayonara,spotify next && $refresh_i3status"
+bindsym XF86AudioPrev exec --no-startup-id "playerctl --player=sayonara,spotify previous && $refresh_i3status"
+bindsym XF86AudioPlay exec --no-startup-id "playerctl --player=sayonara,spotify play-pause && $refresh_i3status"
+
+# -----===== Workspaces =====-----
+# Order:
+# 1. Terminal
+# 2. Firefox
+# 3. Coding
+# 4. Filemanager (ranger / pcmanfm / vifm)
+# 5. Discord
+# 6. Documents
+# 7. Teams
+# 8. Virtualbox
+# 9. Spotify
+# 10. LaTeX
+# 11. Scanner/Printer
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+set $ws11 "11"
+
+# Display monitor at which Monitor
+workspace 1 output DP-0 
+workspace 2 output HDMI-0
+workspace 3 output DP-0
+workspace 4 output HDMI-0
+workspace 5 output HDMI-0
+workspace 6 output HDMI-0
+workspace 7 output DP-0
+workspace 8 output DP-0
+workspace 9 output HDMI-0
+workspace 10 output DP-0
+workspace 11 output HDMI-0
+
+workspace_layout default
+
+# -----===== Keybindings =====------
+# ----- standard -----
+# use these keys for focus, movement, and resize directions when reaching for
+# the arrows is not convenient
+set $up i
+set $down k
+set $left j
+set $right l
+#set $up k
+#set $down j
+#set $left h
+#set $right l
+
+# use Mouse+Mod1 to drag floating windows to their wanted position
+floating_modifier Mod1
+
+# kill focused window
+bindsym Mod1+Shift+q kill
+
+# start dmenu (a program launcher)
+bindsym Mod1+d exec dmenu_run
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+# bindsym Mod1+d exec --no-startup-id i3-dmenu-desktop
+
+# change focus
+bindsym Mod1+$left focus left
+bindsym Mod1+$down focus down
+bindsym Mod1+$up focus up
+bindsym Mod1+$right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym Mod1+Left focus left
+bindsym Mod1+Down focus down
+bindsym Mod1+Up focus up
+bindsym Mod1+Right focus right
+
+# move focused window
+bindsym Mod1+Shift+$left move left
+bindsym Mod1+Shift+$down move down
+bindsym Mod1+Shift+$up move up
+bindsym Mod1+Shift+$right move right
+
+# alternatively, you can use the cursor keys:
+bindsym Mod1+Shift+Left move left
+bindsym Mod1+Shift+Down move down
+bindsym Mod1+Shift+Up move up
+bindsym Mod1+Shift+Right move right
+
+# reload the configuration file
+bindsym Mod1+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym Mod1+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# split in horizontal orientation
+bindsym Mod1+h split h
+
+# split in vertical orientation
+bindsym Mod1+v split v
+
+# enter fullscreen mode for the focused container
+bindsym Mod1+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym Mod1+s layout stacking
+bindsym Mod1+w layout tabbed
+bindsym Mod1+e layout toggle split
+
+# toggle tiling / floating
+bindsym Mod1+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym Mod1+space focus mode_toggle
+
+# focus the parent container
+bindsym Mod1+a focus parent
+
+# focus the child container
+#bindsym Mod1+d focus child
+
+# move the currently focused window to the scratchpad
+bindsym Mod1+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym Mod1+minus scratchpad show
+
+# switch to workspace
+bindsym Mod1+1 workspace number $ws1
+bindsym Mod1+2 workspace number $ws2
+bindsym Mod1+3 workspace number $ws3
+bindsym Mod1+4 workspace number $ws4
+bindsym Mod1+5 workspace number $ws5
+bindsym Mod1+6 workspace number $ws6
+bindsym Mod1+7 workspace number $ws7
+bindsym Mod1+8 workspace number $ws8
+bindsym Mod1+9 workspace number $ws9
+bindsym Mod1+0 workspace number $ws10
+
+# move focused container to workspace
+bindsym Mod1+Shift+1 move container to workspace number $ws1
+bindsym Mod1+Shift+2 move container to workspace number $ws2
+bindsym Mod1+Shift+3 move container to workspace number $ws3
+bindsym Mod1+Shift+4 move container to workspace number $ws4
+bindsym Mod1+Shift+5 move container to workspace number $ws5
+bindsym Mod1+Shift+6 move container to workspace number $ws6
+bindsym Mod1+Shift+7 move container to workspace number $ws7
+bindsym Mod1+Shift+8 move container to workspace number $ws8
+bindsym Mod1+Shift+9 move container to workspace number $ws9
+bindsym Mod1+Shift+0 move container to workspace number $ws10
+
+# ----- custom -----
+bindsym Mod1+Shift+f mode "$resize"
+bindsym Mod4+Return workspace number $ws1 exec alacritty
+bindsym Mod1+Return exec alacritty
+bindsym Ctrl+Shift+k exec --no-startup-id keepassxc
+bindsym Ctrl+Shift+b workspace number $ws8 exec --no-startup-id virtualbox
+bindsym Ctrl+Shift+w workspace number $ws7 exec --no-startup-id teams
+bindsym Ctrl+Shift+l workspace number $ws10 exec --no-startup-id texstudio
+
+# screenshots
+# Key: Print
+bindcode 107 exec --no-startup-id deepin-screen-recorder -n -s ~/Screenshot.png
+bindcode Shift+107 exec --no-startup-id deepin-screen-recorder -n -f -s ~/Screenshot.png
+# Key: Roll
+bindcode 78 exec --no-startup-id flameshot gui
+bindcode Shift+78 exec --no-startup-id flameshot screen -p ~/ -c
+bindcode Ctrl+107 exec --no-startup-id import -window root ~/Screenshot.png
+
+# movement
+bindsym Mod4+t workspace number $ws1
+bindsym Mod4+f workspace number $ws2
+bindsym Mod4+c workspace number $ws3
+bindsym Mod4+r workspace number $ws4
+bindsym Mod4+v workspace number $ws4
+bindsym Mod4+d workspace number $ws5
+bindsym Mod4+Shift+d workspace number $ws6
+bindsym Mod4+w workspace number $ws7
+bindsym Mod4+b workspace number $ws8
+bindsym Mod4+m workspace number $ws9
+bindsym Mod4+l workspace number $ws10
+bindsym Mod4+p workspace number $ws11
+
+# modes
+bindsym Mod4+h mode "$Background"
+bindsym Mod4+g mode "$GLava"
+bindsym Ctrl+Shift+j mode "$Code"
+bindsym Ctrl+Shift+m mode "$Music"
+bindsym Ctrl+Shift+p mode "$Printer"
+bindsym Ctrl+Shift+d mode "$Social"
+bindsym Ctrl+Shift+f mode "$Browser"
+bindsym Ctrl+Shift+r mode "$Filemanager"
+
+# ---- Assigns ------
+assign [class="Minecraft 1.12.2"] 1
+
+assign [class="firefox"] 2
+assign [class="Chromium"] 2
+
+assign [class="JetBrains Toolbox"] 3
+assign [class='"jetbrains-toolbox"] 3
+assign [class="jetbrains-clion"] 3
+assign [class="jetbrains-pycharm"] 3
+assign [class="jetbrains-studio"] 3
+assign [class="code-oss"] 3
+
+assign [class="pcmanfm-qt"] 4
+
+assign [class="discord"] 5
+assign [class="rambox"] 5
+assign [class="Rambox"] 5
+
+for_window [class="spotify"] move to workspace $workspace9
+
+assign [class="Microsoft Teams - Preview"] 7
+
+assign [class="[xX]sane"] 11
+assign [class="system-config-printer"] 11
+assign [class="System-config-printer.py"] 11
+
+assign [class="[tT]e[xX]studio"] 10
+
+# ----- No-focus while opening -----
+no_focus [class="Microsoft Teams - Preview"]
+no_focus [class="jetbrains-clion"]
+no_focus [class="jetbrains-pycharm"]
+no_focus [class="jetbrains-studio"]
+no_focus [class="discord"]
+
+# -----===== Modes =====-----
+# ----- Mode Description -----
+set $Music Music: s = Spotify, m = Sayonara
+set $Printer Printer: s = Scanner, p = Printer
+set $Social Social: d = Disocrd, r = rambox, a = both
+set $Background Background: m = Miku, k = Kaneki, z = train, w = grass, g = galaxy, d = ditfxx
+set $Browser Browser: f = firefox, c = chromium, t = tor
+set $Code j = jetbrains, c = vscode, v = vim
+set $resize Direction = 5px/5ppt, Shift+Direction = 10px/10ppt, Ctrl+Direction = 200px/200ppt, Shift + f = 1080px, Shift+s = -1080px
+set $GLava k = kill, s = spawn, r = refresh
+set $Filemanager Filemanger: r = ranger, p = pcmanfm, v = vifm
+
+# ----- Modes ------
+# resize window (you can also use the mouse for that)
+mode "$resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+		# for ide and dual screen to expand ide over two screens
+ 		bindsym Shift+f resize grow width 1900px or 1900ppt
+ 		bindsym Shift+s resize shrink width 1900px or 1900ppt
+
+
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym $left       resize shrink width 5 px or 5 ppt
+        bindsym $down       resize grow height 5 px or 5 ppt
+        bindsym $up         resize shrink height 5 px or 5 ppt
+        bindsym $right      resize grow width 5 px or 5 ppt
+
+        bindsym Shift+$left       resize shrink width 10 px or 10 ppt
+        bindsym Shift+$down       resize grow height 10 px or 10 ppt
+        bindsym Shift+$up         resize shrink height 10 px or 10 ppt
+        bindsym Shift+$right      resize grow width 10 px or 10 ppt
+
+		bindsym Ctrl+$left       resize shrink width 200 px or 200 ppt
+        bindsym Ctrl+$down       resize grow height 200 px or 200 ppt
+        bindsym Ctrl+$up         resize shrink height 200 px or 200 ppt
+        bindsym Ctrl+$right      resize grow width 200 px or 200 ppt
+
+
+        # same bindings, but for the arrow keys
+        bindsym Left        resize shrink width 5 px or 5 ppt
+        bindsym Down        resize grow height 5 px or 5 ppt
+        bindsym Up          resize shrink height 5 px or 5 ppt
+        bindsym Right       resize grow width 5 px or 5 ppt
+
+        bindsym Shift+Left        resize shrink width 10 px or 10 ppt
+        bindsym Shift+Down        resize grow height 10 px or 10 ppt
+        bindsym Shift+Up          resize shrink height 10 px or 10 ppt
+        bindsym Shift+Right       resize grow width 10 px or 10 ppt
+
+		bindsym Ctrl+Left        resize shrink width 200 px or 200 ppt
+        bindsym Ctrl+Down        resize grow height 200 px or 200 ppt
+        bindsym Ctrl+Up          resize shrink height 200 px or 200 ppt
+        bindsym Ctrl+Right       resize grow width 200 px or 200 ppt
+
+
+		# Set size automatically to it's 
+
+        # back to normal: Enter or Escape or Mod1+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym Mod4+f mode "default"
+		bindsym c mode "default"
+}
+
+mode "$Background" {
+	bindsym k	exec --no-startup-id  "xwallpaper --no-randr --focus /windows/Images/anime_images/TokyoGhoul.jpg; ~/.config/polybar/launch.sh 0"
+	bindsym m	exec --no-startup-id  "xwallpaper --no-randr --focus /windows/Images/anime_images/mikuSplit.jpg; ~/.config/polybar/launch.sh 1"
+	bindsym z	exec --no-startup-id  "xwallpaper --no-randr --focus /windows/Images/anime_images/train.jpg; ~/.config/polybar/launch.sh 3"
+	bindsym d 	exec --no-startup-id  "xwallpaper --no-randr --focus /windows/Images/darling_in_the_franxx/Strelizia_and_Delphinium.png; ~/.config/polybar/launch.sh 4"
+	bindsym w 	exec --no-startup-id  "xwallpaper --no-randr --focus /windows/Images/anime_images/grass.jpg; ~/.config/polybar/launch.sh 2"
+	bindsym g	exec --no-startup-id  "xwallpaper --no-randr --focus /windows/Images/space/colorful.jpg; ~/.config/polybar/launch.sh 0"
+	bindsym Escape  mode "default"
+}
+
+mode "$Music" {
+	bindsym s workspace number $ws9 exec spotify
+	bindsym m workspace number $ws9 exec sayonara
+
+	bindsym c mode "default"
+	bindsym Escape mode "default"
+}
+
+mode "$Social" {
+	bindsym d workspace number $ws5 exec discord
+	bindsym r workspace number $ws5 exec rambox
+	bindsym a workspace number $ws5 exec discord rambox
+
+	bindsym c mode "default"
+	bindsym Escape mode "default"
+}
+
+mode "$Printer" {
+	bindsym p workspace number $ws11 exec system-config-printer
+	bindsym s workspace number $ws11 exec xsane
+
+	bindsym c mode "default"
+	bindsym Escape mode "default"
+}
+
+mode "$Browser" {
+	bindsym f workspace number $ws2 exec firefox
+	bindsym c workspace number $ws2 exec chromium
+	bindsym t workspace number $ws2 exec torbrowser-launcher
+
+	bindsym Escape mode "default"
+}
+
+mode "$Code" {
+	bindsym j workspace number $ws3 exec jetbrains-toolbox
+	bindsym v workspace number $ws3 exec alacritty
+	bindsym c workspace number $ws3 exec code
+
+	bindsym Escape mode "default"
+}
+
+mode "$GLava" {
+	bindsym k exec --no-startup-id killall glava
+	bindsym s exec --no-startup-id glava --desktop
+	bindsym r exec --no-startup-id killall glava && glava --desktop
+
+	bindsym Escape mode "default"
+}
+
+mode "$Filemanager" {
+	bindsym p exec pcmanfm-qt
+	bindsym r workspace number $ws4 exec alacritty --command ranger
+	bindsym v workspace number $ws4 exec alacritty --command ~/.config/vifm/scripts/vifmrun
+
+	bindsym c mode "default"
+	bindsym Escape mode "default"
+}

@@ -1,0 +1,40 @@
+" ----
+" c
+" ----
+fileviewer *.[ch],*.[ch]pp highlight -O xterm256 --syntax c %c
+
+" -------
+" java
+" -------
+fileviewer *.ja[rv][a] highlight -O xterm256 --syntax java %c
+
+" -----------
+" make files
+" -----------
+fileviewer Makefile,Makefile.* highlight -O xterm256 -s dante --syntax make %c
+
+" ---------
+" python
+" ---------
+fileviewer *.py highlight -O xterm256 --syntax python --progress %c
+
+" -------------
+" vim scripts
+" -------------
+fileviewer *.vifm,vifmrc highlight -O xterm256 --syntax vimscript --progress %c
+fileviewer *.vim,vimrc highlight -O xterm256 --syntax vimscript --progress %c
+
+" ---------------
+" autodetection (slow)
+" ---------------
+"fileviewer *[^/] pygmentize -O style=monokai -f console256 -g
+
+" --------------
+" normal files
+" --------------
+fileviewer *.txt highlight -O xterm256 --syntax txt --progress %c
+
+" ---------
+" LaTeX
+" ---------
+fileviewer *.tex highlight -O xterm256 --syntax tex --progress %c

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# clears the cache of vim
+rm ~/.cache/vim/*

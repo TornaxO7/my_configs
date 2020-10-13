@@ -1,0 +1,362 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
+
+[colors]
+background = #222
+background-alt = #444
+foreground = #dfdfdf
+foreground-alt = #555
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+
+memory-color = #FF4000
+date-color = #00FFFF
+cpu-color = #FF8000
+network-color = #FFBF00
+network-not-connected = #FF4000
+pulseaudio-color = #00FF80
+xbacklight-color = #9f78e1
+
+font-color-white = #fff
+
+filesystem-color = #FF00FF
+
+battery-color = #00FFFF
+battery-color-full = #00FF00
+
+music-color = #00FFBF
+
+temp-color = #FFFF00
+temp-color-high = #FF0040
+
+[bar/topBar]
+width = 100%
+height = 50
+radius = 20.0
+fixed-center = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 5
+line-color = #f00
+
+border-size = 4
+border-color = #00000000
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = Hack Nerd Font:style=Bold:pixelsize=17;0
+
+modules-left = bspwm i3 pulseaudio xbacklight filesystem music
+modules-center = date
+modules-right = redshift wireless_network battery temperature
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+tray-position = 
+tray-padding = 
+tray-backgrund =
+
+[bar/downBar]
+inherit = bar/topBar
+
+width = 100%
+
+font-0 = Hack Nerd Font:style=Bold:pixelsize=17;0
+
+background = #0000
+
+modules-left =
+modules-center = cpu memory
+modules-right =
+
+tray-position = right
+tray-padding = 10%
+tray-backgrund = #0063ff
+
+bottom = true
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+;Only show workspaces on the same output as the bar
+pin-workspaces = true
+
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = ${colors.primary}
+
+; focused = Active workspace on focused monitor
+label-focused = %index%
+label-focused-background = ${colors.background-alt}
+label-focused-underline= ${colors.primary}
+label-focused-padding = 2
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %index%
+label-unfocused-padding = 2
+
+; visible = Active workspace on unfocused monitor
+label-visible = %index%
+label-visible-background = ${self.label-focused-background}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %index%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+[module/filesystem]
+type = internal/fs
+interval = 100000
+
+mount-0 = /
+
+;label-mounted = %{F#0a81f5}%mountpoint%%{F-}: %percentage_used%%
+label-mounted =  %percentage_used%%
+label-mounted-foreground = ${colors.font-color-white}
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+
+[module/music]
+type = custom/script
+interval = 1
+format = <label>
+format-prefix = 
+format-prefix-foreground = ${colors.music-color}
+exec = playerctl metadata --format '{{title}}'
+label-underline = ${colors.music-color}
+label-padding = 1
+
+[module/xbacklight]
+type = internal/xbacklight
+
+format = <label> <ramp> <bar>
+label = %percentage%%
+
+bar-width = 15
+bar-indicator = |
+bar-indicator-foreground = #fff
+bar-indicator-font = 2
+bar-fill = ─
+bar-fill-font = 2
+bar-fill-foreground = ${colors.xbacklight-color}
+bar-empty = ─
+bar-empty-font = 2
+bar-empty-foreground = ${colors.foreground-alt}
+
+format-underline = ${colors.xbacklight-color}
+
+ramp-0 = 
+ramp-1 = 
+ramp-foreground = ${colors.xbacklight-color}
+
+[module/backlight-acpi]
+inherit = module/xbacklight
+type = internal/backlight
+card = intel_backlight
+
+[module/cpu]
+type = internal/cpu
+interval = 5
+format-prefix = " "
+format-prefix-foreground = ${colors.cpu-color}
+format-underline = #ff8000
+label = %percentage:2%%
+
+[module/memory]
+type = internal/memory
+interval = 5
+
+;label = %gb_used% | %gb_free% || %mb_swap_used% | %mb_swap_free%
+format = <label> <bar-used>
+label = %mb_used% | %mb_total% || %mb_swap_used% | %mb_swap_total%
+ 
+format-prefix = " "
+format-prefix-foreground = ${colors.memory-color}
+format-underline = ${colors.memory-color}
+
+bar-used-indicator = 
+bar-used-width = 75
+bar-used-foreground-0 = #00FF00
+bar-used-foreground-1 = #40FF00
+bar-used-foreground-2 = #80FF00
+bar-used-foreground-3 = #BFFF00
+bar-used-foreground-4 = #FFFF00
+bar-used-foreground-5 = #FFBF00
+bar-used-foreground-6 = #FF8000
+bar-used-foreground-7 = #FF4000
+bar-used-foreground-8 = #FF0000
+bar-used-fill = ▐
+bar-used-empty = ▐
+bar-used-empty-foreground = #444444
+
+[module/wireless_network]
+type = internal/network
+interface = wlp2s0
+interval = 3
+
+format-connected = <label-connected>
+format-connected-underline = ${colors.network-color}
+label-connected = %essid% %signal%%
+format-connected-prefix = "  "
+format-connected-prefix-foreground = ${colors.network-color}
+
+udspeed-minwidth = 5
+accumulate-stats = true
+
+format-disconnected = <label-disconnected>
+format-disconnected-underline = ${colors.network-not-connected}
+label-disconnected = NO CONNECTION
+label-disconnected-foreground = ${colors.network-not-connected}
+
+[module/date]
+type = internal/date
+interval = 60
+
+label-active-font = 0
+
+date = "%d-%m-%Y"
+
+time = %H:%M
+
+format-prefix = " "
+format-prefix-foreground = ${colors.date-color}
+format-underline = ${colors.date-color}
+
+label = %date% | %time%
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume = <label-volume> <ramp-volume> <bar-volume>
+label-volume = %percentage%%
+label-volume-foreground = ${root.foreground}
+
+label-muted =  MUTED
+label-muted-foreground = ${colors.foreground-alt}
+
+format-volume-underline = ${colors.pulseaudio-color}
+
+bar-volume-width = 15
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+ramp-volume-0 = 
+ramp-volume-1 =  
+ramp-volume-2 = 
+ramp-volume-foreground = ${colors.pulseaudio-color}
+
+[module/battery]
+type = internal/battery
+battery = BAT1
+adapter = ADP1
+full-at = 98
+
+format-charging = <animation-charging>  <label-charging>
+format-charging-underline = ${colors.battery-color}
+label-charging = %percentage%% | %consumption%W
+label-charging-foreground = ${colors.font-color-white} 
+animation-charging-foreground = ${colors.battery-color}
+
+time-format = %H:%M
+format-discharging = <ramp-capacity>  <label-discharging>
+format-discharging-underline = ${colors.battery-color}
+label-discharging = %percentage%% | %consumption%W | %time%
+
+format-full-prefix = "  "
+format-full-prefix-foreground = ${colors.battery-color-full}
+format-full-underline = ${self.format-charging-underline}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+ramp-capacity-4 = 
+ramp-capacity-foreground = ${colors.battery-color}
+
+; Only applies if <animation-charging> is used
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-3 = 
+animation-charging-4 = 
+; Framerate in milliseconds
+animation-charging-framerate = 500
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 50
+interval = 5
+
+format = <ramp> <label>
+format-underline = ${colors.temp-color}
+format-warn = <ramp> <label-warn>
+format-warn-underline = ${colors.temp-color-high}
+
+label = %temperature-c%
+label-foreground = ${colors.font-color-white}
+label-warn = %temperature-c%
+label-warn-foreground = ${colors.temp-color-high}
+
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-3 = 
+ramp-4 = 
+ramp-foreground = ${colors.temp-color}
+
+[module/redshift]
+type = custom/label
+
+content = "Redshift"
+content-underline = #FF0000
+
+click-left = ~/.config/polybar/toggleredshift.sh
+
+[settings]
+screenchange-reload = true
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5

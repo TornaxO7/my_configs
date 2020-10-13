@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sudo rm -rf /boot/grub
+sudo grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=Arch\ Grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg

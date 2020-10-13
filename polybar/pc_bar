@@ -1,0 +1,332 @@
+;==========================================================
+;
+;
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/polybar/polybar
+;
+;   The README contains a lot of information
+;
+;==========================================================
+
+[colors]
+background = #222
+background-alt = #444
+foreground = #dfdfdf
+foreground-alt = #555
+primary = #ffb52a
+secondary = #e60053
+alert = #bd2c40
+
+; --prefix-colors--
+mem-foreground = #4bffdc
+cpu-foreground = #FF8000
+temp-foreground = #FF00FF
+network = #00FFFF
+music = #F7FE2E
+i3-color = #ffb52a
+i3-background = #424242
+i3-underline = #FFFFFF
+filesystem-foreground = #0080FF
+background = #40FF00
+
+; ----- Prefixe -----
+redshift = #FF0000
+vol-foreground = #00FF80
+date-foreground = #00BFFF
+
+[bar/dpBar]
+monitor = ${env:MONITOR:DP-0}
+width = 100%
+height = 30
+radius = 10.0
+fixed-center = true
+
+background = #aa222222
+foreground = ${colors.foreground}
+
+line-size = 3
+line-color = #f00
+
+border-size = 4
+border-color = #00ff2F34F
+
+padding-left = 0
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 1
+
+font-0 = Hack Nerd Font:style=Bold:pixelsize=10:0
+
+modules-left = i3 music
+modules-center = date
+modules-right = background redshift pulseaudio filesystem
+
+bottom = false
+
+tray-position = right
+tray-padding = 10
+tray-background = #04B4AE
+
+wm-restack = bspwm
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[bar/hdmiBar]
+inherit = bar/dpBar
+monitor = ${env:MONITOR:HDMI-0}
+
+modules-left = i3 cpu temperature network
+modules-center = date
+modules-right = memory
+
+tray-position = 
+tray-padding =
+tray-background =
+
+[module/background]
+type = custom/text
+
+content-prefix = "  "
+content-prefix-foreground = ${colors.background}
+content-underline = ${colors.background}
+
+content = "Hintergrund"
+
+click-left = ~/.config/polybar/background.sh -t arch
+click-middle = ~/.config/polybar/background.sh -t ditfxx
+click-right = ~/.config/polybar/background.sh -t nacht
+double-click-left = ~/.config/polybar/background.sh -s -t all
+double-click-middle = ~/.config/polybar/background.sh -s -t ditfxx
+double-click-right = ~/.config/polybar/background.sh -s -t arch
+
+scroll-up = ~/.config/polybar/background.sh -a all
+scroll-down = ~/.config/polybar/background.sh -d -a FT
+
+[module/network]
+type = internal/network
+interface = eno1
+
+interval = 3.0
+
+accumulate-stats = true
+
+unknown-as-up = true
+
+format-connected-prefix = " "
+format-connected-prefix-foreground = ${colors.network}
+
+format-connected = <label-connected>
+label-connected = U: %upspeed:2% D: %downspeed:5%
+label-connected-foreground = #FFFFFF
+format-connected-underline = ${colors.network}
+
+format-disconnected-prefix = " "
+format-disconnected-prefix-foreground = ${colors.network}
+format-disconnected = <label-disconnected>
+
+label-disconnected = "NO CONNECTION!"
+label-disconnected-foreground = ${colors.network}
+format-disconnected-underline = ${colors.network}
+
+[module/filesystem]
+type = internal/fs
+interval = 1000
+
+mount-0 = /
+label-padding = 1
+
+label-mounted = %mountpoint%: %percentage_used%%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+
+format-mounted-prefix = " "
+format-unmounted-prefix = " "
+
+format-mounted-prefix-foreground = ${colors.filesystem-foreground}
+format-unmounted-prefix-foreground = ${colors.filesystem-foreground}
+
+format-mounted-underline = ${colors.filesystem-foreground}
+format-unmounted-underline = ${colors.filesystem-foreground}
+
+[module/music]
+type = custom/script
+interval = 0.5
+format = <label>
+format-prefix = " "
+format-prefix-foreground = ${colors.music}
+
+exec = ~/.config/polybar/music.sh
+
+format-underline = ${colors.music}
+label-padding = 1
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+; Only show workspaces on the same output as the bar
+pin-workspaces = true
+
+label-mode-padding = 2
+label-mode-foreground = #000
+label-mode-background = ${colors.i3-color}
+
+; focused = Active workspace on focused monitor
+label-focused = %index%
+label-focused-background = ${colors.i3-background}
+label-focused-underline= ${colors.i3-color}
+label-focused-padding = 2
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %index%
+label-unfocused-padding = 2
+
+; visible = Active workspace on unfocused monitor
+label-visible = %index% 
+label-visible-background = ${self.label-focused-background}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %index%
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 2
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${colors.cpu-foreground}
+format-underline = #ff8000
+label = %percentage:2%%
+
+[module/memory]
+type = internal/memory
+interval = 1
+
+format = <label> <bar-used>
+label = %gb_used% | %gb_total%
+format-prefix = " "
+format-prefix-foreground = ${colors.mem-foreground}
+format-underline = ${colors.mem-foreground}
+
+bar-used-indicator = 
+bar-used-width = 75
+bar-used-foreground-0 = #00FF00
+bar-used-foreground-1 = #40FF00
+bar-used-foreground-2 = #80FF00
+bar-used-foreground-3 = #BFFF00
+bar-used-foreground-4 = #FFFF00
+bar-used-foreground-5 = #FFBF00
+bar-used-foreground-6 = #FF8000
+bar-used-foreground-7 = #FF4000
+bar-used-foreground-8 = #FF0000
+bar-used-fill = ▐ 
+bar-used-empty = ▐
+bar-used-empty-foreground = #444444
+
+[module/date]
+type = internal/date
+interval = 30
+
+label-active-font = 0
+
+date = "%d-%m-%Y"
+
+time = %H:%M
+
+format-prefix = " "
+format-prefix-foreground = ${colors.date-foreground}
+format-underline = #0a6cf5
+
+label = %date% | %time%
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+warn-temperature = 50
+interval = 5
+
+format = <label>
+format-prefix = " "
+format-prefix-foreground = ${colors.temp-foreground}
+format-underline = #ff00ff
+format-warn = <label-warn>
+format-warn-underline = ${self.format-underline}
+
+label = %temperature-c%
+label-warn = %temperature-c%
+label-warn-foreground = ${colors.secondary}
+format-warn-prefix = "Temp "
+format-warn-prefix-foreground = ${colors.foreground-alt}
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume = <label-volume> <ramp-volume> <bar-volume>
+label-volume = %percentage%%
+label-volume-foreground = ${root.foreground}
+
+format-volume-underline = ${colors.vol-foreground}
+
+label-muted = Muted
+label-muted-foreground = ${colors.foreground-alt}
+
+bar-volume-width = 15
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-foreground = ${colors.vol-foreground}
+
+[module/redshift]
+type = custom/text
+
+content = "Redshift"
+content-prefix = " "
+
+content-prefix-foreground = ${colors.redshift}
+content-foreground = #FFFFFF
+content-underline = ${colors.redshift}
+
+click-left = ~/.config/polybar/toggleredshift.sh
+
+[settings]
+screenchange-reload = true
+pseudo-transparency = true
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+; vim:ft=dosini

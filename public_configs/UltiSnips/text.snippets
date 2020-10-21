@@ -1,0 +1,32 @@
+snippet "(unsigned )?((short)|(int)|(long)|(char)|(long long))+( \*)? (\S+);" "auto initialization" brA
+`!p
+integer_type = ""
+
+if match.group(1) != None:
+	integer_type += "unsigned "
+
+# look which type it is and replace it
+index = 3
+while (index < 8 and match.group(index) == None):
+	index += 1
+
+integer_type += match.group(index)
+
+if match.group(8) == None:
+	snip.rv = f"{integer_type} {match.group(9)};"
+else:
+	snip.rv = f"{integer_type} * {match.group(9)};"
+`
+$0
+`!p
+row = 1
+while (snip.buffer[snip.snippet_end[0] + row] != '' and row < 9):
+	row += 1
+
+snip.buffer[snip.snippet_end[0] + row:snip.snippet_end[0] + row] = [f"{match.group(9)} = 0"]
+#if match.group(8) == None:
+#	snip.rv = snip.mkline(f"{match.group(9)} = 0;")
+#else:
+#	snip.rv = snip.mkline(f"{match.group(9)} = NULL;")
+`
+endsnippet

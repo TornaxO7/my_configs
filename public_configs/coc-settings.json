@@ -1,0 +1,55 @@
+{
+  "python.jediEnabled": false,
+
+  "suggest.enablePreselect": true,
+  "suggest.enablePreview": true,
+  "suggest.snippetIndicator": "  ",
+
+  "suggest.detailField": "abbr",
+  "diagnostic.virtualText": true,
+  "diagnostic.virtualTextPrefix": "  ",
+  "diagnostic.virtualTextLineSeparator": "\n",
+  "diagnostic.errorSign": "",
+  "diagnostic.hintSign": "",
+  "diagnostic.infoSign": "",
+
+  "coc.preferences.formatOnInsertLeave": true,
+  "coc.preferences.formatOnType": false,
+  "coc.preferences.useQuickfixForLocations": true,
+  "coc.preferences.snippetStatusText": "Snip  ",
+  "coc.preferences.hoverTarget": "float",
+  "coc.preferences.bracketEnterImprove": true,
+
+  "coc.source.vimtex.enable": false,
+
+  "signature.enable": true,
+  "signature.preferShownAbove": false,
+
+  "codeLens.enable": true,
+  "codeLens.separator": "  ",
+
+  "latex.forwardSearch.executable": "zathura",
+  "latex.lint.onChange": true,
+
+  "list.indicator": " ",
+
+  "todolist.dateFormat": "DD-MM-YY HH:mm",
+
+  "html.enable": true,
+  "html.filetypes": ["html", "handlebars", "htmldjango"],
+  "html.format.wrapLineLength": 120,
+  "html.format.indentInnerHtml": true,
+  "html.format.extraLiners": "head, body, /html",
+  "html.autoClosingTags": true,
+
+  "tsserver.npm": "/usr/bin/npm",
+  "tsserver.enable": true,
+  "tsserver.maxTsServerMemory": 100,
+  "tsserver.log": "verbose",
+  "tsserver.typingsCacheLocation": "/tmp/",
+  "tsserver.trace.server": "messages",
+  "tsserver.debugPort": 50000,
+
+  "clangd.path": "/usr/bin/clangd",
+  "clangd.checkUpdates": true
+}

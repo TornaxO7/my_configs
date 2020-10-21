@@ -1,0 +1,478 @@
+# --------------
+# Functions
+# --------------
+global !p
+def printf_expand_args(snip):
+	"""
+	This will look how many placeholders printf has and adds the separated commas
+	at the end.
+	"""
+	
+	#pattern = re.compile("\%[^\%].?.?")
+	
+	# now add so many "," as much as the amount of placeholders
+	#amount_placeholders = len(pattern.findall(snip.tabstops[1].current_text))
+	amount_placeholders = snip.tabstops[1].current_text.count("%")
+
+	output = ""
+
+	# Add the amount of tabstops
+	for placeholder_index in range(3, amount_placeholders + 3):
+		output += f", ${placeholder_index}"
+	
+	# convert them into tabstops
+	snip.expand_anon(output)
+
+endglobal
+
+# --------------------
+# Code replacer
+# --------------------
+# code !auto!completion
+snippet "(unsigned )?((short)|(int)|(long)|(char)|(long long))+( \*)? (\S+);" "auto initialization" brA
+`!p
+integer_type = ""
+
+if match.group(1) != None:
+	integer_type += "unsigned "
+
+# look which type it is and replace it
+if match.group(3) != None:
+	integer_type += match.group(3)
+elif match.group(4) != None:
+	integer_type += match.group(4)
+elif match.group(5) != None:
+	integer_type += match.group(5)
+elif match.group(6) != None:
+	integer_type += match.group(6)
+elif match.group(7) != None:
+	integer_type += match.group(7)
+
+if match.group(8) == None:
+	snip.rv = f"{integer_type} {match.group(9)};"
+else:
+	snip.rv = f"{integer_type} * {match.group(9)};"
+`$0
+`!p
+if match.group(8) == None:
+	snip.rv = f"{match.group(9)} = 0;"
+else:
+	snip.rv = f"{match.group(9)} = NULL;"
+`
+endsnippet
+
+post_jump "printf_expand_args(snip)"
+snippet "printf" "Autosetting args" wr
+printf("$1\n"$2);
+endsnippet
+
+# code completion
+snippet default_entry "load the default entry of a new C-File" w
+#include <limits.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#ifndef NULL
+	#define NULL ((void *) 0)
+#endif
+
+void allocate_error(size_t error_line);
+
+int main() {
+
+	$0
+
+	return EXIT_SUCCESS;
+}
+
+// -----===== Useful - selfmade functions =====-----
+void allocate_error(size_t error_line) {
+	printf("-----===== ERROR IN LINE %lu =====-----\n", error_line);
+	printf("Couldn't allocate memory!\n");
+	perror("");
+	exit(-1);
+}
+endsnippet
+
+# conditions
+snippet for "for-loop" b
+for (${1:var}; ${2:condition}; `!p
+if len(t[1]) > 0:
+	snip.rv = t[1].split('=')[0].split()[-1]
+`++) {
+	
+	$0
+}
+endsnippet
+
+snippet do "do-while" b
+do {
+	$0
+
+} while (${1:condition});
+endsnippet
+
+snippet while "while-loop" b
+while ($1) {
+	$0
+}
+endsnippet
+
+snippet if "if-condition" b
+if ($1) {
+	$0
+}
+endsnippet
+
+snippet ife "if-condition" b
+if ($1) {
+	$0
+} else {
+
+}
+endsnippet
+
+# ----------
+# macros
+# ----------
+snippet #def "#define" wbA
+#define $0
+endsnippet
+
+snippet ifn "#ifndef" wbA
+#ifndef $1
+#endif /* $1 */
+endsnippet
+
+snippet ifd "#ifdef" wbA
+#ifdef $1
+#endif /* $1 */
+endsnippet
+
+# -------------------------
+# print values of an array
+# -------------------------
+snippet array_values "Create a for-loop which is going to display the values of an array" i
+printf("Array: ");
+for (unsigned long index=0; index<${1:Max-Size}; index++)
+	printf("%hu ", ${2:Array}[index]);
+printf("\n");
+endsnippet
+
+snippet inc "#include <lib>" bAt
+#include <${1:lib}>
+endsnippet
+
+# allocating stuff
+snippet "(\S+) = malloc" "Add automatically 'free()'" r
+`!p snip.rv = str(match.group(1))` = malloc($1);
+
+// ----- ERROR -----
+if (`!p snip.rv = str(match.group(1))` == NULL)
+	allocate_error(__LINE__);
+// ----- ERROR -----
+
+$3
+
+free(`!p snip.rv = str(match.group(1))`);
+endsnippet
+
+snippet "(\S+) = realloc" "Add automatically the if clause" r
+`!p
+snip.rv = f"{match.group(1)} = realloc();"
+snip += ""
+snip += "// ----- ERROR -----"
+snip += f"if ({match.group(1)} == NULL)"
+snip +=	"\tallocate_error(__LINE__, );"
+snip += "// ----- ERROR -----"
+snip += ""
+snip += f"{match.group(1)} = "
+`
+endsnippet
+
+# allocate if-clause
+snippet allocate_if "Enter the comment and the if-clause" i
+// ----- ERROR -----
+if (${1: Expression})
+	allocate_error(__LINE__, ${2: Exit code});
+// ----- ERROR -----
+endsnippet
+
+# ----------------------
+# Descriptions
+# ----------------------
+
+# auto-file description
+snippet default_file_description "Add the file description" b
+/* 
+ * ---------------------------------------------------------
+ * Filename: `!p snip.rv = snip.fn`
+ * Author: ${1:Anh Dang}
+ * Last changes: `date +%d.%m.%y`
+ * Version: 1.0
+ * Usage: 
+ *     ${2: Usage}
+ * ---------------------------------------------------------
+ */
+endsnippet
+
+# Function description
+snippet desc_func "Add a big comment-section which describes the function" b
+/*
+ * What does it do?
+ *	${1:Steps}
+ *  
+ * Parameters:
+ *	${2: Count all parameters and add a little sentence each one of them}
+ *
+ * Return values:
+ *	${3: Give the possible return values.}
+ */
+endsnippet
+
+
+# ---------------------------
+# compare function for qsort
+# ---------------------------
+snippet dec_compare "The declaration of 'int compare(const void * a, const void * b)''" w
+int compare(const void * a, const void * b);
+endsnippet
+
+snippet init_compare "The initialization of the compare function"
+int compare(const void * a, const void * b) {
+
+	if (* (${1:type-compare} *) a < * ($1 *) b)
+		return -1;
+
+	else if (* ($1 *) a == * ($1 *) b)
+		return 0;
+
+	else
+		return 1;
+}
+endsnippet
+# ------------------
+# readline
+# ------------------
+
+# ----- declaration ------
+#snippet dec_my_readline "declaration of char-readline" w
+#char * readline(unsigned long buffersize);
+#endsnippet
+#
+#snippet dec_my_readline_hu "declaration of hu-readline" w
+#unsigned short readline_hu();
+#endsnippet
+#
+#snippet dec_my_readline_hi "declaration of hi-readline" w
+#short readline_hi();
+#endsnippet
+#
+#snippet dec_my_readline_lu "declaration of ul-readline" w
+#unsigned long readline_lu();
+#endsnippet
+#
+#snippet dec_my_readline_ld "declaration of ld-readline" w
+#long readline_ld();
+#endsnippet
+#
+#snippet dec_my_readline_llu "declaration of llu-readline" w
+#unsigned long long readline_llu();
+#endsnippet
+#
+#snippet dec_my_readline_lld "declaration of lld-readlien" w
+#long long readline_lld();
+#endsnippet
+
+snippet dr "char * readline(unsigned long buffersize, FILE * file)" w
+char * readline(unsigned long buffersize, FILE * file);
+endsnippet
+
+snippet dhu "unsigned short readline_hu()" w
+unsigned short readline_hu(FILE * file);
+endsnippet
+
+snippet dhi "short readline_hi(FILE * file)" w
+short readline_hi(FILE * file);
+endsnippet
+
+snippet dlu "unsigned long readline_lu(FILE * file)" w
+unsigned long readline_lu(FILE * file);
+endsnippet
+
+snippet dld "long readline_ld(FILE * file)" w
+long readline_ld(FILE * file);
+endsnippet
+
+snippet dllu "unsigned long long readline_llu(FILE * file)" w
+unsigned long long readline_llu(FILE * file);
+endsnippet
+
+snippet dlld "long long readline_lld(FILE * file)" w
+long long readline_lld(FILE * file);
+endsnippet
+
+# ----- initialization -----
+snippet irr "create the readline function which reads a line of stdin and returns it" w
+char * readline(unsigned long buffersize, FILE * file) {
+
+	// Look if it should use the default-size
+	if (buffersize == 0)
+		buffersize = 10;
+
+	unsigned long buffer_index = 0;
+
+	char * buffer = malloc(buffersize);
+	char * tmp;
+
+	int character;
+
+	// ERROR
+	if (buffer == NULL)
+		allocate_error(__LINE__, 1);
+	// ERROR
+
+	while ((character = getc(file)) != '\n' && character != EOF && buffersize < ULONG_MAX - 1) {
+
+		// BUFFER IS TOO SMALL
+		if (buffersize <= buffer_index + 1) {
+			buffersize += 10;
+			tmp = realloc(buffer, buffersize);
+
+			// ERROR
+			if (tmp == NULL)
+				allocate_error(__LINE__, 2);
+			// ERROR
+			
+			buffer = tmp;
+		}
+		// BUFFER IS TOO SMALL
+
+		buffer[buffer_index++] = (char) character;
+	}
+
+	// Set the end of the line
+	buffer[buffer_index] = '\0';
+
+	// Adjust the allocated memory to the string length => No wasted memory
+	tmp = realloc(buffer, strlen(buffer) + 1);
+
+	// ERROR
+	if (tmp == NULL)
+		allocate_error(__LINE__, 3);
+	// ERROR
+	
+	return tmp;
+}
+endsnippet
+
+snippet irhu "create the readline function which returns the next number as an unsigned short" w
+unsigned short readline_hu(FILE * file) {
+
+	char buffer[6];
+	unsigned short buffer_index = 0;
+	int character;
+
+	// Get the digits of the number
+	while ((character = getc(file)) != '\n' && character != EOF && character != ' ' && buffer_index < 5)
+		buffer[buffer_index++] = (char) character;
+
+	// Set the end of the line
+	buffer[buffer_index] = '\0';
+
+	// Convert string into unsigned short
+	return (unsigned short) strtoul(buffer, NULL, 10);
+}
+endsnippet
+
+snippet irhi "create the readline function which returns the next number as a short" w
+short readline_hi(FILE * file) {
+
+	char buffer[7];
+	unsigned short buffer_index = 0;
+	int character;
+
+	// Get the digits of the number
+	while ((character = getc(file)) != '\n' && character != EOF && character != ' ' && buffer_index < 6)
+		buffer[buffer_index++] = (char) character;
+
+	// Set the end of the line
+	buffer[buffer_index] = '\0';
+
+	// Convert string into unsigned short
+	return (short) strtol(buffer, NULL, 10);
+}
+endsnippet
+
+snippet irlu "create the readline function which returns the next number as an unsigned long" w
+unsigned long readline_lu(FILE * file) {
+
+	char buffer[11];
+	unsigned short buffer_index = 0;
+	int character;
+
+	// Get the digits of the number
+	while ((character = getc(file)) != '\n' && character != EOF && character != ' ' && buffer_index < 10)
+		buffer[buffer_index++] = (char) character;
+
+	// Set the end of the line
+	buffer[buffer_index] = '\0';
+
+	return strtoul(buffer, NULL, 10);
+}
+endsnippet
+
+snippet irld "create the readline function which returns the next number as a long" w
+long readline_ld(FILE * file) {
+
+	char buffer[12];
+	unsigned short buffer_index = 0;
+	int character;
+
+	// Get the digits of the number
+	while ((character = getc(file)) != '\n' && character != EOF && character != ' ' && buffer_index < 11)
+		buffer[buffer_index++] = (char) character;
+
+	// Set the end of the line
+	buffer[buffer_index] = '\0';
+
+	return strtol(buffer, NULL, 10);
+}
+endsnippet
+
+snippet irlld "create the readline function which returns the next number as a long long" w
+long long readline_lld(FILE * file) {
+
+	char buffer[21];
+	unsigned short buffer_index = 0;
+	int character;
+
+	// Get the digits of the number
+	while ((character = getc(file)) != '\n' && character != EOF && character != ' ' && buffer_index < 20)
+		buffer[buffer_index++] = (char) character;
+
+	// Set the end of the line
+	buffer[buffer_index] = '\0';
+
+	return strtoll(buffer, NULL, 10);
+}
+endsnippet
+
+snippet irllu "create the readline function which returns the next number as a unsigned long long" w
+unsigned long long readline_llu(FILE * file) {
+
+	char buffer[21];
+	unsigned short buffer_index = 0;
+	int character;
+
+	// Get the digits of the number
+	while ((character = getc(file)) != '\n' && character != EOF && character != ' ' && buffer_index < 20)
+		buffer[buffer_index++] = (char) character;
+
+	// Set the end of the line
+	buffer[buffer_index] = '\0';
+
+	return strtoull(buffer, NULL, 10);
+}
+endsnippet

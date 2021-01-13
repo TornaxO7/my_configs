@@ -18,6 +18,14 @@ local helpers = {
 		end
 	end,
 
+    rounded_rect = function(radius)
+        return function(cairo, width, height)
+            gears.shape.rounded_rect(
+                cairo, width, height, radius
+            )
+        end
+    end,
+
 	-- partially rounded rectangle
 	part_round_rect = function(radius, tl, tr, br, bl)
 		return function(cairo, width, height)

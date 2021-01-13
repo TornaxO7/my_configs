@@ -10,5 +10,6 @@ function run {
 run redshift
 run picom
 run discord
-run ~/Apps/Rambox.AppImage
-run ~/Apps/Nextcloud-3.0.2-x86_64.AppImage
+run rambox
+run nextcloud
+run flameshot

@@ -1,0 +1,78 @@
+# -----------------------------------------------------
+# Snippets which are often used for math-documents 
+# -----------------------------------------------------
+global !p
+texMathZones = ['texMathZone' + x for x in ['', 'X', 'XX', 'Env', 'EnvStarred', 'Ensured']]
+texIgnoreMathZones = ['texMathTextArg']
+texMathZoneIds = vim.eval('map(' + str(texMathZones) + ", 'hlID(v:val)')")
+texIgnoreMathZoneIds = vim.eval('map('+str(texIgnoreMathZones)+", 'hlID(v:val)')")
+
+ignore = texIgnoreMathZoneIds[0]
+
+def math():
+	synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
+	try:
+		first = next(i for i in reversed(synstackids) if i in texIgnoreMathZoneIds or i in texMathZoneIds)
+		return first != ignore
+	except StopIteration:
+		return False
+endglobal
+
+snippet ub "\underbrace{}" w
+\underbrace{$1}_{$2}$0
+endsnippet
+
+snippet ob "\overbrace{}" w
+\overbrace{$1}_{$2}$0
+endsnippet
+
+snippet ov "\overset{\mathrm{}}{}" i
+\overset{\mathrm{$1}}{$2}$0
+endsnippet
+
+snippet &iv "\overset{\mathrm{(iV)}}{=}" w
+\overset{\mathrm{(iV)}}{=}$0
+endsnippet
+
+context "math()"
+snippet int "\int{}_{}" wA
+\int_{$1}^{$2}$0
+endsnippet
+
+context "math()"
+snippet sum "\sum\limits^{}_{}" wA
+\sum\limits^{$1}_{$2}$0
+endsnippet
+
+context "math()"
+snippet prod "\prod\limits^{$1}_{$2}$0" wA
+\prod\limits^{$1}_{$2}$0
+endsnippet
+
+# variables
+context "math()"
+snippet "x(\d+)" "x_{1} etc." r
+`!p
+number = int(match.group(1))
+snip.rv = "x_{%d}" % number
+`
+endsnippet
+
+context "math()"
+snippet frac "\frac{}{}" wA
+\frac{$1}{$2}$0
+endsnippet
+
+context "math()"
+snippet lgs "LGS - Environment" b
+\begin{blockarray}{${1:ccccc}}
+	\begin{block}{${2:c(ccc|c)c}}
+		$0
+	\end{block}
+\end{blockarray}
+endsnippet
+
+context "math()"
+snippet lim "\lim\limits_{x\to\infty} f(x)" w
+\lim\limits_{${1:x} \to \infty}$0
+endsnippet

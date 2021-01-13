@@ -66,7 +66,7 @@ local function go_to(tag_number, move_client)
 		client.focus:move_to_tag(tag)
 	end
 
-	awful.screen.focus(tmp_screen)
+    awful.screen.focus(tmp_screen)
 end
 
 local keymodes = require("mappings.keymodes")
@@ -157,15 +157,7 @@ local tmp = gears.table.join(
 	-- keepassxc
     awful.key({ "Control", "Shift" }, "k", 
 		function () 
-			awful.spawn.with_shell("QT_SCALE_FACTOR=1.2 keepassxc") 
-		end,
-            {description = "open keepassxc", group = "launcher"}),
-
-	-- vifm
-    awful.key({ "Control", "Shift" }, "r", 
-		function () 
-			go_to(4)
-			awful.spawn.with_shell("alacritty" .. " -e " .. "~/.config/vifm/scripts/vifmrun") 
+			awful.spawn.with_shell("keepassxc") 
 		end,
             {description = "open keepassxc", group = "launcher"}),
 	
@@ -186,6 +178,13 @@ local tmp = gears.table.join(
             {description = "open xsane", group = "launcher"}),
 
 	----- Modes -----
+	-- filemanagers
+    awful.key({ "Control", "Shift" }, "r", 
+		function () 
+            root.keys(keymodes.filemanagers)
+		end,
+            {description = "open filemanager mode", group = "launcher"}),
+
 	-- Browsers
     awful.key({ "Control", "Shift" }, "f", 
 		function () 
@@ -234,12 +233,14 @@ local tmp = gears.table.join(
 	-- increase volume
     awful.key({}, "XF86AudioRaiseVolume", function ()
 		awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ +2%")
+        volumebar_update();
 	end,
               {description = "increase music volume", group = "music volume"}),
 
 	-- decrease volume
     awful.key({}, "XF86AudioLowerVolume", function ()
 		awful.spawn("pactl set-sink-volume @DEFAULT_SINK@ -2%")
+        volumebar_update();
 	end,
               {description = "decrease music volume", group = "music volume"}),
 	

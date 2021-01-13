@@ -16,6 +16,8 @@ local taglist_square_size = dpi(4)
 -----===== Settings =====-----
 local theme = {}
 
+theme.is_violet = false
+
 theme.wallpaper = awesome_dir .. "/images/tokyo_ghoul.jpg"
 
 theme.bg_normal     = "#0B2F3A"
@@ -39,6 +41,8 @@ theme.width = dpi(100)
 
 theme.notification = {}
 theme.notification.critical = "#8A0808"
+theme.notification.bg = theme.bg_normal
+theme.notification.fg = "#5B8234"
 
 theme.separator = "#088A85"
 

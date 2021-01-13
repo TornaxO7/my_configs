@@ -27,6 +27,7 @@ let g:vimtex_compiler_latexmk = {
     \   '-synctex=1',
     \   '-interaction=nonstopmode',
     \   '-logfilewarninglist',
+    \   '-shell-escape',
     \ ],
     \}
 
@@ -34,6 +35,9 @@ let g:vimtex_compiler_latexmk = {
 let g:tex_flavor = "latex"
 let g:tex_no_error = 0
 let g:tex_conceal = ''
+
+" disable conceal
+set conceallevel=0
 
 " enable verbose information
 let g:vimtex_log_verbose = 1
@@ -76,7 +80,7 @@ let g:vimtex_indent_lists = [
 let g:vimtex_complete_close_braces = 1
 
 " enable mappings in insert mode
-let g:vimtex_imaps_enabled = 0
+let g:vimtex_imaps_enabled = 1
 
 " leader of imaps
 let g:vimtex_imaps_leader = "´"
@@ -84,5 +88,5 @@ let g:vimtex_imaps_leader = "´"
 function! Synctex()
     execute "silent !zathura --synctex-forward " . line('.') . ":" . col('.') . ":" . bufname('%') . " " . g:syncpdf
     redraw!
-	endfunction
+endfunction
 map <localleader>lz :call Synctex()<cr>

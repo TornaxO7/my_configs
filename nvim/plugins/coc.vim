@@ -1,9 +1,41 @@
-
 " -------------
 "  auto stuff
 " -------------
+let g:coc_start_at_startup = 0
 " Highlight the symbol and its references when holding the cursor.
 "autocmd CursorHold * silent call CocActionAsync('highlight')
+
+let g:node_client_debug = 1
+
+" which plugins
+let g:coc_global_extensions = [
+            \ "coc-ultisnips",
+            \ "coc-todolist",
+            \ "coc-terminal",
+            \ "coc-tag",
+            \ "coc-prettier",
+            \ "coc-marketplace",
+            \ "coc-highlight",
+            \ "coc-yaml",
+            \ "coc-vimtex",
+            \ "coc-tsserver",
+            \ "coc-tslint-plugin",
+            \ "coc-tslint",
+            \ "coc-toml",
+            \ "coc-texlab",
+            \ "coc-sh",
+            \ "coc-pyright",
+            \ "coc-phpls",
+            \ "coc-perl",
+            \ "coc-markdownlint",
+            \ "coc-json",
+            \ "coc-html",
+            \ "coc-cmake",
+            \ "coc-clangd",
+            \ "coc-fzf-preview",
+            \ "coc-explorer",
+            \ "coc-flutter-tools"
+            \]
 
 " -----------
 "  functions

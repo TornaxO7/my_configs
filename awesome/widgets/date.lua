@@ -15,6 +15,7 @@ local current_date = wibox.widget(
 	}
 )
 
+
 current_date.markup = "<span foreground=#FFFFFF>" .. current_date.text .. "</span>"
 
 local current_date_widget = {

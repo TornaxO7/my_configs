@@ -2,9 +2,38 @@
   "python.jediEnabled": false,
   "suggest.enablePreselect": true,
   "suggest.enablePreview": true,
-  "suggest.snippetIndicator": "  ",
+  "suggest.snippetIndicator": "  ",
+  "suggest.detailField": "preview",
+  "suggest.echodocSupport": true,
 
-  "suggest.detailField": "abbr",
+  "suggest.completionItemKindLabels": {
+    "keyword": "\uf1de",
+    "variable": "\ue79b",
+    "value": "\uf89f",
+    "operator": "\u03a8",
+    "function": "\u0192",
+    "reference": "\ufa46",
+    "constant": "\uf8fe",
+    "method": "\uf09a",
+    "struct": "\ufb44",
+    "class": "\uf0e8",
+    "interface": "\uf417",
+    "text": "\ue612",
+    "enum": "\uf435",
+    "enumMember": "\uf02b",
+    "module": "\uf40d",
+    "color": " ",
+    "property": "\ue624",
+    "field": "\uf9be",
+    "unit": "\uf475",
+    "event": "\ufacd",
+    "file": "\uf723",
+    "folder": " ",
+    "snippet": " ",
+    "typeParameter": "\uf728",
+    "default": "\uf29c"
+  },
+
   "diagnostic.virtualText": true,
   "diagnostic.virtualTextPrefix": "  ",
   "diagnostic.virtualTextLineSeparator": "\n",
@@ -12,16 +41,17 @@
   "diagnostic.hintSign": "",
   "diagnostic.infoSign": "",
 
-  "coc.preferences.formatOnInsertLeave": true,
   "coc.preferences.formatOnType": false,
   "coc.preferences.useQuickfixForLocations": true,
   "coc.preferences.snippetStatusText": "Snip  ",
   "coc.preferences.hoverTarget": "float",
   "coc.preferences.bracketEnterImprove": true,
+  "coc.preferences.currentFunctionSymbolAutoUpdate": true,
+  "coc.preferences.enableMarkdown": true,
 
   "coc.source.vimtex.enable": false,
 
-  "signature.enable" : true,
+  "signature.enable": true,
   "signature.preferShownAbove": false,
 
   "codeLens.enable": true,
@@ -35,22 +65,39 @@
   "todolist.dateFormat": "DD-MM-YY HH:mm",
 
   "html.enable": true,
-  "html.filetypes": [
-    "html",
-    "handlebars",
-    "htmldjango"
-  ],
+  "html.filetypes": ["html", "handlebars", "htmldjango"],
   "html.format.wrapLineLength": 120,
   "html.format.indentInnerHtml": true,
   "html.format.extraLiners": "head, body, /html",
   "html.autoClosingTags": true,
 
-  "languageserver": {
-    "bash": {
-      "command": "bash-language-server",
-      "args": ["start"],
-      "filetypes": ["sh"],
-      "ignoredRootPaths": ["~"]
-    }
-  }
+  "tsserver.npm": "/usr/bin/npm",
+  "tsserver.enable": true,
+  "tsserver.maxTsServerMemory": 100,
+  "tsserver.log": "verbose",
+  "tsserver.typingsCacheLocation": "/tmp/",
+  "tsserver.trace.server": "messages",
+  "tsserver.debugPort": 50000,
+
+  "clangd.path": "/usr/bin/clangd",
+  "clangd.checkUpdates": true,
+  "clangd.semanticHighlighting": true,
+  "clangd.disableSnippetCompletion": false,
+
+  "typescript.format.insertSpaceAfterConstructor": true,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+
+  "flutter.trace.server": "verbose",
+  "coc.preferences.extensionUpdateCheck": "daily",
+  
+  "explorer.icon.enableVimDevicons": true,
+  "explorer.keyMappings.global": {
+      "J" : "normal:5j",
+      "K" : "normal:5k",
+      "v" : "open:vsplit",
+      "<C-p>" : "previewOnHover:toggle:content"
+  },
+  "explorer.icon.enableNerdfont": true,
+  "explorer.trash.command": "mv %l ~/Trash"
 }

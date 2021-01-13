@@ -36,7 +36,7 @@ let g:airline#extensions#coc#enabled = 1
 
 let g:airline_mode_map = {
     \ '__'     : '-',
-    \ 'c'      : 'C',
+    \ 'c'      : 'Commandline ',
     \ 'i'      : 'Insert ',
     \ 'ic'     : 'Insert ',
     \ 'ix'     : 'Insert ',
@@ -46,22 +46,27 @@ let g:airline_mode_map = {
     \ 'no'     : 'N',
     \ 'R'      : 'Replace ',
     \ 'Rv'     : 'R',
-    \ 's'      : 'S',
+    \ 's'      : 'Select 礪',
     \ 'S'      : 'Select 礪',
-    \ ''     : 'S',
-    \ 't'      : 'T',
+    \ ''     : 'Select 礪',
+    \ 't'      : 'Terminal ',
     \ 'v'      : 'Visual-single ﭑ',
     \ 'V'      : 'Visual-lines ﭑ',
     \ ''     : 'Visual-blocks ﭑ',
     \ }
 
 " enable tabline
-"let g:airline#extensions#tabline#enabled = 0
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'short_path'
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = ''
 
 " scrollbar
-let g:airline_section_x = '%{ScrollStatus()} %y'
-let g:scrollstatus_size = 20
-
+"let g:airline_section_x = '%{ScrollStatus()} %y'
+"let g:scrollstatus_size = 20
+"
 let g:airline_statusline_ontop = 0
 
 " display text when window swapping

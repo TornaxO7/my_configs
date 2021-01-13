@@ -23,9 +23,16 @@ require("awful.hotkeys_popup.keys")
 
 -----===== Global Functions =====-----
 function set_wallpaper()
+
     -- Wallpaper
     if beautiful.wallpaper then
-        gears.wallpaper.maximized(beautiful.wallpaper, nil, true)
+        -- special violet evergarden wallpaper
+        if beautiful.id == "violet" then
+            gears.wallpaper.maximized(beautiful.wallpaper.first, 1, true);
+            gears.wallpaper.maximized(beautiful.wallpaper.second, 2, true);
+        else
+            gears.wallpaper.maximized(beautiful.wallpaper, nil, true)
+        end
     end
 end
 
@@ -86,7 +93,6 @@ require("mappings.mouse")
 
 -----===== Keybindings =====-----
 globalkeys = require("mappings.keybindings")
-awful.spawn("notify-send 'test'")
 
 -- keybindings for each window
 clientkeys = require("mappings.clientkeys")

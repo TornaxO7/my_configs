@@ -1,0 +1,66 @@
+# ======================
+# Graphical drawing 
+# ======================
+
+# -----------
+# Images 
+# -----------
+snippet graphicxpath "\graphicspath{{./figures}}" b
+\graphicspath{{./figures}}
+endsnippet
+
+# ---------
+# pgfplots
+# ---------
+snippet pgf_graph "pgfplot graph" b
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis} [
+			width = \textwidth - 3cm,
+			axis lines = left,
+			xlabel = Teilchengeschwindigkeit,
+			ylabel = Wahrscheinlichkeitsdichte,
+			scaled ticks = false,
+			xticklabels={,,},
+			yticklabels={,,}
+		]
+			% Adding a graph
+			\addplot[
+				domain = 0:50,
+				color=red
+				]
+				{
+					(x^2)
+				};
+			
+			% Adding a legendary to understand the graph
+			\addlegendentry{$T_1$: $0\degree C$}
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+endsnippet
+
+# ------------
+# graphs
+# ------------
+snippet graph_axis "Insert a coordinate system" b
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis} [
+			width = ${1:\texwidth},
+			xmin=-5,xmax=5,
+			ymin=-5, ymax=5,
+			axis lines = left,
+			xlabel = x,
+			ylabel = y,
+			${2:xticklabels={,,\},}
+			${3:yticklabels={,,\},}
+			${4:axis line style=->}
+			]
+		\addplot[
+			domain = -10:10,
+			color=black]{${5:x^2}};
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+endsnippet

@@ -6,10 +6,16 @@ awesome_dir=~/.config/awesome
 # Awesomewm will always take the theme in "~/.config/awesome/theme.lua" so it just copy the theme file in the "themes" folder to this file :)
 case "$1" in
 	"tokyo_ghoul")
+        cp $theme_dir/screen_settings_origin.lua $awesome_dir/screen_settings.lua
 		cp $theme_dir/tokyo_ghoul.lua $awesome_dir/theme.lua;;
 
 	"miku")
+        cp $theme_dir/screen_settings_origin.lua $awesome_dir/screen_settings.lua
 		cp $theme_dir/miku.lua $awesome_dir/theme.lua;;
+
+    "violet_evergarden")
+        cp $theme_dir/screen_settings_violet.lua $awesome_dir/screen_settings.lua
+        cp $theme_dir/violet_evergarden.lua $awesome_dir/theme.lua;;
 
 	*)
 		cp $theme_dir/default.lua $awesome_dir/theme.lua;;

@@ -1,26 +1,18 @@
 # -----------------
 # section-comment
 # -----------------
-snippet section_comment_important_big "Add a section with bigger highlighting"
-/* ---------------===================---------------
- * ${1: Section name} 
- * ---------------===================--------------- */
-endsnippet
+#snippet cbb "Add a section with bigger highlighting"
+#/* =====`!p snip.rv = "=" * len(t[1])`
+# * ${1:Section name} 
+# * =====`!p snip.rv = "=" * len(t[1])` */
+#endsnippet
+#
+#snippet cb "Add a separator for a new section"
+#/* -----`!p snip.rv = "-" * len(t[1])`
+# * ${1:Section name} 
+# * -----`!p snip.rv = "-" * len(t[1])` */
+#endsnippet
 
-snippet section_comment_important_small "Add a section with bigger highlighting"
-/* -------==========-------
- * ${1: Section name} 
- * -------==========------- */
-endsnippet
-
-snippet section_comment_big "Add a separator for a new section"
-/* -------------------------------------------------
- * ${1: Section name} 
- * ------------------------------------------------- */
-endsnippet
-
-snippet section_comment_small "Add a separator for a new section"
-/* ----------------------------
- * ${1: Section name} 
- * ---------------------------- */
+snippet date "The current date" w
+`date +%d.%m.%Y`
 endsnippet

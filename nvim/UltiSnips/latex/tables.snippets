@@ -1,0 +1,43 @@
+# -------------------
+# Table-snippets 
+# -------------------
+snippet "tab(\d+)" "create table" r
+`!p
+snip += "\\begin{tabularx}{\\linewidth}{"
+
+# add columns
+for column_index in range(int(match.group(1))):
+	snip += f"\t|>{{\\raggedright\\arraybackslash\\hsize={1 / int(match.group(1))}\hsize}}X"
+snip += "\t|}"
+snip += "\t\\hline"
+snip += "\t\\hline"
+snip += "\t\\hline"
+snip += "\\end{tabularx}"
+`
+endsnippet
+
+snippet rc "row-cell (makecell)" b
+\makecell[${1:Alignment (l,r,b)}]{${2:Multilined text}}$0
+endsnippet
+
+snippet "r(\d+)" "create a row with x columns" br
+$0`!p
+
+for column in range(int(match.group(1)) - 1):
+	snip += '&'
+snip += "\\\\ % ----------"
+`
+endsnippet
+
+snippet mc "Multicolumn" b
+\multicolumn{${1:Columns}}{|c`!p
+if t[1].isdigit():
+	snip.rv = (int(t[1]) - 1) * '|c'
+`|}{
+`!p
+if t[1].isdigit():
+
+	snip.rv = (int(t[1]) - 1) * "& "
+`
+}
+endsnippet

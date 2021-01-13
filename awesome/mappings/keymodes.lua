@@ -106,7 +106,7 @@ tmp = gears.table.join( {
 		-- rambox
 	    awful.key({}, "r", function()
 			go_to(5)
-			awful.spawn("~/Apps/Rambox.AppImage")
+			awful.spawn("rambox")
 			root.keys(globalkeys)
 			end,
 			{description="open rambox", group="social"}
@@ -115,6 +115,30 @@ tmp = gears.table.join( {
 		-- exit
 		awful.key({}, "Escape", function() root.keys(globalkeys) end)
 	),
+
+    -----===== Filemanager =====-----
+    filemanagers = gears.table.join(
+
+        -- pcmanfm
+	    awful.key({}, "p", function()
+			go_to(4)
+			awful.spawn("pcmanfm")
+			root.keys(globalkeys)
+			end,
+			{description="open pcmanfm", group="filemanger"}
+		),
+
+        -- vifm
+	    awful.key({}, "v", function()
+			go_to(4)
+			awful.spawn.with_shell("alacritty -e ~/.config/vifm/scripts/vifmrun.sh")
+			root.keys(globalkeys)
+			end,
+			{description="open vifm", group="filemanger"}
+		),
+	-- exit
+		awful.key({}, "Escape", function() root.keys(globalkeys) end)
+    ),
 
 	-----===== Music stuff =====-----
 	music = gears.table.join(
@@ -186,7 +210,7 @@ tmp = gears.table.join( {
 			root.keys(globalkeys)
 			write_mode("tokyo_ghoul")
 		end,
-			{description="set wallpaper to tokyo ghoul", group="wallpaper"}
+			{description="set wallpaper to tokyo ghoul", group="theme"}
 		),
 	
 		-- Miku
@@ -194,7 +218,7 @@ tmp = gears.table.join( {
 			root.keys(globalkeys)
 			write_mode("miku")
 		end,
-			{description="set wallpaper to miku_split", group="wallpaper"}
+			{description="set wallpaper to miku_split", group="theme"}
 		),
 	
 		-- Grass
@@ -202,8 +226,16 @@ tmp = gears.table.join( {
 			gears.wallpaper.maximized("/windows/Images/anime_images/grass.jpg")
 			root.keys(globalkeys)
 		end,
-			{description="set wallpaper to grass", group="wallpaper"}
+			{description="set wallpaper to grass", group="theme"}
 		),
+
+        -- Violet Evergarden
+        awful.key({}, "v", function()
+            root.keys(globalkeys)
+            write_mode("violet_evergarden")
+        end,
+            {description="Set theme to violet evergarden", group="theme"}
+        ),
 
 		-- exit
 		awful.key({}, "Escape", function() root.keys(globalkeys) end)

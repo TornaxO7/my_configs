@@ -4,7 +4,7 @@
 set termguicolors
 
 " enable syntax
-syntax on
+"syntax on
 
 " detect filetype for plugin
 filetype plugin on
@@ -27,6 +27,9 @@ set tabstop=4
 set softtabstop=2 expandtab
 set shiftwidth=4
 
+" enable lisp mode
+set lisp
+
 " encoding
 set encoding=utf-8
 
@@ -38,16 +41,27 @@ set concealcursor="nvic"
 set clipboard=unnamedplus
 
 " hide unfocused buffers
-set hidden
+"set hidden
 
 " cmdheight at the bottom
 set cmdheight=2
+
+" show the other bracket pair
+"set showmatch
 
 " updatetime
 set updatetime=100
 
 " timeout for which-key
-set timeoutlen=100
+set timeoutlen=1000
+
+" create backups before saving
+set backup
+set backupext=.bak
+set backupdir=/home/tornax/.config/nvim/backups/
+
+" which python version to use
+set pyxversion=3
 
 " for coc: Don't pass messages to |ins-completion-menu|
 "set shortmess+=c
@@ -72,6 +86,12 @@ endif
 " will refresh the file automatically
 set autoread
 
+" change path to current buffer
+set autochdir
+
+" enable icons for terminal
+set icon
+
 " overwrites indent above
 set cindent
 
@@ -80,22 +100,31 @@ set cursorline
 
 " menu-completion
 set wildmenu
-set wildmode=longest,list,full  " Enable zsh like completion
+"set wildmode=longest,list,full  " Enable zsh like completion
 
 " linebreak if word and line is too long
 set wrap
 set textwidth=80
 set linebreak
+"set showbreak
+
+" virtual space for tables!
+"set virtualedit=all
 
 " mouse
 set mouse=a
 
 " search exactly after this word
-set ignorecase
+"set ignorecase
 set smartcase
+set ruler
 
 " Highlighting in VISUAL-Mode
 highlight Visual cterm=reverse ctermbg=NONE
+
+" add a higlight column to see the deadline of column 80
+set cc=+1
+hi ColorColumn ctermbg=LightBlue guibg=LightBlue
 
 " set guifont
 set guifont="Hack Nerd Font:style=bold:pixelsize=12"
@@ -104,11 +133,24 @@ set guifont="Hack Nerd Font:style=bold:pixelsize=12"
 let filetype_i = "nasm"
 let asmsyntax = "nasm"
 
+" set vertical splitted windows to the right
+set splitright
+set splitbelow
+
+" autosave when editing a file
+set autowrite
+
+" the path where to look or to use `gf` and `find` also for autocompletion!
+set path+="/usr/local/X11"
+
+" C - Options
+set cindent shiftwidth=4
+
 " ---------
 "  folding
 " ---------
 set foldmethod=syntax
-set foldnestmax=1
+set foldnestmax=2
 let c_no_comment_fold = 1
 let c_syntax_for_h = 1
 highlight Folded guibg=grey guifg=turquoise
@@ -148,15 +190,28 @@ let g:neovide_cursor_vfx_particle_speed=10.0
 let g:neovide_cursor_vfx_particle_phase=1.5
 let g:neovide_cursor_vfx_particle_curl=1.0
 
-inoremap <C-b> <Esc>a\
-set winaltkeys=yes
-for s:char in split('¶¡@£$€¥{[]}\±{}þ←đŋ©®ł¸~æœ€↓→ðħŧłß̣̣̣´|·@©ĸ»”µł“«', '\zs')
-    if s:char == '\'
-        let s:expr = 'imap <M-Bslash> <Bslash>'
-    elseif s:char == '|'
-        let s:expr = 'imap <M-Bar> <Bar>'
-    else
-        let s:expr = printf('imap <M-%s> %s', s:char, s:char)
-    endif
-    exec s:expr
-endfor
+"inoremap <C-b> <Esc>a\
+"set winaltkeys=yes
+"for s:char in split('¶¡@£$€¥{[]}\±{}þ←đŋ©®ł¸~æœ€↓→ðħŧłß̣̣̣´|·@©ĸ»”µł“«', '\zs')
+"    if s:char == '\'
+"        let s:expr = 'imap <M-Bslash> <Bslash>'
+"    elseif s:char == '|'
+"        let s:expr = 'imap <M-Bar> <Bar>'
+"    else
+"        let s:expr = printf('imap <M-%s> %s', s:char, s:char)
+"    endif
+"    exec s:expr
+"endfor
+
+" for my own extension
+set runtimepath^=/windows/Programmieren/nvim_coc_extensions/coc-test
+"set runtimepath^=/usr/include/gtk-3.0/,
+"            \/usr/include/glib-2.0/,
+"            \/usr/include/glibmm-2.4,
+"            \/usr/include/cairo,
+"            \/usr/include/pangomm-1.4,
+"            \/usr/include/harfbuzz,
+"            \/usr/include/freetype2,
+"            \/usr/include/atkmm-1.6,
+"            \/usr/include/atk-1.0
+"

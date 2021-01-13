@@ -1,994 +1,127 @@
-# ------------
-# Functions
-# ------------
-global !p
-
-texMathZones = [
-	'texMathZone' + x for x in [
-		'A',
-		'AS',
-		'B',
-		'BS',
-		'C',
-		'CS',
-		'D',
-		'DS',
-		'E',
-		'ES',
-		'F',
-		'FS',
-		'G',
-		'GS',
-		'H',
-		'HS',
-		'I',
-		'IS',
-		'J',
-		'JS',
-		'K',
-		'KS',
-		'L',
-		'LS',
-		'DS',
-		'V',
-		'W',
-		'X',
-		'Y',
-		'Z',
-		'AmsA',
-		'AmsB',
-		'AmsC',
-		'AmsD',
-		'AmsE',
-		'AmsF',
-		'AmsG',
-		'AmsAS',
-		'AmsBS',
-		'AmsCS',
-		'AmsDS',
-		'AmsES',
-		'AmsFS',
-		'AmsGS' 
-		]
-	]
-texIgnoreMathZones = ['texMathText']
-texMathZoneIds = vim.eval('map(' + str(texMathZones) + ", 'hlID(v:val)')")
-texIgnoreMathZoneIds = vim.eval('map('+str(texIgnoreMathZones)+", 'hlID(v:val)')")
-
-ignore = texIgnoreMathZoneIds[0]
-
-def math():
-	synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
-	try:
-		first = next(i for i in reversed(synstackids) if i in texIgnoreMathZoneIds or i in texMathZoneIds)
-		return first != ignore
-	except StopIteration:
-		return False
-
-def in_ce_env() -> bool:
-	"""
-	This will look if the first 4 chars in the line are "\ce{" and
-	the last char "}".
-	If yes => Return true
-	else => False
-	"""
-
-	if snip.buffer[snip.line].startswith("\ce{"):
-		return True
-	else:
-		return False
-
-def set_arg_draw() -> bool:
-	"""
-	It will read how many args the \draw commands needs and add them
-	automatically.
-	"""
-
-	placeholders = ""
-
-	# Get the amount of placeholders
-	amount_coordinates = int(snip.buffer[snip.line].strip())
-	
-	# Set the starting line "\draw "
-	amount_tabs = len(snip.buffer[snip.line].split("draw"))
-	snip.buffer[snip.line] = ""
-
-	for tab_index in range(amount_tabs):
-		placeholders += "\t"
-	placeholders += "\\draw"
-
-	# add the placeholders
-	for placeholder_index in range(1, amount_coordinates + 1):
-		placeholders += f" (${placeholder_index}) --"
-	placeholders += f" (${amount_coordinates + 1});"
-
-	# enable the new tabstops
-	snip.expand_anon(placeholders)
-
-def create_matrix(snip):
-	"""
-	This will create the matrix with its amount of columns.
-	"""
-
-	return_string = "\left(\n\t\\begin{tabular}{"
-
-	amount_columns = int(snip.buffer[snip.line].strip())
-	amount_tabs = len(snip.buffer[snip.line].split("mat"))
-
-	# reset line
-	snip.buffer[snip.line] = "\t" * amount_tabs
-
-	for column_index in range(amount_columns):
-		return_string += "c"
-	
-	return_string += "}\n\t"
-	
-	return_string += "\t\t$0\n\t\end{tabular}"
-	return_string += "\n\\right)"
-
-	# expand snippet
-	snip.expand_anon(return_string)
-endglobal
-
-# --------------
-# general stuff
-# --------------
-snippet date "the current date" b
-\begin{center}
-	`date +%d.%m.%y`
-\end{center}
-endsnippet
-
-snippet tc "textcolor" i
-\textcolor{${1:Color}}{${2:Text}}$0
-endsnippet
-
-snippet %-- "%-----------------" b
-%------------------
-$0
-endsnippet
-
-snippet u "underline" w
-\underline{$1}$0
-endsnippet
-
-snippet b "bold" w
-\textbf{$1}$0
-endsnippet
-
-snippet i "italic" w
-\textit{$1}$0
-endsnippet
-
-snippet subfile "\subfile{<path>}" bA
-\subfile{$1}
-endsnippet
-
-snippet _ "_{}" i
-_{$1}$0
-endsnippet
-
-snippet ^ "^{}" i
-^{$1}$0
-endsnippet
-
-snippet deg "\degree" w
-\degree$0
-endsnippet
-
-snippet text "\text{}" w
-\text{$1}$0
-endsnippet
-
-snippet "(\S+)\.t" "rofl => \text{rofl}" ri
-\text{`!p snip.rv = match.group(1)`$1}$0
-endsnippet
-
-snippet for "\foreach \<var-name>" w
-\foreach \\${1:var-name} in {${2:range}}
-endsnippet
-
-post_jump "set_arg_draw()" 
-snippet "draw(\d+)" "\draw" rw
-`!p snip.rv = match.group(1)`
-endsnippet
-
-snippet "cen(tering)?" "\centering" rw
-\centering$0
-endsnippet
-
-snippet ub "\underbrace{}" w
-\underbrace{$1}_{$2}$0
-endsnippet
-
-snippet ob "\overbrace{}" w
-\overbrace{$1}_{$2}$0
-endsnippet
-
-snippet ov "\overset{\mathrm{}}{}" i
-\overset{\mathrm{$1}}{$2}$0
-endsnippet
-
-snippet &iv "\overset{\mathrm{(iV)}}{=}" w
-\overset{\mathrm{(iV)}}{=}$0
-endsnippet
-
-# -- tables/matrixes --
-#post_jump "create_table(snip)"
-#snippet "tab(\d+)" "table" r
-#`!p snip.rv = match.group(1)`
-#endsnippet
-
-snippet "tab(\d+)" "create table" r
-`!p
-snip += "\\begin{tabularx}{\\linewidth}{"
-
-# add columns
-for column_index in range(int(match.group(1))):
-	snip += "\t|>{\\raggedright\\arraybackslash\\hspace{0pt}}X"
-snip += "\t|}"
-snip += "\t\\hline"
-snip += "\\end{tabularx}"
-`
-endsnippet
-
-#snippet "tab(\d+)" "create table" r
-#\begin{tabularx}{\linewidth}{${1:|0l|0c|0c|>{\raggedright\arraybackslash\hspace{0pt}}X|}}
-#\hline
-#$0
-#\end{tabularx}
-#endsnippet
-
-snippet rc "row-cell (makecell)" b
-\makecell[${1:Alignment (l,r,b)}]{${2:Multilined text}}$0
-endsnippet
-
-snippet c_multi "set multiline-column" w
->{\raggedright\arraybackslash\hspace{0pt}}X$0
-endsnippet
-
-#post_jump "create_row_placeholders(snip)"
-snippet "r(\d+)" "latex table row variable" br
-$0`!p
-
-for column in range(int(match.group(1)) - 1):
-	snip += '&'
-snip += "\\\\ % ----------"
-`
-endsnippet
-
-# ---------------
-# environments
-# ---------------
-snippet env "Begin-environment" wb
-\begin{$1}
-	$2
-\end{$1}
-endsnippet
-
-snippet align "align-environment" bw
-\begin{align*}
-	$1
-\end{align*}
-endsnippet
-
-snippet alignat "alignat-environment" bw
-\begin{alignat*}{${1: Amount columns}}
-	$0
-\end{alignat*}
-endsnippet
-
-snippet aligned "aligned-environment" w
-\begin{aligned}
-	$1
-\end{aligned}
-endsnippet
-
-snippet equation "equation-environment" bw
-\begin{equation*}
-	$1
-\end{equation*}
-endsnippet
-
-snippet item "itemize-environment" bw
-\begin{itemize}
-	\item $0
-\end{itemize}
-endsnippet
-
-snippet enum "enumeration-environment" bw
-\begin{enumerate}
-	\item $0
-\end{enumerate}
-endsnippet
-
-snippet label "\label{}" w
-\label{$1}$0
-endsnippet
-
-snippet box "boxed-environment" bw
-\begin{boxed}
-	$0
-\end{boxed}
-endsnippet
-
-# --- own environments ---
-snippet env_boxed "\begin{boxed}" wb
-\newenvironment{boxed} {
-	\begin{center}
-		\begin{tabular}{|p{0.9\textwidth}|}
-			\hline\\
-			}
-			{ 
-			\\\\\hline
-		\end{tabular} 
-	\end{center}
-}
-endsnippet
-
-# -- section --
-snippet section "\section{}" bwA
-\section{$1}
-endsnippet
-
-snippet section* "\section*{}" bwA
-\section*{$1}
-endsnippet
-
-snippet subsection "\subsection{}" bwA
-\subsection{$1}
-endsnippet
-
-snippet subsection* "\subsection*{}" bwA
-\subsection*{$1}
-endsnippet
-
-snippet subsubsection "\subsubsection{}" bwA
-\subsubsection{$1}
-endsnippet
-
-snippet subsubsection* "\subsubsection*{}" bwA
-\subsubsection*{$1}
-endsnippet
-
-snippet paragraph "\paragraph{}" bwA
-\paragraph{$1}
-endsnippet
-
-snippet paragraph* "\paragraph*{}" bwA
-\paragraph*{$1}
-endsnippet
-
-# ---------
-# packages
-# ---------
-snippet pack "\usepackage{}" b
-\usepackage{$1}
-endsnippet
-
-snippet pack_table "Packages for tables" b
-\usepackage{tabularx}			  % Better tables 
-\usepackage[column=0]{cellspace}  % Adding horizontal/vertical space to cells
-\usepackage{makecell}			  % for creating cells with better customicing
-\usepackage{adjustbox}
-endsnippet
-
-snippet pack_subfiles "\usepackage{subfiles}" b
-\usepackage{subfiles} % Split compilation on one file
-endsnippet
-
-snippet pack_lightning "\usepackage{wasysym}" b
-\usepackage{wasysym} % for lightning symbol
-endsnippet
-
-snippet pack_enum "\usepackage{enumitem}" b
-\usepackage{enumitem} % able to change the settings of enumerates/itemizes
-endsnippet
-
-snippet pack_quote "\usepackage{dirtytalk} For Quoting" b
-\usepackage{dirtytalk} % Quoting
-endsnippet
-
-snippet pack_chemic "\usepackage[version=4]{mhchem} Chemic stuff" b
-\usepackage[version=4]{mhchem} % Chemic stuff
-endsnippet
-
-snippet pack_chemfig "\usepackage{chemfig}" b
-\usepackage{chemfig} % Chemic structures
-endsnippet
-
-snippet pack_pgf "For creating graphs" b
-\usepackage{pgfplots} % For function graphs
-\pgfplotsset{compat=1.5}
-endsnippet
-
-snippet pack_m_tools "\usepackage{mathtools}" b
-\usepackage{mathtools} 					% Text under equation
-endsnippet
-
-snippet pack_physics "\usepackage{physics}" b
-\usepackage{physics}
-endsnippet
-
-snippet pack_tikz "\usepackage{tikz}" b
-\usepackage{tikz}
-endsnippet
-
-snippet pack_gilles "gilles castelli's neccessary packages" b
-\usepackage{import} % gilles castelli's neccessary packages for inkscape
-\usepackage{pdfpages}
-\usepackage{transparent}
-\usepackage{xcolor} $0
-endsnippet
-
-snippet q "Quote a text" w
-\say{$1}$0
-endsnippet
-
-# --------
-# chemic
-# --------
-snippet chf "Create chemfig environment" w
-\chemfig{
-	$1
-}$0
-endsnippet
-
-snippet chn "\chemname{}{}" w
-\chemname{
-	$1
-}
-{$2}
-endsnippet
-
-snippet ce "Create chemic reaction" i
-\ce{$1}$2
-endsnippet
-
-snippet up "\uparrow" i
-\uparrow$0
-endsnippet
-
-snippet benzol "**6(------)" i
-**6(
-	-
-	-
-	-
-	-
-	-
-	-
-)$0
-endsnippet
-
-# -- chemfig
-# -- chemic structure autocomplete
-snippet "(\()?-?(\d+)(\S+)" "Automatic atom setter" r
-`!p
-
-"""
-Here are al chemical formulas stored.
-The key is the name of the element.
-The first value of the list decides how many substituents are gonna be added
-automatically!
-"""
-formula = {
-	"ch2" :  [
-			3,
-			f"-[{int(match.group(2))}]C",
-			f"\t( -[{int(match.group(2)) + 2}]H)",
-			f"\t( -[{int(match.group(2)) - 2}]H)"
-	],
-	"cooh" : [
-		5,
-		f"-[{int(match.group(2))}]C",
-		f"\t( =[{int(match.group(2)) + 1}]\charge{{{90 + 45 * int(match.group(2))}=\|, {0 + 45 * int(match.group(2))}=\|}}{{O}})",
-		f"\t( -[{int(match.group(2)) - 1}]\charge{{{60 + 45 * int(match.group(2))}=\|, {-120 + 45 * int(match.group(2))}=\|}}{{O}}",
-		f"\t\t ( -[{int(match.group(2))}]H)",
-		f"\t)"
-	],
-	"coor" : [
-		4,
-		f"-[{int(match.group(2))}]C",
-		f"\t( =[{int(match.group(2)) + 1}]\charge{{{90 + 45 * int(match.group(2))}=\|, {0 + 45 * int(match.group(2))}=\|}}{{O}})",
-		f"\t-[{int(match.group(2)) - 1}]\charge{{{45 + 45 * int(match.group(2))}=\|, {-135 + 45 * int(match.group(2))}=\|}}{{O}}",
-		f"\t\-[{int(match.group(2))}]r"
-	],
-	"ch3" : [
-		4,
-		f"-[{int(match.group(2))}]C",
-		f"\t( -[{int(match.group(2)) + 2}]H)",
-		f"\t( -[{int(match.group(2))}]H)",
-		f"\t( -[{int(match.group(2)) - 2}]H)"
-	],
-	"o2" : [
-		1,
-		f"=[{int(match.group(2))}]\charge{{{45 + 45 * int(match.group(2))}=\|, {-45 + 45 * int(match.group(2))}=\|}}{{O}})"
-	],
-	"o3" : [
-		1,
-		f"-[{int(match.group(2))}]\charge{{{90 + 45 * int(match.group(2))}=\|, {0 + 45 * int(match.group(2))}=\|, {-90 + 45 * int(match.group(2))}=\|, {45 + 45 * int(match.group(2))}:5pt=$\\ominus$}}{{O}})"
-	]
-}
-
-# get the angle to adjust the electron pairs
-angle = int(match.group(2))
-
-# get the substituent-group
-return_string = formula.get(match.group(3), "rofl")
-
-# Test if it was a known molecule
-if return_string != "rofl":
-	"""
-	This will fuse the substituents into one output :)
-	"""
-	amount = return_string[0]
-
-	snip.rv = return_string[1]
-
-	# Add them into a compatible string!
-	for index in range(2, amount + 1):
-		snip += return_string[index]
-
-else:
-	snip.rv = "nope"
-`
-endsnippet
-
-snippet - "-[<number>]<atom>" w
--[${1: Number}]${2:Atom}$0
-endsnippet
-
-snippet = "=[<number>]<atom>" i
-=[${1: Number}]${2:Atom}$0
-endsnippet
-
-snippet ~ "~[<number>]<atom>" i
-~[${1: Number}]${2:Atom}$0
-endsnippet
-
-snippet charge "\charge{<args>}{<atom>}" i
-\charge{${1:Args}}{${2:Atom}}$0
-endsnippet
-
-snippet chsch "\schemestart" bw
-\schemestart
-	$0
-\schemestop
-endsnippet
-
-snippet chsubsch "\subscheme" w
-\subscheme{$0}
-endsnippet
-
-snippet ch[ "\chemleft[\chemright]" w
-\chemleft[
-	$0
-\chemright
-endsnippet
-
-snippet chm "\chemmove}" bw
-\chemmove {
-	$0
-}
-endsnippet
-
-snippet chd "\draw for chemmove" bw
-\draw[shorten <= ${1:Tail}pt, shorten >= ${2:Head}pt] (${3:start}) .. controls +(90:5mm) and +(90:5mm) .. (${4:end});$0
-endsnippet
-
-snippet charr "\arrow{<->}" w
-\arrow{${1:<->}}$0
-endsnippet
-
-snippet op "\oplus" w
-\oplus$0
-endsnippet
-
-snippet om "\ominus" w
-\ominus$0
-endsnippet
-
-# -- molecular formula
-snippet h3o "H3O^{+}_{(aq)}" i
-H3O^{+}_{(aq)}
-endsnippet
-
-snippet oh "OH^{-}_{(aq)}" i
-OH^{-}_{(aq)}
-endsnippet
-
-snippet pks "pK_{S}" iA
-pK_{S}$0
-endsnippet
-
-snippet pkb "pK_{B}" iA
-pK_{B}$0
-endsnippet
-
-# -- aggregatszustände --
-snippet _aq "(aq)" i
-_{(aq)}$0
-endsnippet
-
-snippet _s "(s)" i
-_{(s)}$0
-endsnippet
-
-snippet _g "(g)" i
-_{(g)}$0
-endsnippet
-
-snippet _l "(l)" i
-_{(l)}$0
-endsnippet
-
-# -- units --
-snippet uM "\frac{g}{mol}" w
-\frac{g}{mol} $0
-endsnippet
-
-snippet atom "A atom in the structure"
-(-[${1:Place}]\ce{${2:molecule}})$3
-endsnippet
-
-# -------
-# math
-# -------
-context "math()"
-snippet int "\int{}_{}" wA
-\int_{$1}^{$2}$0
-endsnippet
-
-context "math()"
-snippet sum "\sum{}^{}" wA
-\sum^{$1}_{$2}$0
-endsnippet
-
-context "math()"
-snippet lig "\Lightning" wA
-\text{ \lightning}
-endsnippet
-
-context "math()"
-snippet -> "\rightarrow" wA
-\rightarrow
-endsnippet
-
-context "math()"
-snippet >= "\geq" w
-\geq$0
-endsnippet
-
-context "math()"
-snippet <= "\leq" w
-\leq$0
-endsnippet
-
-context "math()"
-snippet cd "\cdot" wA
-\cdot$0
-endsnippet
-
-context "math()"
-snippet vec "\vec{}" wA
-\vec{$1}$0
-endsnippet
-
-context "math()"
-snippet bar "\bar{}" wA
-\bar{$1}$0
-endsnippet
-
-context "math()"
-snippet overline "\overline{}" wA
-\overline{$1}$0
-endsnippet
-
-context "math()"
-snippet veC "\overrightarrow{}" w
-\overrightarrow{$1}$0
-endsnippet
-
-snippet "ti(mes)?" "\times" rw
-\times$0
-endsnippet
-
-context "math()"
-snippet || "\parallel" wA
-\parallel$0
-endsnippet
-
-context "math()"
-snippet sqr "\sqrt{}" wA
-\sqrt{$1}$0
-endsnippet
-
-context "math()"
-snippet pi "\pi" wA
-\pi$0
-endsnippet
-
-context "math()"
-snippet in "\in" wA
-\in$0
-endsnippet
-
-context "math()"
-snippet m "\mathbb{}" wA
-\mathbb{$1}$0
-endsnippet
-
-context "math()"
-snippet div "\div" wA
-\div $0
-endsnippet
-
-snippet ... "\ldots" i
-\ldots$0
-endsnippet
-
-context "math()"
-snippet ::: "\vdots" i
-\vdots$0
-endsnippet
-
-context "math()"
-snippet log "\log" wA
-\log$0
-endsnippet
-
-context "math()"
-snippet , "{,}" i
-{,}$0
-endsnippet
-
-# variables
-context "math()"
-snippet "x(\d+)" "x_{1} etc." rA
-`!p
-number = int(match.group(1))
-snip.rv = "x_{%d}" % number
-`
-endsnippet
-
-context "math()"
-snippet frac "\frac{}{}" wA
-\frac{$1}{$2}$0
-endsnippet
-
-# ----------
-# brackets
-# ----------
-snippet [ "\left[\right]" i
-\left[$1\right$2
-endsnippet
-
-snippet ( "\left(\right)" i
-\left($1\right$2
-endsnippet
-
-snippet { "\left{\right}" i
-\left{$1\right$2
-endsnippet
-
-# -----------
-# commands/settings
-# -----------
-# -- commands --
-# to draw a vector
-snippet command_vector "Create vector arrow." bw
-\newcommand{\myVector}[3] {
-	\ensuremath{
-		\begin{pmatrix}
-			#1 \\\\ #2 \\\\ #3
-		\end{pmatrix}
-	}
-}
-endsnippet
-
-snippet command_vector_point "Enter vector point" bw
-\newcommand{\myVectorPoint}[3] {
-	\ensuremath{
-		\left(\,#1\,\middle|\,#2\,\middle|\,#3\,\right)
-	}
-}
-endsnippet
-
-snippet command_abs "\abs" bw
-\newcommand{\abs}[1] {
-	\left\vert#1\right\vert
-}
-endsnippet
-
-# include image of inkscape
-snippet command_image "inkscape-image-including" bw
-% Command to include image of inkscape
-\newcommand{\incfig}[2][1]{
-	\def\svgwidth{#1\columnwidth}
-	\import{./figures/}{#2.pdf_tex}
-}
-endsnippet
-
-# renew commands
-snippet renews "\renewcommand\thesection{Nr. \arabic{section}}" bw
-\renewcommand{\thesection}{${1:Nr. \arabic{section}}}$0
-endsnippet
-
-snippet renewss "\renewcommand\thesubsection{Nr. \arabic{section}}" bw
-\renewcommand{\thesubsection}{${1:Nr. \arabic{section}}}$0
-endsnippet
-
-snippet renewsss "\renewcommand\thesubsubsection{Nr. \arabic{section}}" bw
-\renewcommand{\thesubusbsection}{${1:Nr. \arabic{section}}}$0
-endsnippet
-
-snippet renewqed "\renewcommand\qedsymbol{$\blacksquare$}" bw
-\renewcommand\qedsymbol{$\blacksquare$} % q.e.d symbol is a block box $0
-endsnippet
-
-snippet renew_table "\renewcommand{\tabularxcolumn}[1]{m{#1}}" b
-\renewcommand{\tabularxcolumn}[1]{
-	m{#1}
-}
-endsnippet
-
-# -- settings --
-snippet setting_cellspace "Set cellpadding" b
-\setlength\cellspacetoplimit{8pt}
-\setlength\cellspacebottomlimit{8pt}
-endsnippet
-
-# ----------------------------
-# shortcut to my commands
-# ----------------------------
-snippet mv "\myVector" w
-\myVector{$1}{$2}{$3}$0
-endsnippet
-
-snippet mvp "\myVectorPoint" w
-\myVectorPoint{$1}{$2}{$3}$0
-endsnippet
-
-snippet abs "\abs{}" w
-\abs{$1}$0
-endsnippet
-
-# ------------
-# constants/names
-# ------------
-snippet rho "\rho" w
-\rho $0
-endsnippet
-
-# ---------
-# pgfplots
-# ---------
-snippet pgf_graph "pgfplot graph" b
-\begin{center}
-	\begin{tikzpicture}
-		\begin{axis} [
-			width = \textwidth - 3cm,
-			axis lines = left,
-			xlabel = Teilchengeschwindigkeit,
-			ylabel = Wahrscheinlichkeitsdichte,
-			scaled ticks = false,
-			xticklabels={,,},
-			yticklabels={,,}
-		]
-			% Adding a graph
-			\addplot[
-				domain = 0:50,
-				color=red
-				]
-				{
-					(x^2)
-				};
-			
-			% Adding a legendary to understand the graph
-			\addlegendentry{$T_1$: $0\degree C$}
-		\end{axis}
-	\end{tikzpicture}
-\end{center}
-endsnippet
-
-# ------------
-# graphs
-# ------------
-snippet graph_axis "Insert a coordinate system" b
-\begin{center}
-	\begin{tikzpicture}
-		\begin{axis} [
-			width = ${1:\texwidth},
-			xmin=-5,xmax=5,
-			ymin=-5, ymax=5,
-			axis lines = left,
-			xlabel = x,
-			ylabel = y,
-			${2:xticklabels={,,\},}
-			${3:yticklabels={,,\},}
-			${4:axis line style=->}
-			]
-		\addplot[
-			domain = -10:10,
-			color=black]{${5:x^2}};
-		\end{axis}
-	\end{tikzpicture}
-\end{center}
-endsnippet
-
-# ------
-# music
-# ------
-snippet abc "Start abc-environment" w
-\begin{abc}[name=${1:Tonart, for exampel: 'c-dur'}]
-		X: 1 % start of header
-		K: C % scale: C major
-		${2:Start!}
-\end{abc}
-endsnippet
-
-# ----------------
-# default loading
-# ----------------
-snippet default_subfile "Load default content of subfiles" w
-\documentclass[${1:../main.tex}]{subfiles}
-\begin{document}
-$0
-%
-%
-% END
-\end{document}
-endsnippet
-
-snippet default "Load the default options" wb
-\documentclass[a4paper, 12pt]{scrartcl}
-
-% -----------
-% Packages
-% -----------
-\usepackage[ngerman]{babel}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}				% west european chars
-\usepackage{amsmath, amsthm, amssymb} 	% math symbols
-\usepackage{geometry} 					% Ermöglicht die Formatierung des Seitenlayouts
-%\usepackage{showframe}
-%\usepackage{siunitx}	% simpler variables
-\usepackage{comment}  	% To comment out things
-\usepackage{textcomp} 	% For arrow
-\usepackage[export]{adjustbox}[2011/08/13] 	% very big images
-\usepackage{subcaption} % for subfigures
-
-\usepackage{tocloft} 	% show dots in the table of contents
-
-% -----------
-% commands
-% -----------
-\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
-
-% ------------------
-%  own environments
-% ------------------
-
-% -----------
-% Settings 
-% -----------
-% border on the side
-\geometry {
-		left = 2.5cm,
-		right = 2.5cm,
-		top = 1.0cm,
-		bottom = 0.5cm,
-		includeheadfoot
-}
-
-\title{${1:Title}}
-\author{${2:Author}}
-\date{\today}
-
-\parskip5pt
-\parindent0pt
-
-\begin{document}
-$3
-\end{document}
-endsnippet
+# ------------------------------------------------------------------------
+# Everything is included otherwise this file would be pretty large... 
+# ------------------------------------------------------------------------
+extends latex/chemic
+extends latex/color_boxes
+extends latex/commands
+extends latex/default
+extends latex/environments
+extends latex/global_functions
+extends latex/graphic
+extends latex/informatic
+extends latex/macros
+extends latex/math
+extends latex/packages
+extends latex/physics
+extends latex/symbols_constants
+extends latex/sectioning
+extends latex/settings
+extends latex/small_functions
+extends latex/tables
+extends latex/text_style
+
+
+#global !p
+#def in_ce_env() -> bool:
+#	"""
+#	This will look if the first 4 chars in the line are "\ce{" and
+#	the last char "}".
+#	If yes => Return true
+#	else => False
+#	"""
+#
+#	if snip.buffer[snip.line].startswith("\ce{"):
+#		return True
+#	else:
+#		return False
+#
+#def set_arg_draw() -> bool:
+#	"""
+#	It will read how many args the \draw commands needs and add them
+#	automatically.
+#	"""
+#
+#	placeholders = ""
+#
+#	# Get the amount of placeholders
+#	amount_coordinates = int(snip.buffer[snip.line].strip())
+#	
+#	# Set the starting line "\draw "
+#	amount_tabs = len(snip.buffer[snip.line].split("draw"))
+#	snip.buffer[snip.line] = ""
+#
+#	for tab_index in range(amount_tabs):
+#		placeholders += "\t"
+#	placeholders += "\\draw"
+#
+#	# add the placeholders
+#	for placeholder_index in range(1, amount_coordinates + 1):
+#		placeholders += f" (${placeholder_index}) --"
+#	placeholders += f" (${amount_coordinates + 1});"
+#
+#	# enable the new tabstops
+#	snip.expand_anon(placeholders)
+#
+#def create_row_placeholders(snip):
+#	"""
+#	It will get the amount of columns and creates the placeholders.
+#	"""
+#	
+#	# get the amount of placeholders
+#	placeholders_amount = int(snip.buffer[snip.line].strip())
+#
+#	# how big is the indentation?
+#	#snip.buffer[snip.line] = ""
+#	
+#	# create anonymous snippet with expected content and number of tabstops
+#	placeholders = ' & '.join([f"${placeholder_index + 1}" for placeholder_index in range(placeholders_amount)])
+#	
+#	# add newline
+#	placeholders += "\\\\\\"
+#	
+#	# expand anonymous snippet
+#	snip.expand_anon(placeholders)
+#
+#def create_table(snip):
+#	"""
+#	This will create the matrix with its amount of columns.
+#	"""
+#	return_string = "\\begin{tabularx}{\\linewidth}{\n\t|"
+#
+#	amount_columns = int(snip.buffer[snip.line].split()[-1])
+#	amount_tabs = len(snip.buffer[snip.line].split("mat"))
+#
+#	# reset line
+#	snip.buffer[snip.line] = "\t" * amount_tabs
+#
+#	for column_index in range(amount_columns):
+#		return_string += ">{\\raggedright\\arraybackslash\\hspace{0pt}}X\n\t|"
+#	return_string += "}\n\t\\hline\n\t$0\n\\end{tabularx}$0"
+#
+#	# expand snippet
+#	snip.expand_anon(return_string)
+#
+#def create_matrix(snip):
+#	"""
+#	This will create the matrix with its amount of columns.
+#	"""
+#
+#	return_string = "\left(\n\t\\begin{tabular}{"
+#
+#	amount_columns = int(snip.buffer[snip.line].strip())
+#	amount_tabs = len(snip.buffer[snip.line].split("mat"))
+#
+#	# reset line
+#	snip.buffer[snip.line] = "\t" * amount_tabs
+#
+#	for column_index in range(amount_columns):
+#		return_string += "c"
+#	
+#	return_string += "}\n\t"
+#	
+#	return_string += "\t\t$0\n\t\end{tabular}"
+#	return_string += "\n\\right)"
+#
+#	# expand snippet
+#	snip.expand_anon(return_string)
+#endglobal

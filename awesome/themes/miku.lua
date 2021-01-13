@@ -16,8 +16,7 @@ local taglist_square_size = dpi(4)
 -----===== Settings =====-----
 local theme = {}
 
--- Set the id
-theme.id = "miku"
+theme.is_violet = false
 
 theme.wallpaper = awesome_dir .. "/images/mikuSplit.jpg"
 
@@ -41,6 +40,8 @@ theme.width = dpi(100)
 
 theme.notification = {}
 theme.notification.critical = "#8A0808"
+theme.notification.bg = theme.bg_normal
+theme.notification.fg = "#5B8234"
 
 theme.separator = "#0B610B"
 
@@ -78,8 +79,8 @@ theme.clock = "#80FF00"
 theme.bar = {}
 theme.bar.bg_focus = "#04B4AE"
 
-theme.bar.left = "#04B4AE"
-theme.bar.right = "#DF0101" 
+theme.bar.left = "#088A85"
+theme.bar.right = "#B40404" 
 
 ----- Systray -----
 theme.bg_systray = theme.bar.left

@@ -8,8 +8,8 @@ local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 ----------------------------
 
-beautiful.notification_bg = beautiful.bg_normal
-beautiful.notification_fg = "#5B8234"
+beautiful.notification_bg = beautiful.notification.bg
+beautiful.notification_fg = beautiful.notification.fg
 beautiful.notification_border_color = "#93a1a1"
 
 naughty.notification.font = "Liberation Sans Bold 13"

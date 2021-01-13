@@ -9,7 +9,7 @@ local beautiful = require("beautiful")
 -----------------------------
 
 ----- The actual bar
-local volume_bar = wibox.widget {
+volume_bar = wibox.widget {
 	max_value = 100,
 	value = 0,
 	forced_height = popup_values.bars.height,
@@ -48,27 +48,30 @@ local volume_percentage = wibox.widget {
 	}
 
 ---- Functions -----
-local function update_graphic(widget, value, _, _, _)
-	value = tonumber(value)
-    widget.value = value;
+function volumebar_update()
+
+    awful.spawn.easy_async("pamixer --get-volume", function(stdout, stderr, exitreason, exitcode)
+        volume_bar.value = tonumber(stdout);
+    end)
 
 	-- change color if muted
     awful.spawn.easy_async("pamixer --get-mute", function(stdout, stderr, exitreason, exitcode)
 		if stdout == "true\n" then
 			volume_icon:set_image(awesome_dir .. "/favicons/volume/mute.ico")
 			volume_percentage.markup = "<span foreground='" .. beautiful.popup.volume.mute .. "'>" .. volume_percentage.text .. "</span>"
-			widget.color = beautiful.popup.volume.mute
+			volume_bar.color = beautiful.popup.volume.mute
 		else
 			volume_icon:set_image(awesome_dir .. "/favicons/volume/not_mute.ico")
 			volume_percentage.markup = "<span foreground='" .. beautiful.popup.volume.not_mute .. "'>" .. volume_percentage.text .. "</span>"
-			widget.color = beautiful.popup.volume.not_mute
+			volume_bar.color = beautiful.popup.volume.not_mute
 		end
 	end)
 	
-	volume_percentage.text = value .. "%"
+	volume_percentage.text = volume_bar.value .. "%"
 end
 
 local function button_press(_, _, _, button)
+
 	-- Mouse wheel up
 	if (button == 4) then awful.spawn("pamixer -i 2", false)
 	-- Mouse wheel down 
@@ -78,13 +81,11 @@ local function button_press(_, _, _, button)
 	elseif (button == 1) then awful.spawn("pamixer -t", false)
 	end
 
-    awful.spawn.easy_async("pamixer --get-volume", function(stdout, stderr, exitreason, exitcode)
-        update_graphic(volume_bar, stdout, stderr, exitreason, exitcode)
-    end)
+    volumebar_update();
 end
 
 -- Refresh the volume value each second
-watch("pamixer --get-volume", 0.5, update_graphic, volume_bar)
+watch("pamixer --get-volume", 0.5, volumebar_update, volume_bar)
 
 -- Connect to listings
 volume_bar:connect_signal("button::press", button_press)

@@ -1,10 +1,13 @@
 # Screenshots
 
-![oh no! The screenshot can't be load :(](https://github.com/TornaxO7/my_configs/blob/master/awesome/screenshots/tokyo_ghoul.png?raw=true)
+Tokyo Ghoul theme:
+![oh no! The screenshot can't be load :(](./screenshots/tokyo_ghoul.png)
 
-![oh no! The screenshot can't be load :(](https://github.com/TornaxO7/my_configs/blob/master/awesome/screenshots/miku.png?raw=true)
+Miku theme:
+![oh no! The screenshot can't be load :(](./screenshots/miku.png)
 
-![oh no! The screenshot can't be load :(](https://github.com/TornaxO7/my_configs/blob/master/awesome/screenshots/full.png?raw=true)
+Violet Evergarden Theme:
+![oh no! The screenshot can't be load :(](./screenshots/violet.png)
 
 # What do I need to get this work?
 
@@ -16,6 +19,10 @@
   Set your timezone in `local _current_time`
 - `widgets/bar_time.lua`:<br>
   Set your timezone in `textclock`
+- `scripts/filesystem.sh`: <br>
+  Change the path in `grep` to your partition!
+- `scripts/network.sh`: <br>
+  Change (if needed) the interfaces
 
 ## Required Dependencies
 
@@ -75,6 +82,7 @@ So first of the keybindings are _i3-like_! So the _main-key_ is the _alt_-key. Y
 | :----------------------------: | :-------------------------------------- |
 | `modkey2 + h` **and then** `k` | Set the theme to `kaneki`/`tokyo_ghoul` |
 | `modkey2 + h` **and then** `m` | Set the theme to `miku`                 |
+| `modkey2 + h` **and then** `v` | Set the theme to `violet`               |
 
 **Hint:** You need to restart awesome after changing the theme!
 

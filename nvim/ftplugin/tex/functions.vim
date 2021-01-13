@@ -1,11 +1,16 @@
 " Compile on initialization, cleanup on quit
-augroup vimtex_event_1
-  au!
-  au User VimtexEventQuit     call vimtex#compiler#clean(0)
-  au User VimtexEventInitPost call vimtex#compiler#compile()
-augroup END
+"augroup vimtex_event_1
+"  au!
+"  au User VimtexEventQuit     call vimtex#compiler#clean(0)
+"  au User VimtexEventInitPost call vimtex#compiler#compile()
+"augroup END
 
-" Close viewers when vimtex buffers are closed
+" ==============
+" Functions 
+" ==============
+" ----------------------------------------------
+" Close viewers when vimtex buffers are closed 
+" ----------------------------------------------
 function! CloseViewers()
   " Close viewers on quit
   if executable('xdotool') && exists('b:vimtex')
@@ -14,17 +19,29 @@ function! CloseViewers()
   endif
 endfunction
 
-augroup vimtex_event_2
-  au!
-  au User VimtexEventQuit call CloseViewers()
-augroup END
-
+" -------------------
+" Enable synctex 
+" -------------------
 function! Synctex()
     execute "silent !zathura --synctex-forward " . line('.') . ":" . col('.') . ":" . bufname('%') . " " . g:syncpdf
     redraw!
 endfunction
 
+" ===========================
+" Enabling the functions 
+" ===========================
 " start a clientserver to connect pdf-file with vim
 if empty(v:servername) && exists('*remote_startserver')
   call remote_startserver('VIM')
 endif
+
+augroup vimtex_event_2
+  au!
+  au User VimtexEventQuit call CloseViewers()
+augroup END
+
+"if vimtex#env#is_inside('itemize')
+"    imap <CR> i\item
+"else
+"    unmap <CR>
+"endif

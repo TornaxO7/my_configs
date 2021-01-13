@@ -2,7 +2,7 @@
 "autocmd VimEnter * nested :call tagbar#autoopen(1)
 
 " tagbar window width
-let g:tagbar_width = 50
+let g:tagbar_width = 40
 
 " display them in their order
 let g:tagbar_sort = 0

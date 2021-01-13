@@ -3,7 +3,6 @@ local gears = require("gears")
 local awful = require("awful")
 local wibox = require("wibox")
 local beautiful = require("beautiful")
---local menubar = require("menubar")
 local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 local helpers = require("helpers")
@@ -58,43 +57,30 @@ awful.screen.connect_for_each_screen(
 
  	function (tmp_screen)
 
-		----- Prompt -----
-		--tmp_screen.promptbox = my_prompt
-
-		----- Layout-icon -----
-		tmp_screen.layouticon = awful.widget.layoutbox(tmp_screen)
-		tmp_screen.layouticon:buttons(
-			gears.table.join(
-    			awful.button({ }, 1, function () awful.layout.inc( 1) end),
-    		    awful.button({ }, 3, function () awful.layout.inc(-1) end),
-    		    awful.button({ }, 4, function () awful.layout.inc( 1) end),
-    		    awful.button({ }, 5, function () awful.layout.inc(-1) end)
-			)
-		)
-
 		-- Tags
 		tmp_screen.taglist = awful.widget.taglist {
 			screen = tmp_screen,
 			filter = awful.widget.taglist.filter.all,
 			buttons = taglist_buttons,
 			style = {
-				shape = gears.shape.powerline,
-				taglist_shape = gears.shape.powerline,
+				shape = gears.shape.rectangle,
+				taglist_shape = gears.shape.rectangle,
 			},
 
 			layout = {
 				spacing = 20,
 				spacing_widget = {
-					shape = gears.shape.powerline,
+					shape = gears.shape.rectangle,
 					thickness = dpi(1),
 					orientation = "horizontal",
 					widget = wibox.widget.separator,
 
-					color = beautiful.separator,
+					color = "#00000000",
 				},
 				layout = wibox.layout.fixed.horizontal
 			},
 
+            -- each tag form
   			widget_template = {
 				{
 					{
@@ -105,19 +91,19 @@ awful.screen.connect_for_each_screen(
 					left = dpi(5),
 					right = dpi(5),
 					widget = wibox.container.margin,
-				 },
+				},
 
-				 {
+				{
 				    {
-					     id = "icon_role",
-					     widget = wibox.widget.imagebox,
-					  },
+                        id = "icon_role",
+                        widget = wibox.widget.imagebox,
+                    },
 
-			      left = dpi(5),
-			      right = dpi(5),
-			      widget = wibox.container.margin,
+			    left = dpi(5),
+			    right = dpi(5),
+			    widget = wibox.container.margin,
 
-            },
+                },
 				left = dpi(20),
 				right = dpi(20),
 				widget = wibox.container.margin,
@@ -133,41 +119,48 @@ awful.screen.connect_for_each_screen(
 			filter = awful.widget.tasklist.filter.currenttags,
 			buttons = tasklist_buttons,
 			style = {
-				shape = gears.shape.powerline,
+				shape = helpers.rounded_rect(3),
 				shape_border_width = dpi(2),
 				spacing = dpi(5),
 				align = "center",
-				bg_image_focus = awesome_dir .. "/images/galaxy.jpg"
+				--bg_image_focus = awesome_dir .. "/images/violet_city.jpeg"
+                bg_focus = beautiful.tasklist.focus
 			},
 
 			widget_template = {
-				{
-					{
-						{ ----- Icon -----
-							{
-								id = "icon_role",
-								widget = wibox.widget.imagebox,
-							},
+                {
+				    {
+				    	{
+				    		{ ----- Icon -----
+				    			{
+				    				id = "icon_role",
+				    				widget = wibox.widget.imagebox,
+				    			},
 
-							left = dpi(10),
-							right = dpi(10),
-							widget = wibox.container.margin,
-						},
+				    			left = dpi(10),
+				    			right = dpi(10),
+				    			widget = wibox.container.margin,
+				    		},
 
-						----- Text Widget -----
-						{
-							id = "text_role",
-							widget = wibox.widget.textbox,
-						},
-						layout = wibox.layout.align.horizontal,
-					},
+				    		----- Text Widget -----
+				    		{
+				    			id = "text_role",
+				    			widget = wibox.widget.textbox,
+				    		},
+				    		layout = wibox.layout.align.horizontal,
+				    	},
 
-					left = 10,
-					right = 10,
-					widget = wibox.container.margin
-				},
-				id = "background_role",
-				widget = wibox.container.background
+				    	left = 10,
+				    	right = 10,
+				    	widget = wibox.container.margin
+				    },
+				    id = "background_role",
+				    widget = wibox.container.background
+                },
+
+                left = dpi(5),
+                right = dpi(5),
+                widget = wibox.container.margin,
 			}
 		}
 
@@ -182,9 +175,9 @@ awful.screen.connect_for_each_screen(
 			}
 		)
 
-		tmp_screen.bar.shape = helpers.rounded_rect(90)
+		--tmp_screen.bar.shape = helpers.rounded_rect(90)
 
-		----- Add widgets ----
+        ----- Widgets of the bar -----
 		tmp_screen.bar:setup {
 			layout = wibox.layout.align.horizontal,
 
@@ -206,7 +199,6 @@ awful.screen.connect_for_each_screen(
                     --    username = "TornaxO7"
                     --},
 					wibox.widget.systray,
-					tmp_screen.layouticon,
 					layout = wibox.layout.align.horizontal,
 				},
 
@@ -221,15 +213,9 @@ awful.screen.connect_for_each_screen(
 )
 
 ----- Specifique properties -----
-if beautiful.id == "miku" then
-
-	-- Set some value spacially for miku
-	screen[1].bar.bg = beautiful.bar.left
-	screen[2].bar.bg = beautiful.bar.right
-
-	screen[1].bar.opacity = 0.9
-	screen[2].bar.opacity = 0.9
-end
+-- Set some value spacially for miku
+screen[1].bar.bg = beautiful.bar.normal
+screen[2].bar.bg = beautiful.bar.normal
 
 -----===== Special widgets =====-----
 

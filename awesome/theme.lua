@@ -16,13 +16,18 @@ local taglist_square_size = dpi(4)
 -----===== Settings =====-----
 local theme = {}
 
-theme.wallpaper = awesome_dir .. "/images/tokyo_ghoul.jpg"
+theme.id = "violet"
 
-theme.bg_normal     = "#0B2F3A"
+theme.wallpaper = {
+    first = awesome_dir .. "/images/violet_young.png",
+    second = awesome_dir .. "/images/violet_older.png"
+}
+
+theme.bg_normal     = "#796D54"
 theme.bg_focus      = "#086A87"
 theme.bg_urgent     = "#8A0808"
 theme.bg_minimize   = "#0B6138"
-theme.bg_systray    = bg_normal
+theme.bg_systray    = "#EEE8D5"
 
 theme.fg_normal     = "#A4A4A4"
 theme.fg_focus      = "#FFFFFF"
@@ -39,6 +44,8 @@ theme.width = dpi(100)
 
 theme.notification = {}
 theme.notification.critical = "#8A0808"
+theme.notification.bg = "#EDE9D8"
+theme.notification.fg = "#9AB9CB"
 
 theme.separator = "#088A85"
 
@@ -72,6 +79,27 @@ theme.popup.music.bar = "#00FFFF"
 ----- Bar -----
 theme.bar = {}
 theme.bar.bg_focus = "#04B4AE"
+theme.bar.normal = {
+    type = "linear",
+    from = {0, 0},
+    to = {1080, 0},
+    stops = {
+        {0, "#6E6E6E"},
+        {1, "#EEE8D5"}
+    }
+}
+
+theme.tasklist = {}
+theme.tasklist.focus = {
+    type = "linear",
+    from = {0, 0},
+    to = {1080, 0},
+    stops = {
+        {0, "#EFF0EE"},
+        {1, "#7C7187"}
+    }
+}
+
 
 theme.font = "Liberation Sans Bold 13"
 theme.systray_icon_spacing = 5

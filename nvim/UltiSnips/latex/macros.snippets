@@ -1,0 +1,28 @@
+# ----------------------
+# Auto macro placer 
+# ----------------------
+extends latex/global_functions.snippets
+snippet text "\text{}" w
+\text{$1}$0
+endsnippet
+
+snippet subfile "\subfile{<path>}" bA
+\subfile{$1}
+endsnippet
+
+snippet for "\foreach \<var-name>" w
+\foreach \\${1:var-name} in {${2:range}}
+endsnippet
+
+snippet "(\S+)\.t" "rofl => \text{rofl}" ri
+\text{`!p snip.rv = match.group(1)`$1}$0
+endsnippet
+
+post_jump "set_arg_draw()" 
+snippet "draw(\d+)" "\draw" rw
+`!p snip.rv = match.group(1)`
+endsnippet
+
+snippet "cen(tering)?" "\centering" rw
+\centering$0
+endsnippet

@@ -1,0 +1,88 @@
+# ======================
+# Some own commands 
+# ======================
+# -----------------------------
+# Snippets to use commands 
+# -----------------------------
+snippet mv "\myVector" w
+\myVector{$1}{$2}{$3}$0
+endsnippet
+
+snippet mvp "\myVectorPoint" w
+\myVectorPoint{$1}{$2}{$3}$0
+endsnippet
+
+snippet abs "\abs{}" w
+\abs{$1}$0
+endsnippet
+
+# ----------------------
+# Declared commands 
+# ----------------------
+# to draw a vector
+snippet command_vector "Create vector arrow." bw
+\newcommand{\myVector}[3] {
+	\ensuremath{
+		\begin{pmatrix}
+			#1 \\\\ #2 \\\\ #3
+		\end{pmatrix}
+	}
+}$0
+endsnippet
+
+snippet command_vector_point "Enter vector point" bw
+\newcommand{\myVectorPoint}[3] {
+	\ensuremath{
+		\left(\,#1\,\middle|\,#2\,\middle|\,#3\,\right)
+	}
+}$0
+endsnippet
+
+snippet command_abs "\abs" bw
+\newcommand{\abs}[1] {
+	\left\vert#1\right\vert
+}$0
+endsnippet
+
+# include image of inkscape
+snippet command_image "inkscape-image-including" bw
+% Command to include image of inkscape
+\newcommand{\incfig}[2][1]{
+	\def\svgwidth{#1\columnwidth}
+	\import{./figures/}{#2.pdf_tex}
+}$0
+endsnippet
+
+# for LGS
+snippet command_lgs "LGS - matrix design" bw
+% Adds the vertical bar in the matrix
+\makeatletter
+\renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
+	\hskip -\arraycolsep
+	\let\@ifnextchar\new@ifnextchar
+	\array{#1}}
+\makeatother$0
+endsnippet
+
+# renew sections
+snippet renews "\renewcommand\thesection{Nr. \arabic{section}}" bw
+\renewcommand{\thesection}{${1:Nr. \arabic{section}}}$0
+endsnippet
+
+snippet renewss "\renewcommand\thesubsection{Nr. \arabic{section}}" bw
+\renewcommand{\thesubsection}{${1:Nr. \arabic{section}}}$0
+endsnippet
+
+snippet renewsss "\renewcommand\thesubsubsection{Nr. \arabic{section}}" bw
+\renewcommand{\thesubusbsection}{${1:Nr. \arabic{section}}}$0
+endsnippet
+
+snippet renewqed "\renewcommand\qedsymbol{$\blacksquare$}" bw
+\renewcommand\qedsymbol{$\blacksquare$} % q.e.d symbol is a block box $0
+endsnippet
+
+snippet renew_table "\renewcommand{\tabularxcolumn}[1]{m{#1}}" b
+\renewcommand{\tabularxcolumn}[1]{
+	m{#1}
+}
+endsnippet

@@ -51,9 +51,18 @@ awful.rules.rules = {
 	{ rule = { class = "Microsoft Teams - Preview"},
 		properties = { screen = 1, tag = "6"}
 	},
+
+    -- music stuff
+    { rule = { class = "sayonara" },
+        properties = {screen = 1, tag = "7"}
+    },
 	
 	----- JetBrains -----
 	{ rule = { class = "jetbrains-pycharm"},
+		properties = { screen = 1, tag = "3"}
+	},
+
+	{ rule = { class = "jetbrains-phpstorm"},
 		properties = { screen = 1, tag = "3"}
 	},
 
@@ -61,12 +70,23 @@ awful.rules.rules = {
 		properties = { screen = 1, tag = "3"}
 	},
 
+	{ rule = { class = "jetbrains-studio"},
+		properties = { screen = 1, tag = "3"}
+	},
+
+    -- printer
+    {
+        rule = { class = "Xsane" },
+        properties = {screen = 2, tag = "9"}
+    },
+
     -- Floating clients.
      { rule_any = {
          instance = {
            "DTA",  -- Firefox addon DownThemAll.
            "copyq",  -- Includes session name in class.
            "pinentry",
+           "gifview"
          },
          class = {
            "Arandr",
@@ -79,7 +99,8 @@ awful.rules.rules = {
            "Wpa_gui",
            "veromix",
            "xtightvncviewer",
-		   "Xsane"
+		   "Xsane",
+           "Gifview"
 	   },
 
          -- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -95,7 +116,15 @@ awful.rules.rules = {
        }, properties = { floating = true }},
 
     -- Spawn floating clients centered
-    { rule_any = {floating = true},
+    { rule_any = {
+        floating = true,
+        --class = {
+        --    "jetbrains-studio",
+        --    "jetbrains-pycharm",
+        --    "jetbrains-phpstorm",
+        --    "jetbrains-clion"
+        --}
+    },
         properties = {
             placement = awful.placement.centered + awful.placement.no_overlap+awful.placement.no_offscreen
         }

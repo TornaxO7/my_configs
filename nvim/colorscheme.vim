@@ -3,13 +3,15 @@
 "let g:gruvbox_transp_bg = 1
 
 " ----- Colorscheme and background -----
-set background=dark
+set background=light
 
-colorscheme onedark
+colorscheme one
 
-let g:airline_theme = 'onedark'
+let g:airline_solarized_bg='light'
 
 let g:airline_theme = 'solarized'
+"let g:airline_theme = 'onedark'
+"let g:airline_theme = 'deus'
 "" transparent background
 
 hi! Normal ctermbg=NONE guibg=NONE

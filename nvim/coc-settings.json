@@ -1,5 +1,5 @@
 {
-  "python.jediEnabled": false,
+  "python.linting.pylintEnabled": true,
   "suggest.enablePreselect": true,
   "suggest.enablePreview": true,
   "suggest.snippetIndicator": "  ",
@@ -83,6 +83,7 @@
   "clangd.checkUpdates": true,
   "clangd.semanticHighlighting": true,
   "clangd.disableSnippetCompletion": false,
+  "clangd.arguments": ["--suggest-missing-includes"],
 
   "typescript.format.insertSpaceAfterConstructor": true,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": true,
@@ -99,5 +100,10 @@
       "<C-p>" : "previewOnHover:toggle:content"
   },
   "explorer.icon.enableNerdfont": true,
-  "explorer.trash.command": "mv %l ~/Trash"
+  "explorer.trash.command": "mv %l ~/Trash",
+
+  "translator.toLang": "en",
+  "translator.engines": [
+      "google"
+  ]
 }

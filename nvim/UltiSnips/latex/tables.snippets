@@ -3,16 +3,16 @@
 # -------------------
 snippet "tab(\d+)" "create table" r
 `!p
-snip += "\\begin{tabularx}{\\linewidth}{"
+snip += "\\begin{tabular}{"
 
 # add columns
 for column_index in range(int(match.group(1))):
-	snip += f"\t|>{{\\raggedright\\arraybackslash\\hsize={1 / int(match.group(1))}\hsize}}X"
+	snip += f"\t|>{{\\centering\\arraybackslash}}m{{{1 / int(match.group(1))}\\textwidth}}"
 snip += "\t|}"
 snip += "\t\\hline"
 snip += "\t\\hline"
 snip += "\t\\hline"
-snip += "\\end{tabularx}"
+snip += "\\end{tabular}"
 `
 endsnippet
 
@@ -40,4 +40,8 @@ if t[1].isdigit():
 	snip.rv = (int(t[1]) - 1) * "& "
 `
 }
+endsnippet
+
+snippet ts "table stretch"
+\def\arraystretch{${1:1.5}}$0
 endsnippet

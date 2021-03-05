@@ -63,11 +63,4 @@ let g:airline#extensions#tabline#left_alt_sep = ''
 let g:airline#extensions#tabline#right_sep = ''
 let g:airline#extensions#tabline#right_alt_sep = ''
 
-" scrollbar
-"let g:airline_section_x = '%{ScrollStatus()} %y'
-"let g:scrollstatus_size = 20
-"
 let g:airline_statusline_ontop = 0
-
-" display text when window swapping
-let g:airline#extensions#windowswap#indicator_text = 'Window Swapping'

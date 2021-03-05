@@ -1,3 +1,6 @@
+" -------------
+" Settings 
+" -------------
 " auto-open tagbar
 "autocmd VimEnter * nested :call tagbar#autoopen(1)
 
@@ -18,3 +21,9 @@ let g:tagbar_autopreview = 0
 
 " where the preview should show up
 "let g:tagbar_previewwin_pos = 'split'
+
+" -------------
+" Mappings 
+" -------------
+nnoremap <F3> :TagbarToggle<CR>
+nnoremap T :TagbarToggle<CR>

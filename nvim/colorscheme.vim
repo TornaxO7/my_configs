@@ -1,20 +1,25 @@
-"let g:gruvbox_guisp_fallback = 'bg'
-"let g:gruvbox_contrast_dark = 'hard'
-"let g:gruvbox_transp_bg = 1
-
-" ----- Colorscheme and background -----
+" =========================
+" Colorscheme settings 
+" =========================
 set background=light
 
-colorscheme one
+"let g:neosolarized_contrast = "high"
+"let g:neosolarized_visibility = "high"
+"let g:neosolarized_vertSplitBgTrans=0 
+"colorscheme NeoSolarized
+let g:solarized_italics=0
+colorscheme solarized8
 
 let g:airline_solarized_bg='light'
 
 let g:airline_theme = 'solarized'
-"let g:airline_theme = 'onedark'
+"let g:airline_theme = 'onelight'
 "let g:airline_theme = 'deus'
 "" transparent background
 
+" ----------------------------
+" Overwriting some colors 
+" ----------------------------
 hi! Normal ctermbg=NONE guibg=NONE
 hi! NonText ctermbg=NONE guibg=NONE
-
-"highlight Function ctermfg=39 guifg=#61AFEF
+"hi ColorColumn ctermbg=cyan guibg=LightBlue

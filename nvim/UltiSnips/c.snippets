@@ -7,7 +7,7 @@ def printf_expand_args(snip):
 	This will look how many placeholders printf has and adds the separated commas
 	at the end.
 	"""
-	
+
 	# now add so many "," as much as the amount of placeholders
 	amount_placeholders = snip.tabstops[1].current_text.count("%")
 
@@ -16,7 +16,7 @@ def printf_expand_args(snip):
 	# Add the amount of tabstops
 	for placeholder_index in range(3, amount_placeholders + 3):
 		output += f", ${placeholder_index}"
-	
+
 	# convert them into tabstops
 	snip.expand_anon(output)
 
@@ -40,37 +40,37 @@ snippet cb "Add a separator for a new section"
 endsnippet
 
 # code !auto!completion
-snippet "(unsigned )?((short)|(int)|(long)|(char)|(long long))+( \*)? (\S+);" "auto initialization" brA
-`!p
-integer_type = ""
-
-if match.group(1) != None:
-	integer_type += "unsigned "
-
-# look which type it is and replace it
-if match.group(3) != None:
-	integer_type += match.group(3)
-elif match.group(4) != None:
-	integer_type += match.group(4)
-elif match.group(5) != None:
-	integer_type += match.group(5)
-elif match.group(6) != None:
-	integer_type += match.group(6)
-elif match.group(7) != None:
-	integer_type += match.group(7)
-
-if match.group(8) == None:
-	snip.rv = f"{integer_type} {match.group(9)};"
-else:
-	snip.rv = f"{integer_type} * {match.group(9)};"
-`$0
-`!p
-if match.group(8) == None:
-	snip.rv = f"{match.group(9)} = 0;"
-else:
-	snip.rv = f"{match.group(9)} = NULL;"
-`
-endsnippet
+#snippet "(unsigned )?((short)|(int)|(long)|(char)|(long long))+( \*)? (\S+);" "auto initialization" brA
+#`!p
+#integer_type = ""
+#
+#if match.group(1) != None:
+#	integer_type += "unsigned "
+#
+## look which type it is and replace it
+#if match.group(3) != None:
+#	integer_type += match.group(3)
+#elif match.group(4) != None:
+#	integer_type += match.group(4)
+#elif match.group(5) != None:
+#	integer_type += match.group(5)
+#elif match.group(6) != None:
+#	integer_type += match.group(6)
+#elif match.group(7) != None:
+#	integer_type += match.group(7)
+#
+#if match.group(8) == None:
+#	snip.rv = f"{integer_type} {match.group(9)};"
+#else:
+#	snip.rv = f"{integer_type} * {match.group(9)};"
+#`$0
+#`!p
+#if match.group(8) == None:
+#	snip.rv = f"{match.group(9)} = 0;"
+#else:
+#	snip.rv = f"{match.group(9)} = NULL;"
+#`
+#endsnippet
 
 post_jump "printf_expand_args(snip)"
 snippet "printf" "Autosetting args" wr
@@ -250,7 +250,7 @@ endsnippet
 # ----------------------
 
 # auto-file description
-snippet default_file_description "Add the file description" b
+snippet filed "Add the file description" b
 /* 
  * ---------------------------------------------------------
  * Filename: `!p snip.rv = snip.fn`
@@ -264,16 +264,16 @@ snippet default_file_description "Add the file description" b
 endsnippet
 
 # Function description
-snippet desc_func "Add a big comment-section which describes the function" b
+snippet funcd "Add a big comment-section which describes the function" b
 /*
  * What does it do?
  *	${1:Steps}
  *  
  * Parameters:
- *	${2: Count all parameters and add a little sentence each one of them}
+ *	${2: Params}
  *
  * Return values:
- *	${3: Give the possible return values.}
+ *	${3: Rets}
  */
 endsnippet
 
@@ -333,21 +333,25 @@ char * readline(unsigned long buffersize, FILE * file) {
 		allocate_error(__LINE__);
 	// ERROR
 
-	while ((character = getc(file)) != '\n' && character != EOF && buffersize < ULONG_MAX - 1) {
+	while (
+			(character = getc(file)) != '\n' 
+			&& character != EOF 
+			&& buffersize < ULONG_MAX - 1) 
+	{
 
-		// BUFFER IS TOO SMALL
+		// (BEG) BUFFER IS TOO SMALL (BEG)
 		if (buffersize <= buffer_index + 1) {
 			buffersize += 10;
 			tmp = realloc(buffer, buffersize);
 
-			// ERROR
+			// ----- ERROR -----
 			if (tmp == NULL)
 				allocate_error(__LINE__);
-			// ERROR
+			// ----- ERROR -----
 			
 			buffer = tmp;
 		}
-		// BUFFER IS TOO SMALL
+		// (END) BUFFER IS TOO SMALL (END)
 
 		buffer[buffer_index++] = (char) character;
 	}

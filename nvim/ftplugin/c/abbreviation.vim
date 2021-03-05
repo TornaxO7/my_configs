@@ -1,14 +1,9 @@
 " ----------------
 "  integer types
 " ----------------
-iab ihi short
-iab ihu unsigned short
-iab ild long
-iab ilu unsigned long
-iab illd long long
-iab illu unsigned long long
-
-" ----------
-"  comments
-" ----------
-iab commsolve -----===== Solve =====-----
+"iab <buffer> ihi short
+"iab <buffer> ihu unsigned short
+"iab <buffer> ild long
+"iab <buffer> ilu unsigned long
+"iab <buffer> illd long long
+"iab <buffer> illu unsigned long long

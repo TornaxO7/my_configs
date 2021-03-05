@@ -2,24 +2,20 @@
 # Snippets which are often used for math-documents 
 # -----------------------------------------------------
 global !p
-texMathZones = ['texMathZone' + x for x in ['', 'X', 'XX', 'Env', 'EnvStarred', 'Ensured']]
-texIgnoreMathZones = ['texMathTextArg']
-texMathZoneIds = vim.eval('map(' + str(texMathZones) + ", 'hlID(v:val)')")
-texIgnoreMathZoneIds = vim.eval('map('+str(texIgnoreMathZones)+", 'hlID(v:val)')")
-
-ignore = texIgnoreMathZoneIds[0]
-
 def math():
-	synstackids = vim.eval("synstack(line('.'), col('.') - (col('.')>=2 ? 1 : 0))")
-	try:
-		first = next(i for i in reversed(synstackids) if i in texIgnoreMathZoneIds or i in texMathZoneIds)
-		return first != ignore
-	except StopIteration:
-		return False
+	return vim.eval('vimtex#syntax#in_mathzone()') == '1'
 endglobal
 
 snippet ub "\underbrace{}" w
-\underbrace{$1}_{$2}$0
+\underbrace
+	{
+		$1
+	}
+	_
+	{
+		$2
+	}$0
+
 endsnippet
 
 snippet ob "\overbrace{}" w
@@ -36,7 +32,7 @@ endsnippet
 
 context "math()"
 snippet int "\int{}_{}" wA
-\int_{$1}^{$2}$0
+int_{$1}^{$2}$0\,\mathrm{dx}
 endsnippet
 
 context "math()"
@@ -60,7 +56,14 @@ endsnippet
 
 context "math()"
 snippet frac "\frac{}{}" wA
-\frac{$1}{$2}$0
+\frac
+	{
+		$1
+	}
+	{
+		$2
+	}$0
+
 endsnippet
 
 context "math()"
@@ -75,4 +78,16 @@ endsnippet
 context "math()"
 snippet lim "\lim\limits_{x\to\infty} f(x)" w
 \lim\limits_{${1:x} \to \infty}$0
+endsnippet
+
+context "math()"
+snippet "mpf(\d+)" "multi-part function" br
+
+\left\{
+	\begin{array}{`!p 
+snip.rv = "l" * int(match.group(1))
+`}
+		$0
+	\end{array}
+\right.
 endsnippet

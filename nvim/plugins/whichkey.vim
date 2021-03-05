@@ -1,4 +1,4 @@
-" define prefix dictionary
+" define prefix dictionary, also the main key-bindings
 let g:which_key_map = {}
 
 " use foating window
@@ -13,7 +13,7 @@ let g:which_key_display_names = {'<CR>': '↵', '<TAB>': '⇆'}
 " --------------
 "  filemanager
 " --------------
-let g:which_key_map.v = [':EditVifm', "Vifm"]
+"let g:which_key_map.v = [':EditVifm', "Vifm"]
 
 " -------------
 "  quickrunner
@@ -44,57 +44,70 @@ let g:which_key_map = { ' ' : ["w" 	, "Write"]}
 " -----------
 "  aligning
 " -----------
-let g:which_key_map.a = ['<Plug>(EasyAlign)', 'align']
+let g:which_key_map.A = ['<Plug>(EasyAlign)', 'align']
 
 " ------
 "  coc
 " ------
-let g:which_key_map.T = {'name' : 'todolist'}
-let g:which_key_map.T.l = [':CocFzfList todolist', 'list todolist']
-let g:which_key_map.T.a = [':CocCommand todolist.create', "add a task"]
-let g:which_key_map.T.c = [':CocCommand todolist.clear', "clear todlist"]
+"let g:which_key_map.T = {'name' : 'todolist'}
+"let g:which_key_map.T.l = [':CocFzfList todolist', 'list todolist']
+"let g:which_key_map.T.a = [':CocCommand todolist.create', "add a task"]
+"let g:which_key_map.T.c = [':CocCommand todolist.clear', "clear todlist"]
 
-let g:which_key_map.c = { 'name' : 'coc' }
+"let g:which_key_map.c = {
+"            \ 'name' : 'coc',
+"            \ 'm' : [ ':CocFzfList marketplace', 'marketplace' ],
+"            \ 's' : [ ':CocFzfList -I symbols', 'list symbols' ],
+"            \ 'l' : {
+"            \   'name'  : 'list',
+"            \   'a'  : [':CocFzfList diagnostics', 'diagnostics'],
+"            \   'e'  : [':CocFzfList extensions', 'extensions'],
+"            \   'p'  : [':CocFzfList preview', 'preview'],
+"            \   'o'  : [':CocFzfList outline', 'outline'],
+"            \   'r'  : [':CocFzfListResume', 'resume'],
+"            \   'c'  : [':CocFzfList commands', 'commands'],
+"            \   }
+"            \ }
+"let g:which_key_map.c = { 'name' : 'coc' }
 
 "let g:which_key_map.c.a = ['<Plug>(coc-codeaction)', 'codeaction']
 "let g:which_key_map.c.t = ['<Plug>(coc-type-definition)', "type-definition"]
 "let g:which_key_map.c.r = ['<Plug>(coc-references)', "references"]
-"
+
 "let g:which_key_map.i = ['<Plug>(coc-implementation)', "implementation"]
-"
+
 " -- marketplace
-let g:which_key_map.c.m = [':CocFzfList marketplace', "marketplace"]
-"
-"" -- renaming
-"let g:which_key_map.r = ['<Plug>(coc-rename)', "rename"]
-"
-"" -- Refactor
+"let g:which_key_map.c.m = [':CocFzfList marketplace', "marketplace"]
+
+" -- Refactor
 "let g:which_key_map.c.R = ['<Plug>(coc-refactor)', "Refactor"]
-"
-"" -- formatting
+
+" -- formatting
 "let g:which_key_map.f = ['<Plug>(coc-format)', "format code"]
 "
-"" -- fixing
+" -- fixing
 "let g:which_key_map.c.f = [':CocFix', 'fix current']
-"
-"" -- terminal
-"let g:which_key_map.t = [ ':CocCommand terminal.Toggle', "Terminal Toggle"]
-"
-"" -- find errors
-let g:which_key_map.n = ['<Plug>(coc-diagnostic-next)', 'goto next error']
-let g:which_key_map.p = ['<Plug>(coc-diagnostic-prev)', 'goto previous error']
-"let g:which_key_map.c.s = [ ':CocFzfList -I symbols', "list symbols" ]
-"
-"" -- list
-let g:which_key_map.c.l = { 'name' : 'list' }
-let g:which_key_map.c.l.a = [':CocFzfList diagnostics', 'diagnostics']
-let g:which_key_map.c.l.e = [':CocFzfList extensions', 'extensions']
-let g:which_key_map.c.l.p = [':CocFzfList preview', 'preview']
-let g:which_key_map.c.l.o = [':CocFzfList outline', 'outline']
-let g:which_key_map.c.l.r = [':CocFzfListResume', 'resume']
-let g:which_key_map.c.l.c = [':CocFzfList commands', 'commands']
 
-" ----- language specifique -----
+" -- find errors
+"let g:which_key_map.n = ['<Plug>(coc-diagnostic-next)', 'goto next error']
+"let g:which_key_map.p = ['<Plug>(coc-diagnostic-prev)', 'goto previous error']
+"let g:which_key_map.c.s = [ ':CocFzfList -I symbols', "list symbols" ]
+
+" -- list
+"let g:which_key_map.c.l = { 'name' : 'list' }
+"let g:which_key_map.c.l.a = [':CocFzfList diagnostics', 'diagnostics']
+"let g:which_key_map.c.l.e = [':CocFzfList extensions', 'extensions']
+"let g:which_key_map.c.l.p = [':CocFzfList preview', 'preview']
+"let g:which_key_map.c.l.o = [':CocFzfList outline', 'outline']
+"let g:which_key_map.c.l.r = [':CocFzfListResume', 'resume']
+"let g:which_key_map.c.l.c = [':CocFzfList commands', 'commands']
+
+" --------
+" lsp 
+" --------
+"let g:which_key_map.a = ['<Plug>(lcn-code-action)', 'code action']
+"let g:which_key_map.n = ['<Plug>(lcn-diagnostics-next)', 'diagnostic next']
+"let g:which_key_map.p = ['<Plug>(lcn-diagnostics-prev)', 'diagnostic prev']
 
 call which_key#register('<Space>', "g:which_key_map")
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>

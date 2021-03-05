@@ -1,43 +1,24 @@
-" autoreload of my vimrc if something changes
-autocmd BufWritePost .vimrc,_vimrc source $MYVIMRC
+" --------------------
+" My autocommands 
+" --------------------
+augroup MyStuff
+    autocmd!
+    autocmd FileType * setlocal textwidth=80
+    autocmd FileType vim,term setlocal textwidth=0
+    autocmd FileType help nnoremap q :q<CR>
+    autocmd FileType zsh set nofen
+    autocmd FileType nasm set filetype=asm
 
-" set nasm filetpye
-autocmd BufRead,BufNewFile *asm set ft=nasm
+    " set nasm filetpye
+    autocmd BufRead,BufNewFile *asm set ft=nasm
 
-" Highlight the symbol and its references when holding the cursor.
-"autocmd CursorHold * silent call CocActionAsync('highlight')
-"autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+    " enable spell checking
+    autocmd FileType markdown setlocal spell
 
-" autoclose quickfix
-aug QFClose
-  au!
-  au WinEnter * if winnr('$') == 1 && &buftype == "quickfix"|q|endif
-aug END
+    " close quickfix
+    autocmd WinEnter * if winnr('$') == 1 && &buftype == "quickfix"|q|endif
 
-" for latex
-autocmd FileType tex let b:coc_pairs = [["$", "$"]]
-
-" close automatically the quickfix window if it's last
-au BufEnter * call s:close_quickfix()
-function! s:close_quickfix()
-
-  " if the window is quickfix go on
-  if &buftype=="quickfix"
-
-    " if this window is last on screen quit without warning
-    if winbufnr(2) == -1
-      quit!
+    if &readonly
+        autocmd BufEnter <buffer> nnoremap q :q<CR>
     endif
-
-  endif
-endfunction
-
-" for displaying the vertical colomn
-augroup TextWidth
-  autocmd!
-  autocmd FileType * setlocal textwidth=80
-  autocmd FileType tex,vim,term setlocal textwidth=0
 augroup END
-
-" disable folding for some files
-autocmd FileType zsh set nofen

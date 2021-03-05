@@ -1,1 +1,1 @@
-iab init def __init__(self):
+iab <buffer> init def __init__(self):

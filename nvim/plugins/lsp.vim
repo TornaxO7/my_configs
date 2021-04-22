@@ -17,8 +17,7 @@ let g:LanguageClient_serverCommands = {
 let g:LanguageClient_hasSnippetSupport=1
 let g:LanguageClient_preferredMarkupKind=['markdown', 'plaintext']
 
-augroup LSP
-    autocmd!
+augroup LSP autocmd!
     autocmd CursorHold * call LanguageClient#textDocument_documentHighlight()
 augroup END
 
@@ -33,6 +32,6 @@ nmap <silent> <C-h> <Plug>(lcn-hover)
 nmap <silent> <localleader>ren <Plug>(lcn-rename)
 nmap <silent> <localleader>ref <Plug>(lcn-references)
 nmap <silent> <localleader>i <Plug>(lcn-implementation)
-nmap <silent> <localleader>s <Plug>(lcn-symbols)
+nmap <silent> <localleader>ss <Plug>(lcn-symbols)
 nmap <silent> <localleader>e <Plug>(lcn-explain-error)
 nmap <silent> <localleader>f <Plug(lcn-format)

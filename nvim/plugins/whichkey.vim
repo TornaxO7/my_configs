@@ -110,5 +110,5 @@ let g:which_key_map.A = ['<Plug>(EasyAlign)', 'align']
 "let g:which_key_map.p = ['<Plug>(lcn-diagnostics-prev)', 'diagnostic prev']
 
 call which_key#register('<Space>', "g:which_key_map")
-nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
-vnoremap <silent> <leader> :<c-u>WhichKeyVisual '<Space>'<CR>
+nnoremap <silent> <localleader> :<c-u>WhichKey '<Space>'<CR>
+vnoremap <silent> <localleader> :<c-u>WhichKeyVisual '<Space>'<CR>

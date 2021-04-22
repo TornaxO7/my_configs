@@ -1,7 +1,7 @@
 " -----------------
 "  GUI - Settings
 " -----------------
-set guifont="Hack Nerd Font Bold 20"
+let guifont="Hack Nerd Font:style=bold:20"
 set linespace=4
 "
 "let g:neovide_refresh_rate=60

@@ -3,12 +3,6 @@
 " --------
 noremap <2-RightMouse> zO
 
-" -------------
-" Whichkey 
-" -------------
-nnoremap <silent> <localleader> :<c-u>WhichKey '<Space>'<CR>
-vnoremap <silent> <localleader> :<c-u>WhichKeyVisual '<Space>'<CR>
-
 " --------------
 "  open test files
 " --------------
@@ -59,15 +53,21 @@ noremap - :res -2<CR>
 noremap < 3<C-w><
 noremap > 3<C-w>>
 
-" -------------
-"  indentation
-" -------------
-nnoremap <C-p> :IndentLinesToggle<CR>
+" ---------------------
+" Internet browser 
+" ---------------------
+nnoremap <localleader>bv :!chromium https://vimawesome.com/<CR>
+nnoremap <localleader>bp :!chromium https://de.pons.com/ & disown<CR>
+nnoremap <localleader>bl :!chromium https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md & disown<CR>
 
 " ------------------
 " Private ones
 " ------------------
-noremap q :wq<CR>
+if &readonly || &buftype == 'nofile'
+    autocmd BufEnter <buffer> nnoremap q :q<CR>
+else
+    noremap q :wq<CR>
+endif
 noremap <localleader><Space> :w<CR>
 
 " undo the undo with a latter U
@@ -77,7 +77,6 @@ map U <C-r>
 noremap ä q
 
 " how to leave from different modes
-nnoremap <C-l> :w<CR>:bd<CR>
 onoremap <C-l> <Esc>
 xnoremap <C-l> <Esc>
 inoremap <C-l> <Esc>
@@ -95,7 +94,7 @@ endfunction
 inoremap <C-f> <CMD>call MySpellFix()<CR>
 
 " switch between each language
-nnoremap <localleader>sd :setlocal spell spelllang=de_20<CR>
-nnoremap <localleader>sg :setlocal spell spelllang=en_gb<CR>
-nnoremap <localleader>se :setlocal spell spelllang=en_us<CR>
+nnoremap <localleader>sd :setlocal spell spelllang=de_20 <bar> let g:translator_target_lang='de'<CR>
+nnoremap <localleader>sg :setlocal spell spelllang=en_gb <bar> let g:translator_target_lang='en'<CR>
+nnoremap <localleader>se :setlocal spell spelllang=en_us <bar> let g:translator_target_lang='en'<CR>
 nnoremap <localleader>sc :setlocal spell spelllang=<CR>

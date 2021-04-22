@@ -32,4 +32,3 @@ noremap <localleader>l1 :QuickRun -outputter loclist -hook/time/enable 1 -cmdopt
 noremap <localleader>l2 :QuickRun -outputter loclist -hook/time/enable 1 -cmdopt "text2.txt"<CR>
 noremap <localleader>l3 :QuickRun -outputter loclist -hook/time/enable 1 -cmdopt "text3.txt"<CR>
 noremap <localleader>l4 :QuickRun -outputter loclist -hook/time/enable 1 -cmdopt "text4.txt"<CR>
-

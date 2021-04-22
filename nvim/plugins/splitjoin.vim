@@ -7,5 +7,5 @@ let g:splitjoin_join_mapping = ''
 " -------------
 " Mappings 
 " -------------
-noremap gs :SplitjoinSplit<CR>
-noremap gj :SplitjoinJoin<CR>
+nnoremap gS :SplitjoinSplit<CR>
+nnoremap gJ :SplitjoinJoin<CR>

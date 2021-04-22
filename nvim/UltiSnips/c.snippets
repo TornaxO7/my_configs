@@ -29,13 +29,13 @@ endglobal
 # commenter
 snippet cbb "Add a section with bigger highlighting"
 /* =====`!p snip.rv = "=" * len(t[1])`
- * ${1:Section name} 
+ * ${1:Section name}
  * =====`!p snip.rv = "=" * len(t[1])` */
 endsnippet
 
 snippet cb "Add a separator for a new section"
 /* -----`!p snip.rv = "-" * len(t[1])`
- * ${1:Section name} 
+ * ${1:Section name}
  * -----`!p snip.rv = "-" * len(t[1])` */
 endsnippet
 
@@ -186,15 +186,15 @@ endsnippet
 
 snippet "#?ifd(d)?" "#ifdef" wbr
 #ifdef $1
-	`!p
+`!p
 if match.group(1) != None:
 	snip.rv = f'printf("DEBUG (START): ===== {t[1]} =====\\n");'
-	`
+`
 	$0
-	`!p
+`!p
 if match.group(1) != None:
 	snip.rv = f'printf("DEBUG (END): ===== {t[1]} =====\\n");'
-	`
+`
 #endif /* $1 */
 endsnippet
 
@@ -254,7 +254,7 @@ snippet filed "Add the file description" b
 /* 
  * ---------------------------------------------------------
  * Filename: `!p snip.rv = snip.fn`
- * Author: ${1:Anh Dang}
+ * Author: ${1:TornaxO7}
  * Last changes: `date +%d.%m.%y`
  * Version: 1.0
  * Usage: 
@@ -276,7 +276,6 @@ snippet funcd "Add a big comment-section which describes the function" b
  *	${3: Rets}
  */
 endsnippet
-
 
 # ------------------
 # readline

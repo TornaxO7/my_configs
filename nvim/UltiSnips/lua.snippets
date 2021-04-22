@@ -10,3 +10,15 @@ snippet cb "Add a separator for a new section"
 -- ${1:Section name} 
 -- -----`!p snip.rv = "-" * len(t[1])`
 endsnippet
+
+# auto-file description
+snippet filed "Add the file description" b
+-----------------------------------------------------------
+--	Filename: `!p snip.rv = snip.fn`
+--	Author: ${1:TornaxO7}
+--	Last changes: `date +%d.%m.%y`
+--	Version: 1.0
+--	Usage: 
+--		${2: Usage}
+-----------------------------------------------------------
+endsnippet

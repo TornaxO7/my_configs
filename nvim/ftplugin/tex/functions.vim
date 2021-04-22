@@ -39,9 +39,3 @@ augroup vimtex_event_2
   au!
   au User VimtexEventQuit call CloseViewers()
 augroup END
-
-"if vimtex#env#is_inside('itemize')
-"    imap <CR> i\item
-"else
-"    unmap <CR>
-"endif

@@ -147,8 +147,3 @@ if exists('*complete_info')
 else
   inoremap <expr> <tab> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 endif
-
-" -----------------
-" Special file 
-" -----------------
-nnoremap <localleader>lc :CocCommand clangd.switchSourceHeader<CR>

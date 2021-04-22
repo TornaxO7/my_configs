@@ -1,4 +1,4 @@
 " -------------
 " Mappings 
 " -------------
-"nmap <localleader>f :Autoformat<CR>
+nmap <localleader>f :Autoformat<CR>

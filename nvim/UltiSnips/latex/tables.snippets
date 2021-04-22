@@ -7,7 +7,7 @@ snip += "\\begin{tabular}{"
 
 # add columns
 for column_index in range(int(match.group(1))):
-	snip += f"\t|>{{\\centering\\arraybackslash}}m{{{1 / int(match.group(1))}\\textwidth}}"
+	snip += f"\t|>{{\\raggedright\\arraybackslash}}m{{{1 / int(match.group(1))}\\textwidth}}"
 snip += "\t|}"
 snip += "\t\\hline"
 snip += "\t\\hline"
@@ -20,25 +20,33 @@ snippet rc "row-cell (makecell)" b
 \makecell[${1:Alignment (l,r,b)}]{${2:Multilined text}}$0
 endsnippet
 
-snippet "r(\d+)" "create a row with x columns" br
+snippet "r(h|l)?(\d+)" "create a row with x columns" br
 $0`!p
 
-for column in range(int(match.group(1)) - 1):
-	snip += '&'
-snip += "\\\\ % ----------"
+if match.group(1) != 'l':
+	
+	for column in range(int(match.group(2)) - 1):
+		snip += '&'
+	snip += "\\\\ % ----------"
+
+	if match.group(1) == 'h':
+		snip += '\\hline'
+
+else:
+	snip.rv = f"{' &' * int(match.group(2))} \\\\"
 `
 endsnippet
 
 snippet mc "Multicolumn" b
-\multicolumn{${1:Columns}}{|c`!p
+\multicolumn{${1:Columns}}{`!p
+# create the column placeholder
 if t[1].isdigit():
-	snip.rv = (int(t[1]) - 1) * '|c'
-`|}{
-`!p
-if t[1].isdigit():
-
-	snip.rv = (int(t[1]) - 1) * "& "
-`
+	tmp = int(t[1])
+	for column in range(tmp):
+		snip += f"\t>{{\\centering\\arraybackslash}}m{{{1 / tmp}\\textwidth}}"
+`|
+}{
+	$0
 }
 endsnippet
 

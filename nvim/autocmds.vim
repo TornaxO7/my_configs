@@ -16,9 +16,5 @@ augroup MyStuff
     autocmd FileType markdown setlocal spell
 
     " close quickfix
-    autocmd WinEnter * if winnr('$') == 1 && &buftype == "quickfix"|q|endif
-
-    if &readonly
-        autocmd BufEnter <buffer> nnoremap q :q<CR>
-    endif
+    autocmd WinEnter * if winnr('$') == 1 && &buftype == 'quickfix' | q | endif
 augroup END

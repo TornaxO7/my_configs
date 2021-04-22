@@ -20,7 +20,7 @@ endsnippet
 # Declared commands 
 # ----------------------
 # to draw a vector
-snippet command_vector "Create vector arrow." bw
+snippet cvector "Create vector arrow." bw
 \newcommand{\myVector}[3] {
 	\ensuremath{
 		\begin{pmatrix}
@@ -30,7 +30,7 @@ snippet command_vector "Create vector arrow." bw
 }$0
 endsnippet
 
-snippet command_vector_point "Enter vector point" bw
+snippet cvectorpoint "Enter vector point" bw
 \newcommand{\myVectorPoint}[3] {
 	\ensuremath{
 		\left(\,#1\,\middle|\,#2\,\middle|\,#3\,\right)
@@ -38,14 +38,14 @@ snippet command_vector_point "Enter vector point" bw
 }$0
 endsnippet
 
-snippet command_abs "\abs" bw
+snippet cabs "\abs" bw
 \newcommand{\abs}[1] {
 	\left\vert#1\right\vert
 }$0
 endsnippet
 
 # include image of inkscape
-snippet command_image "inkscape-image-including" bw
+snippet cimage "inkscape-image-including" bw
 % Command to include image of inkscape
 \newcommand{\incfig}[2][1]{
 	\def\svgwidth{#1\columnwidth}
@@ -54,7 +54,7 @@ snippet command_image "inkscape-image-including" bw
 endsnippet
 
 # for LGS
-snippet command_lgs "LGS - matrix design" bw
+snippet clgs "LGS - matrix design" bw
 % Adds the vertical bar in the matrix
 \makeatletter
 \renewcommand*\env@matrix[1][*\c@MaxMatrixCols c]{%
@@ -81,7 +81,7 @@ snippet renewqed "\renewcommand\qedsymbol{$\blacksquare$}" bw
 \renewcommand\qedsymbol{$\blacksquare$} % q.e.d symbol is a block box $0
 endsnippet
 
-snippet renew_table "\renewcommand{\tabularxcolumn}[1]{m{#1}}" b
+snippet renewtable "\renewcommand{\tabularxcolumn}[1]{m{#1}}" b
 \renewcommand{\tabularxcolumn}[1]{
 	m{#1}
 }

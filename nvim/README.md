@@ -15,7 +15,7 @@ my_configs
 ├── commands.vim      # some "self"-made commands
 ├── ftplugin          # mappings and settings for specifique filetypes
 ├── ginit.vim         # GUI settings (I don't use it anymore)
-├── init.vim          # All Plugins are loaded here and the settings are sourced from the plugin directory
+├── init.vim          # All Plugins are loaded here and the settings are sourced from the plugins directory
 ├── lua               # plugin-settings for lua stuff like LSP
 ├── mappings.vim      # my mappings which are independent from the plugins
 ├── plugins           # all settings from almost all plugins I've tried :D

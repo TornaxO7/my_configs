@@ -5,8 +5,11 @@
 # -----------
 # Images 
 # -----------
-snippet graphicxpath "\graphicspath{{./figures}}" b
-\graphicspath{{./figures}}
+snippet figure "figure environment" b
+\begin{figure}[ht]
+	\centering
+	\includegraphics{$0}
+\end{figure}
 endsnippet
 
 # ---------

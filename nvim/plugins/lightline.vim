@@ -1,4 +1,7 @@
 let g:lightline = {
+            \ 'enable' : {
+            \   'tabline' : 0,
+            \ },
             \ 'component' : {
             \       'lineinfo' : 'L: %3l/%L  C: %-2c',
             \       'absolutepath' : '%<%-F',
@@ -56,23 +59,8 @@ let g:lightline = {
             \ 
             \ 'component_expand' : {
             \     'my_readonly' : 'LightlineReadonly',
-            \     'tabs' : 'lightline#tabs',
             \     'lsp_progress' : 'LSPProgress',
-            \     'buffers' : 'lightline#bufferline#buffers'
             \   },
-            \
-            \ 'component_type' : {
-            \     'buffers': 'tabsel',
-            \   },
-            \ 
-            \ 'tab' : {
-            \   'active': [ 'tabnum', 'filename', 'modified' ],
-            \   'inactive': [ 'tabnum', 'filename', 'modified' ]
-            \   },
-            \
-            \ 'tabline' : {
-		    \ 'left': [ [ 'buffers' ] ],
-		    \ 'right': [ [ 'close' ] ] }
             \ }
 
 function LightlineReadonly()

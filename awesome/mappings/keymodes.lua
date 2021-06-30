@@ -35,7 +35,7 @@ end
 
 local function write_mode(string)
 	-- This function will write "string" into a file which is read after the restart
-	awful.spawn("/home/tornax/.config/awesome/scripts/theme.sh " .. string)
+	awful.spawn("~/.config/awesome/scripts/theme.sh " .. string)
 	awful.spawn("notify-send 'Theme' 'Theme set to " .. string .. "'")
 end 
 

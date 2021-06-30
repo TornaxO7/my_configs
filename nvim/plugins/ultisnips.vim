@@ -12,5 +12,5 @@ let g:UltiSnipsEnableSnipMate = 0
 " -------------
 " Mappings 
 " -------------
-let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsExpandTrigger="<Tab>"
 let g:UltiSnipsListSnippets='<c-tab>'

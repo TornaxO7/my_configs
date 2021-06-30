@@ -49,7 +49,7 @@ let g:vimtex_view_method = "zathura"
 let g:vimtex_view_zathura_options=''
 
 " autocompiling
-let g:livepreview_cursorhold_recompile = 1
+let g:livepreview_cursorhold_recompile = 0
 
 " formatting
 let g:vimtex_format_enabled = 1
@@ -84,9 +84,3 @@ let g:vimtex_imaps_enabled = 1
 
 " leader of imaps
 let g:vimtex_imaps_leader = "´"
-
-function! Synctex()
-    execute "silent !zathura --synctex-forward " . line('.') . ":" . col('.') . ":" . bufname('%') . " " . g:syncpdf
-    redraw!
-endfunction
-map <localleader>lz :call Synctex()<cr>

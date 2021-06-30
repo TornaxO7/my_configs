@@ -5,15 +5,27 @@ treesitter.setup {
     ensure_installed = "maintained",
 
     highlight = {
-        enable = true,  -- false will disable the whole extension
-        disable = { 'latex' },  -- list of language that will be disabled
+        enable = true, -- false will disable the whole extension
+        disable = {'latex'} -- list of language that will be disabled
     },
 
-    indent = {
-        enable = false,
+    indent = {enable = false},
+
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = "gs",
+            node_incremental = "<C-k>",
+            -- scope_incremental = "<C-j>",
+            node_decremental = "<C-j>"
+        }
     },
 
-    rainbow = {
-        enable = false,
-    },
+    tree_setter = {enable = false},
+
+    query_linter = {
+        enable = true,
+        use_virtual_text = true,
+        lint_events = {"BufWrite", "CursorHold"}
+    }
 }

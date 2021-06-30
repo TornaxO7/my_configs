@@ -1,6 +1,6 @@
 " == indent-blankline ==
 let g:indent_blankline_char = '│'
-let g:indent_blankline_filetype_exclude = ['help']
+let g:indent_blankline_filetype_exclude = ['help', 'man']
 let g:indent_blankline_buftype_exclude = ['terminal']
 let g:indent_blankline_space_char = ' '
 let g:indent_blankline_use_treesitter = v:false
@@ -19,6 +19,4 @@ let g:indent_blankline_char_highlight_list = [
                                               \ 'Conditional',
                                               \ 'Special',
                                               \ 'Underlined']
-
-" == indentline ==
 

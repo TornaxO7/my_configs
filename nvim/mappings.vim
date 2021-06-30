@@ -35,11 +35,6 @@ nnoremap gq :tabmove -<CR>
 "map <localleader>gr <Plug>(grammarous-remove-error)
 "map <localleader>gd <Plug>(grammarous-disable-rule)
 
-" ---------------
-" easymotion 
-" ---------------
-map ö <Plug>(easymotion-prefix)
-
 " -----------------
 "  Window
 " -----------------
@@ -50,37 +45,39 @@ noremap + :res +2<CR>
 noremap - :res -2<CR>
 
 " Resize vertical splitted windows with '<' and '>'
-noremap < 3<C-w><
-noremap > 3<C-w>>
+noremap > 3<C-w><
+noremap < 3<C-w>>
 
 " ---------------------
 " Internet browser 
 " ---------------------
-nnoremap <localleader>bv :!chromium https://vimawesome.com/<CR>
-nnoremap <localleader>bp :!chromium https://de.pons.com/ & disown<CR>
-nnoremap <localleader>bl :!chromium https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md & disown<CR>
+nnoremap <localleader>bv :!google-chrome-stable https://vimawesome.com/<CR>
+nnoremap <localleader>bp :!google-chrome-stable https://de.pons.com/ & disown<CR>
+nnoremap <localleader>bl :!google-chrome-stable https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md & disown<CR>
+nnoremap <localleader>br :!google-chrome-stable https://crates.io/search\?q=
 
 " ------------------
 " Private ones
 " ------------------
 if &readonly || &buftype == 'nofile'
-    autocmd BufEnter <buffer> nnoremap q :q<CR>
+    augroup QuitMappings
+        autocmd!
+        autocmd BufEnter <silent><buffer> nnoremap q :q<CR>
+    augroup END
 else
-    noremap q :wq<CR>
+    noremap <silent> q :wq<CR>
 endif
 noremap <localleader><Space> :w<CR>
 
+nnoremap ö q
+
 " undo the undo with a latter U
 map U <C-r>
-
-" record macros
-noremap ä q
 
 " how to leave from different modes
 onoremap <C-l> <Esc>
 xnoremap <C-l> <Esc>
 inoremap <C-l> <Esc>
-nnoremap <F4> :%s/<c-r><c-w>/<c-r><c-w>/gc<c-f>$F/i
 nnoremap <silent> <buffer> k gk
 nnoremap <silent> <buffer> j gj
 
@@ -97,4 +94,4 @@ inoremap <C-f> <CMD>call MySpellFix()<CR>
 nnoremap <localleader>sd :setlocal spell spelllang=de_20 <bar> let g:translator_target_lang='de'<CR>
 nnoremap <localleader>sg :setlocal spell spelllang=en_gb <bar> let g:translator_target_lang='en'<CR>
 nnoremap <localleader>se :setlocal spell spelllang=en_us <bar> let g:translator_target_lang='en'<CR>
-nnoremap <localleader>sc :setlocal spell spelllang=<CR>
+nnoremap <localleader>s<Space> :setlocal spell spelllang=<CR>

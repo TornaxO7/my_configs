@@ -14,7 +14,7 @@ telescope.setup {
             i = {
                 ["<C-l>"] = actions.close,
                 ["<C-u>"] = false,
-                ["<C-d>"] = false,
+                ["<C-d>"] = actions.close,
                 ["<C-k>"] = actions.preview_scrolling_up,
                 ["<C-j>"] = actions.preview_scrolling_down,
             }

@@ -21,7 +21,7 @@ treesitter.setup {
         }
     },
 
-    tree_setter = {enable = false},
+    tree_setter = {enable = true},
 
     query_linter = {
         enable = true,

@@ -139,12 +139,6 @@ inoremap <silent><expr> <C-Space> coc#refresh()
 " marketplace for installing extensions
 map <localleader>cm :CocList marketplace<CR>
 
-"nnoremap <silent> <localleader>ef :CocCommand explorer --preset flutter<CR>
-"nnoremap <silent> <localleader>ec :CocCommand explorer --preset c<CR>
-"nnoremap <silent> <localleader>ep :CocCommand explorer --preset python<CR>
-"nnoremap <silent> <localleader>ev :CocCommand explorer --preset vim<CR>
-"nnoremap <silent> <localleader>es :CocCommand explorer --preset school<CR>
-
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
 " <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.

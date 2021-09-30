@@ -1,5 +1,5 @@
 command! CompeEnable lua require('compe').setup()
 command! CompeDisable call compe#setup({'enabled': v:false}, 0)
-command! CopyPath let @"=expand("%:p")
+command! CopyPath let @+=expand('%:p')
 command! FilePath :echo expand("%:p")
 command! CopyMessage :put =execute('messages')

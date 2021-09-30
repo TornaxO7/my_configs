@@ -9,9 +9,9 @@ let g:fzf_preview_window=['right:50%', 'ctrl-/']
 function MyRg()
     let l:search = input('Search after: ', expand('<cword>'))
     if l:search == ''
-        call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case -- ""', 1, fzf#vim#with_preview(), 0)
+        call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case ""', 1, fzf#vim#with_preview(), 0)
     else
-        call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case -- ' . l:search, 1, fzf#vim#with_preview(), 0)
+        call fzf#vim#grep('rg --column --line-number --no-heading --color=always --smart-case ' . l:search, 1, fzf#vim#with_preview(), 0)
     endif
 endfunction
 

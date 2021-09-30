@@ -17,4 +17,4 @@ let g:vifm_embed_cwd = 0
 " Mappings 
 " -------------
 "noremap <localleader>v :EditVifm<CR>
-noremap <C-t> :TabVifm<CR>
+" noremap <C-t> :TabVifm<CR>

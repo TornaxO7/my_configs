@@ -35,6 +35,11 @@ nnoremap gq :tabmove -<CR>
 "map <localleader>gr <Plug>(grammarous-remove-error)
 "map <localleader>gd <Plug>(grammarous-disable-rule)
 
+" -------------
+" Terminal 
+" -------------
+nnoremap <C-t> :vsplit <bar> :term<CR>
+
 " -----------------
 "  Window
 " -----------------
@@ -91,7 +96,7 @@ endfunction
 inoremap <C-f> <CMD>call MySpellFix()<CR>
 
 " switch between each language
-nnoremap <localleader>sd :setlocal spell spelllang=de_20 <bar> let g:translator_target_lang='de'<CR>
-nnoremap <localleader>sg :setlocal spell spelllang=en_gb <bar> let g:translator_target_lang='en'<CR>
-nnoremap <localleader>se :setlocal spell spelllang=en_us <bar> let g:translator_target_lang='en'<CR>
-nnoremap <localleader>s<Space> :setlocal spell spelllang=<CR>
+nnoremap <silent> <localleader>sd :setlocal spell spelllang=de_20 <bar> let g:translator_target_lang='de'<CR>
+nnoremap <silent> <localleader>sg :setlocal spell spelllang=en_gb <bar> let g:translator_target_lang='en'<CR>
+nnoremap <silent> <localleader>se :setlocal spell spelllang=en_us <bar> let g:translator_target_lang='en'<CR>
+nnoremap <silent> <localleader>s<Space> :setlocal spell spelllang=<CR>

@@ -39,7 +39,7 @@ sign define LspDiagnosticsSignHint text= texthl=LspDiagnosticsSignHint linehl
 " ------------
 nnoremap <localleader>a <Cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <localleader>D <Cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <localleader>d <Cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap gd <Cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 nnoremap <localleader>i <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <localleader>ks <cmd>lua vim.lsp.buf.signature_help()<CR>
@@ -49,7 +49,7 @@ nnoremap <localleader>ks <cmd>lua vim.lsp.buf.signature_help()<CR>
 "nnoremap <C-f>s <Cmd>lua vim.lsp.buf.document_symbol()<CR>
 "nnoremap <localleader>td <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <localleader>kr <cmd>lua vim.lsp.buf.rename()<CR>
-"nnoremap <C-f>r <Cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <C-f>r <Cmd>lua vim.lsp.buf.references()<CR>
 "nnoremap <localleader>ö <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
 nnoremap <localleader>p <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <localleader>n <cmd>lua vim.lsp.diagnostic.goto_next()<CR>

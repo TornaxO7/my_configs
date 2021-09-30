@@ -1,6 +1,6 @@
 local dap = require('dap')
 local dap_ui = require('dapui')
-
+-- dap.set_log_level('TRACE')
 dap_ui.setup(
 {
         icons = {
@@ -38,23 +38,39 @@ dap_ui.setup(
 
 vim.g.dap_virtual_text = true
 
--- request variable values for all frames (experimental)
---vim.g.dap_virtual_text = 'all frames'
+-- DAP CONFIG --
+dap.adapters.python_local = {
+    type = 'executable';
+    command = 'python3';
+    args = {'-m', 'debugpy.adapter'};
+}
 
-dap.adapters.python = {
-type = 'executable';
-command = "/usr/bin/python";
-args = { '-m', 'debugpy.adapter'};
+dap.adapters.python_remote = {
+    type = 'server';
+    host = '127.0.0.1';
+    port = 5678;
 }
 
 dap.configurations.python = {
-{
-type = 'python';
-request = "launch";
-name = "Launch file";
-program = "${file}";
-pythonPath = function()
-return "/usr/bin/python"
-end;
-};
+    {
+        name = 'Launch file';
+        type = 'python_local';
+        request = 'launch';
+        program = '${file}';
+    },
+}
+
+dap.adapters.php_remote = {
+    type = 'server';
+    host = '127.0.0.1';
+    port = 5678;
+}
+
+dap.configurations.php = {
+    {
+        type = 'php_remote';
+        request = 'launch';
+        name = 'Remote file';
+        port = 5678;
+    }
 }

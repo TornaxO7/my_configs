@@ -1,10 +1,11 @@
 -- -----------------------------
--- Neovim lsp general setup 
+-- Neovim lsp general setup
 -- -----------------------------
 local nvim_lsp = require('lspconfig')
+local cmp_nvim_lsp = require('cmp_nvim_lsp')
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
+local capabilities = cmp_nvim_lsp.update_capabilities(vim.lsp.protocol
+                                                          .make_client_capabilities())
 
 local border_chars = {
     TOP_LEFT = '┌',
@@ -35,7 +36,7 @@ vim.g.lsp_utils_location_opts = {
     }
 }
 
-local function on_attach(client, bufnr)
+local function on_attach(client)
     -- Find the clients capabilities
     local cap = client.resolved_capabilities
 
@@ -51,13 +52,21 @@ local function on_attach(client, bufnr)
 end
 
 -- --------------------------
--- Language server setup 
+-- Language server setup
 -- --------------------------
-nvim_lsp.pyright.setup {
+nvim_lsp.pyright.setup({
     on_attach = on_attach,
-    autostart = true}
+    autostart = true,
+    settings = {
+        python = {
+            pythonPath = "python3",
+            analysis = {logLevel = "Trace"}
+        }
+    },
+    capabilities = capabilities
+})
 
-nvim_lsp.sumneko_lua.setup {
+nvim_lsp.sumneko_lua.setup({
     on_attach = on_attach,
 
     cmd = {'lua-language-server'},
@@ -76,18 +85,15 @@ nvim_lsp.sumneko_lua.setup {
             },
             workspace = {
                 -- Make the server aware of Neovim runtime files
-                library = {
-                    [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true
-                }
+                library = vim.api.nvim_get_runtime_file("", true),
             }
         }
     },
     capabilities = capabilities,
     autostart = true
-}
+})
 
-nvim_lsp.jsonls.setup {
+nvim_lsp.jsonls.setup({
     on_attach = on_attach,
 
     commands = {
@@ -99,9 +105,9 @@ nvim_lsp.jsonls.setup {
     },
     capabilities = capabilities,
     autostart = true
-}
+})
 
-nvim_lsp.clangd.setup {
+nvim_lsp.clangd.setup({
     on_attach = on_attach,
 
     cmd = {
@@ -109,25 +115,30 @@ nvim_lsp.clangd.setup {
         '--header-insertion-decorators', '--suggest-missing-includes'
     },
     filetypes = {"c", "cpp", "objc", "objcpp"},
-    autostart = false,
+    autostart = true,
     capabilities = capabilities
-}
+})
 
-nvim_lsp.texlab.setup {
+nvim_lsp.texlab.setup({
     on_attach = on_attach,
 
     -- commented, because otherwise mappings wouldn't work
-    autostart = false
-}
+    autostart = false,
+    capabilities = capabilities
+})
 
-nvim_lsp.rust_analyzer.setup {
+nvim_lsp.rust_analyzer.setup({
     on_attach = on_attach,
-    autostart = false}
+    autostart = true,
+    capabilities = capabilities
+})
 
-nvim_lsp.vimls.setup {
-    on_attach = on_attach,
-}
+nvim_lsp.vimls.setup({on_attach = on_attach, capabilities = capabilities})
 
-nvim_lsp.bashls.setup {
-    on_attach = on_attach,
-}
+nvim_lsp.bashls.setup({on_attach = on_attach, capabilities = capabilities})
+
+nvim_lsp.tsserver.setup({on_attach = on_attach, capabilities = capabilities})
+
+nvim_lsp.phpactor.setup({on_attach = on_attach, capabilities = capabilities})
+
+nvim_lsp.tailwindcss.setup({on_attach = on_attach, capabilities = capabilities})

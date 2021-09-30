@@ -1,3 +1,5 @@
+lua require('lsp-status').register_progress()
+
 let g:lightline = {
             \ 'enable' : {
             \   'tabline' : 0,
@@ -35,7 +37,7 @@ let g:lightline = {
             \
             \ 'active' : {
             \   'left': [ [ 'mode', ],
-            \             [ 'spell', 'filename', 'my_readonly', 'my_modified', 'branch_symbol', 'gitbranch' ],
+            \             [ 'spell', 'filename', 'my_readonly', 'my_modified'],
             \             [ 'absolutepath' ]
             \     ],
             \   
@@ -54,12 +56,12 @@ let g:lightline = {
             \ 'component_function' : {
             \     'my_modified' : 'LightlineModified',
             \     'gitbranch' : 'FugitiveHead',
-            \     'word_counter' : 'WordCounter'
+            \     'word_counter' : 'WordCounter',
+            \     'lsp_progress' : 'LSPProgress',
             \   },
             \ 
             \ 'component_expand' : {
             \     'my_readonly' : 'LightlineReadonly',
-            \     'lsp_progress' : 'LSPProgress',
             \   },
             \ }
 
@@ -80,7 +82,7 @@ function LightlineModified()
 endfunction
 
 function LSPProgress()
-    return lua require('lsp-status').register_progress()
+    lua return require('lsp-status').status()
 endfunction
 
 function WordCounter()

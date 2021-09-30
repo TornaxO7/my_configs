@@ -1,13 +1,11 @@
-set foldexpr=nvim_treesitter#foldexpr()
-set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()
+" set foldmethod=expr
 "set langmap=nj,rk,bh,sl,ca,ar,ue,dw,id,ts,xt,jq,og,öb,hu,
 
-set autoindent
-set autoread
 set autowrite
 set backup
 set backupcopy=no
-set backupdir=/home/tornax/.config/nvim/backups/
+set backupdir=~/.config/nvim/backups/
 set backupext=.bak
 set cindent
 set clipboard=unnamedplus
@@ -24,10 +22,10 @@ set foldtext=MyFoldText()
 set grepprg=rg\ --vimgrep\ --no-heading
 set icon
 set inccommand=nosplit
-set incsearch
 set lazyredraw
 set linebreak
 set lisp
+set hidden
 set mouse=a
 set nosmarttab
 set number
@@ -43,7 +41,7 @@ set smartcase
 set softtabstop=4
 set splitbelow
 set splitright
-set synmaxcol=200
+set synmaxcol=10000
 set tabstop=4
 set termguicolors
 set textwidth=80
@@ -57,7 +55,6 @@ let c_no_comment_fold=1
 let c_syntax_for_h=0
 let loaded_matchit = 1
 
-filetype plugin on
 "let asmsyntax="nasm"
 
 function MyFoldText()
@@ -67,5 +64,4 @@ let l:sub = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
 return v:folddashes . l:sub
 endfunction
 
-"set runtimepath^=/windows/Programming/pull_requests/auto-cosco.vim
-" set runtimepath^=/windows/Programming/Projects/tree-setter/tree-setter
+set rtp+=/usr/local/opt/fzf

@@ -5,22 +5,35 @@ augroup MyStuff
     autocmd!
     autocmd FileType * setlocal textwidth=80
     autocmd FileType vim,term setlocal textwidth=0
-    autocmd FileType help nnoremap q :q<CR>
-    autocmd FileType zsh set nofen
-    autocmd FileType nasm set filetype=asm
+    " autocmd FileType zsh set nofen
+    " autocmd FileType nasm set filetype=asm
 
     " set nasm filetpye
     autocmd BufRead,BufNewFile *asm set ft=nasm
 
-    " enable spell checking
-    autocmd FileType markdown setlocal spell
+    " Update the cwd of the current stuff
+    autocmd BufEnter * silent! lcd %:p:h
+
+    " change some settings, when we are editing rust
+    autocmd FileType rust setlocal textwidth=100
 
     " close quickfix and lsptrouble
     autocmd WinEnter * call s:close()
 
     " set the keybindings for Cargo files
     autocmd BufWinEnter Cargo.toml call s:adjust_cargo()
+
+    autocmd BufEnter * call s:isCheck()
+
+    autocmd TermOpen * setlocal list
+    autocmd TermOpen,TermEnter * startinsert
 augroup END
+
+function s:isCheck()
+    if expand("%:p") =~ 'dev/furniture'
+        setlocal textwidth=120
+    endif
+endfunction
 
 function s:close()
     if winnr('$') == 1

@@ -7,7 +7,6 @@ key.register(
         f = { "format" },
         a = { "action" },
         D = { "declaration" },
-        d = { "definition" },
         i = { "implementation" },
         n = { "next diagnostic" },
         p = { "previous diagnostic" },

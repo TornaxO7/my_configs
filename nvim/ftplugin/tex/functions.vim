@@ -1,10 +1,3 @@
-" Compile on initialization, cleanup on quit
-"augroup vimtex_event_1
-"  au!
-"  au User VimtexEventQuit     call vimtex#compiler#clean(0)
-"  au User VimtexEventInitPost call vimtex#compiler#compile()
-"augroup END
-
 " ==============
 " Functions 
 " ==============
@@ -39,9 +32,3 @@ augroup vimtex_event_2
   au!
   au User VimtexEventQuit call CloseViewers()
 augroup END
-
-"if vimtex#env#is_inside('itemize')
-"    imap <CR> i\item
-"else
-"    unmap <CR>
-"endif

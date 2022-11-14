@@ -1,0 +1,24 @@
+{
+    "tasks": [
+        {
+            "name": "build",
+            "cwd": "${lsp_root}",
+            "cmd": "cargo build"
+        },
+        {
+            "name": "check",
+            "cwd": "${lsp_root}",
+            "cmd": "cargo clippy"
+        },
+        {
+            "name": "run",
+            "cwd": "${lsp_root}",
+            "cmd": "cargo run"
+        },
+        {
+            "name": "doc",
+            "cwd": "${lsp_root}",
+            "cmd": "cargo doc --open"
+        }
+    ]
+}

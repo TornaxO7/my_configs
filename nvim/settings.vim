@@ -1,7 +1,3 @@
-" set foldexpr=nvim_treesitter#foldexpr()
-" set foldmethod=expr
-"set langmap=nj,rk,bh,sl,ca,ar,ue,dw,id,ts,xt,jq,og,öb,hu,
-
 set autowrite
 set backup
 set backupcopy=no
@@ -45,7 +41,7 @@ set synmaxcol=10000
 set tabstop=4
 set termguicolors
 set textwidth=80
-set timeoutlen=1000
+set timeoutlen=0
 set updatetime=100
 set wrap
 
@@ -55,13 +51,9 @@ let c_no_comment_fold=1
 let c_syntax_for_h=0
 let loaded_matchit = 1
 
-"let asmsyntax="nasm"
-
 function MyFoldText()
-let l:line = getline(v:foldstart)
-let l:sub = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
+    let l:line = getline(v:foldstart)
+    let l:sub = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
 
-return v:folddashes . l:sub
+    return v:folddashes . l:sub
 endfunction
-
-set rtp+=/usr/local/opt/fzf

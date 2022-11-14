@@ -33,11 +33,10 @@ let g:vimtex_compiler_latexmk = {
 
 " detect latex file
 let g:tex_flavor = "latex"
-let g:tex_no_error = 0
-let g:tex_conceal = ''
 
 " disable conceal
 set conceallevel=0
+set concealcursor="nc"
 
 " enable verbose information
 let g:vimtex_log_verbose = 1
@@ -45,8 +44,8 @@ let g:vimtex_log_verbose = 1
 " pdf-viewer (zathura)
 let g:livepreview_previewer = 'zathura'
 let g:vimtex_view_method = "zathura"
-" options for zathura
-let g:vimtex_view_zathura_options=''
+
+" let g:vimtex_view_method = 'sioyek'
 
 " autocompiling
 let g:livepreview_cursorhold_recompile = 0
@@ -69,18 +68,7 @@ let g:vimtex_indent_delims = {
       \}
 
 " environments which should have an auto indentation
-let g:vimtex_indent_lists = [
-      \ 'itemize',
-      \ 'description',
-      \ 'enumerate',
-      \ 'thebibliography',
-      \]
+let g:vimtex_indent_lists=[]
 
 " auto closing braces
 let g:vimtex_complete_close_braces = 1
-
-" enable mappings in insert mode
-let g:vimtex_imaps_enabled = 1
-
-" leader of imaps
-let g:vimtex_imaps_leader = "´"

@@ -1,0 +1,7 @@
+command! RustRunnables lua require('rust-tools.runnables').runnables()
+command! RustDebuggables lua require('rust-tools.debuggables').debuggables()
+command! RustOpenExternalDocs lua require('rust-tools.external_docs').open_external_docs()
+command! RustHoverActions lua require("rust-tools.hover_actions").hover_actions()
+command! RustHoverRange lua require("rust-tools.hover_range").hover_range()
+command! RustCodeAction lua require("rust-tools/code_action_group").code_action_group()
+command! LspRustTools lua require("rust-tools").setup({}); require('lsp_settings.keybindings')(0)

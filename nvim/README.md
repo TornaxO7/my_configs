@@ -3,7 +3,8 @@
 
 # Dependencies
 - Neovim nightly
-- vim-plug
+- the appropriate lsp-servers
+- `git`
 
 # Repository structure
 ```
@@ -21,6 +22,5 @@ my_configs
 ├── plugins           # all settings from almost all plugins I've tried :D
 ├── README.md         # What you are looking at...
 ├── Screenshot.png    # The screenshot from the README
-├── settings.vim      # all settings for vim
-└── UltiSnips         # My snippets for C, LaTeX, Python and so on
+└── settings.vim      # all settings for vim
 ```

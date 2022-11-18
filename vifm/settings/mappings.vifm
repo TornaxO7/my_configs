@@ -1,105 +1,64 @@
-" ----------
+" vim:ft=vim
 " directorys
-" ----------
 nnoremap gh :cd ~/<CR>
-
+nnoremap gd :cd /main/Dokumente<CR>
+nnoremap gi :cd /main/Configs/Images<CR>
 nnoremap gm :cd /mnt<CR>
+nnoremap gr :cd /rest<CR>
+nnoremap gw :cd /main<CR>
 
-nnoremap g/ :cd /<CR>
-nnoremap gr :cd /<CR>
+" editing
+nnoremap gV :cd ~/.config/vifm/settings<CR>
+nnoremap gv :cd ~/.config/nvim<CR>
+nnoremap gc :cd /main/Configs<CR>
 
-nmap gt :clear | tabnext <CR>
-
-" -----------
 " movement
-" -----------
 nnoremap J 5j
 nnoremap K 5k
 
-" -------------------
+" Editing / Do something with the files
+nnoremap cu :unpack<CR>
+nnoremap cD :diff<CR>
+vnoremap cD :diff<CR>
+vnoremap ef :mergeFiles<CR>
+
 " general commands
-" -------------------
 nnoremap cd :cd
-nmap mk :mkdir
 
-" --------------------
-" preview scrolling
-" --------------------
-nmap > :!vifmimg inc<CR>
-nmap < :!vifmimg dec<CR>
-
-" --------------
 " start shell
-" --------------
-nmap S :clear | shell<Cr>
+nmap S :shell<Cr>
 
-" ---------
-" sorting
-" ---------
 " Display sorting dialog
 nnoremap s :sort<cr>
 
-" -----------------
 " preview window
-" -----------------
 " Toggle visibility of preview window
 nnoremap w :view<cr>
 vnoremap w :view<cr>gv
 
-" --------------
 " panel resize
-" --------------
-nnoremap ö <C-w>5<
-nnoremap Ö <C-w>5>
+nnoremap < <C-w>5<
+nnoremap > <C-w>5>
 
-" -------------
 " tabs
-" -------------
-nnoremap <C-t> :tabnew<CR> 
+nnoremap <C-t> :tabnew<CR>
 
-" -------------
 " drag and drop
-" -------------
-nmap <C-d> :dragon<CR>
+nmap <C-h> :dragon<CR>
+vmap <C-h> :dragon<CR>
 
-" -----------
-" yank
-" -----------
 " Yank current directory path into the clipboard
 nnoremap yd :!echo -n %d | xclip -selection clipboard %i<cr>:echo expand('%"d') "is yanked to clipboard"<cr>
 " Yank current file path into the clipboard
 nnoremap yf :!echo -n %c:p | xclip -selection clipboard %i<cr>:echo expand('%"c:p') "is yanked to clipboard"<cr>
 
-" ---------
-" rename
-" ---------
-" Mappings for faster renaming
-noremap r cw
-
-" -----------
-" editing
-" -----------
-nnoremap cV :cd ~/.config/vifm/settings<CR>
-nnoremap cv :cd ~/.vim/<CR>
-
-nnoremap ci :edit ~/.config/i3/config<CR>
-nnoremap cp :cd ~/.config/polybar<CR>
-
-" --------
-" dunno
-" --------
-" Toggle wrap setting on ,w key
-nnoremap ,w :set wrap!<cr>
-
-" Example of standard two-panel file managers mappings
-nnoremap <f3> :!less %f<cr>
-nnoremap <f4> :edit<cr>
-nnoremap <f5> :copy<cr>
-nnoremap <f6> :move<cr>
-nnoremap <f7> :mkdir<space>
-nnoremap <f8> :delete<cr>
-
-" -------
 " exit
-" -------
 nnoremap q :q<cr>
+
+" record
+nnoremap ö q
+
+" unmaps
+unmap zt
+unmap zz
+unmap zb

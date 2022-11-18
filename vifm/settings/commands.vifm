@@ -1,3 +1,4 @@
+" vim:ft=vim
 " :com[mand][!] command_name action
 " The following macros can be used in a command
 " %a is replaced with the user arguments.
@@ -9,15 +10,19 @@
 " %d the current directory name.
 " %D the other window directory name.
 " %m run the command in a menu window
+" more information: https://vifm.info/vimdoc.shtml#vifm-macros
 
 command! df df -h %m 2> /dev/null
-command! diff vim -d %f %F
-command! zip zip -r %f.zip %f
+command! diff nvim -d %f %F
 command! run !! ./%f
 command! make !!make %a
 command! mkcd :mkdir %a | cd %a
 command! vgrep vim "+grep %a"
 command! reload :write | restart
-command! dragon dragon -a -x %f
+command! dragon dragon-drop -a -x %f
 command! clear vifmimg clear
 command! print lp -n 1 -o sides=two-sided-long-edge %f
+command! unpack aunpack %c
+command! mergeFiles merge_files.sh %d %f
+command! zip if [ -n "%a" ]; then zip -r '%a.zip' %f; fi
+command! sudoedit sudoedit %c

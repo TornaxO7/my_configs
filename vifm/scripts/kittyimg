@@ -1,0 +1,14 @@
+#!/bin/bash
+
+test_support="kitty +kitten icat --detect-support $5"
+$test_support 2> /dev/null
+
+# if the file is not supported => cancel!
+if [ ! $? -eq 0 ]; then
+    exit
+fi
+
+# otherwise preview the file
+kitty +kitten icat --place "$1"x"$2"@"$3"x"$4" --silent $5
+$6
+kitty +kitten icat --clear --silent $7

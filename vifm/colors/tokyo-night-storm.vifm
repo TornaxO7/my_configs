@@ -1,28 +1,7 @@
-" VIFM COLORS
-" solarized dark
-" based on: https://github.com/istib/dotfiles/blob/master/vifm/vifm-colors
-
-" Default = -1 = None, can be used for transparency or default color
-" Black = 0
-" Red = 1
-" Green = 2
-" Yellow = 3
-" Blue = 4
-" Magenta = 5
-" Cyan = 6
-" White = 7
-
-" STYLES
-" bold
-" underline
-" reverse or inverse
-" standout
-" none
-
-
 highlight clear
 
 highlight Win             cterm=none    			ctermfg=default     ctermbg=none
+"highlight OtherWin        cterm=none                ctermfg=default     ctermbg=none
 
 highlight TopLine         cterm=none    			ctermfg=blue        ctermbg=none
 highlight TopLineSel      cterm=none    			ctermfg=blue        ctermbg=none
@@ -30,7 +9,7 @@ highlight StatusLine      cterm=none    			ctermfg=blue        ctermbg=none
 highlight Border          cterm=none    			ctermfg=blue        ctermbg=none
 
 highlight Selected        cterm=bold    			ctermfg=magenta     ctermbg=default
-highlight CurrLine        cterm=underline,inverse   ctermfg=default     ctermbg=-1
+highlight CurrLine        cterm=underline,inverse   ctermfg=default     ctermbg=black
 
 highlight WildMenu        cterm=underline,reverse 	ctermfg=white 		ctermbg=black
 highlight CmdLine         cterm=none 				ctermfg=white 		ctermbg=black

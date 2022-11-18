@@ -1,40 +1,22 @@
-" ----
-" c
-" ----
-fileviewer *.[ch],*.[ch]pp highlight -O xterm256 --syntax c %c
-
-" -------
-" java
-" -------
-fileviewer *.ja[rv][a] highlight -O xterm256 --syntax java %c
-
-" -----------
-" make files
-" -----------
-fileviewer Makefile,Makefile.* highlight -O xterm256 -s dante --syntax make %c
-
-" ---------
-" python
-" ---------
-fileviewer *.py highlight -O xterm256 --syntax python --progress %c
-
-" -------------
-" vim scripts
-" -------------
-fileviewer *.vifm,vifmrc highlight -O xterm256 --syntax vimscript --progress %c
-fileviewer *.vim,vimrc highlight -O xterm256 --syntax vimscript --progress %c
-
-" ---------------
-" autodetection (slow)
-" ---------------
-"fileviewer *[^/] pygmentize -O style=monokai -f console256 -g
-
-" --------------
-" normal files
-" --------------
-fileviewer *.txt highlight -O xterm256 --syntax txt --progress %c
-
-" ---------
-" LaTeX
-" ---------
-fileviewer *.tex highlight -O xterm256 --syntax tex --progress %c
+" vim:ft=vim
+fileviewer *.c,*.[ch]pp,*.h highlight -O ansi --syntax c %c
+fileviewer *.ja[rv][a] highlight -O ansi --syntax java %c
+fileviewer Makefile,Makefile.* highlight -O ansi -s dante --syntax make %c
+fileviewer *.py highlight -O ansi --syntax python --progress %c
+fileviewer *.vifm,vifmrc,*.vim,vimrc highlight -O ansi --syntax vimscript --progress %c
+fileviewer *.ts highlight -O ansi --syntax ts --progress %c
+fileviewer *.json highlight -O ansi --syntax json --progress %c
+fileviewer *.txt highlight -O ansi --syntax txt --progress %c
+fileviewer *.lua highlight -O ansi --syntax lua --progress %c
+fileviewer *.tex highlight -O ansi --syntax tex --progress %c
+fileviewer *.sh highlight -O ansi --syntax sh --progress %c
+fileviewer *.dart highlight -O ansi --syntax dart --progress %c
+fileviewer *.asm,*.s highlight -O ansi --syntax assembler --progress %c
+fileviewer *.rs, highlight -O ansi --syntax rust --progress %c
+fileviewer *.toml, highlight -O ansi --syntax toml --progress %c
+fileviewer *.css, highlight -O ansi --syntax css --progress %c
+fileviewer *.diff,*.patch, highlight -O ansi --syntax dart --progress %c
+fileviewer *.md, highlight -O ansi --syntax markdown --progress %c
+fileviewer *.xml, highlight -O ansi --syntax xml --progress %c
+fileviewer *.yml, highlight -O ansi --syntax yaml --progress %c
+fileviewer *.zig, highlight -O ansi --syntax zig --progress %c

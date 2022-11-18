@@ -1,24 +1,18 @@
-" vim: filetype=vifm :
+" vim: filetype=vim :
 
 " ----- file-settings -----"
-" commands
 source ~/.config/vifm/settings/commands.vifm
-
-" favicons
 source ~/.config/vifm/settings/favicons.vifm
-
-" filetypes
 source ~/.config/vifm/settings/filetypes.vifm
-
-" syntax highlighting"
 source ~/.config/vifm/settings/highlighting.vifm
-
-" mappings
 source ~/.config/vifm/settings/mappings.vifm
+source ~/.config/vifm/settings/abbreviations.vifm
+
 " --------------------------
 
 " editor
-set vicmd=nvim
+" let &vicmd="$EDITOR"
+set vicmd="nvim"
 
 " This makes vifm perform file operations on its own instead of relying on
 " standard utilities like `cp`.  While using `cp` and alike is a more universal
@@ -30,7 +24,24 @@ set syscalls
 set millerview
 set milleroptions="lsize:1,csize:2,rsize:0,rpreview:all"
 
-set quickview
+set sizefmt=units:si,precision:2,space
+
+" The display on the bottom left
+set rulerformat="%2l/%2S %[MAX: %2L%]"
+
+set findprg="rg --files %s | rg %p"
+set grepprg="rg -n -H %i %a %s"
+
+" the border
+" set fillchars=vborder:│
+
+" execute files
+set runexec
+
+set tuioptions="pu"
+
+" controls details of file operations
+set iooptions=fastfilecloning
 
 " Trash Directory
 " The default is to move files that are deleted with dd or :d to
@@ -44,8 +55,8 @@ set trashdir="~/Trash"
 " This is how many directories to store in the directory history.
 set history=100
 
-" Automatically resolve symbolic links on l or Enter.
-set nofollowlinks
+" number of spaces of a tab"
+set tabstop=4
 
 " With this option turned on you can run partially entered commands with
 " unambiguous beginning using :! (e.g. :!Te instead of :!Terminal or :!Te<tab>).
@@ -59,14 +70,18 @@ set undolevels=100
 
 " If you installed the vim.txt help file set vimhelp.
 " If would rather use a plain text help file set novimhelp.
-set novimhelp
+set vimhelp
 
 " If you would like to run an executable file when you
 " press return on the file name set this.
 set norunexec
+
+set rnu
+set dotdirs=
  
 " colorscheme
-colorscheme solarized_dark
+" colorscheme solarized_dark
+colorscheme tokyo-night-storm
 
 " Format for displaying time in file list. For example:
 " TIME_STAMP_FORMAT=%m/%d-%H:%M
@@ -80,7 +95,7 @@ set wildstyle=popup
 
 " Display suggestions in normal, visual and view modes for keys, marks and
 " registers (at most 5 files).  In other view, when available.
-set suggestoptions=normal,visual,view,otherpane,keys,marks,registers
+set suggestoptions=normal,visual,view,otherpane,keys,marks,registers,delay:0
 
 " Ignore case in search patterns unless it contains at least one uppercase
 " letter
@@ -102,7 +117,8 @@ if !has('win')
 endif
 
 " Set custom status line look
-set statusline=" %A %10u:%-7g %5s %20d"
+"set statusline=" %A %10u:%-7g %5s %20d"
+set statusline=" %A %10u:%-7g %20d Free Space: %a"
 
 " What should be saved automatically between vifm runs
 " Like in previous versions of vifm

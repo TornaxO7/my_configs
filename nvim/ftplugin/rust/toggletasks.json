@@ -16,6 +16,11 @@
             "cmd": "cargo run"
         },
         {
+            "name": "test",
+            "cwd": "${lsp_root}",
+            "cmd": "cargo test"
+        },
+        {
             "name": "doc",
             "cwd": "${lsp_root}",
             "cmd": "cargo doc --open"

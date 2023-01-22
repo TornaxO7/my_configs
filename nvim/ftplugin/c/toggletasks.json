@@ -5,15 +5,20 @@
             "cmd": "make -j6"
         },
         {
-            "name": "build",
+            "name": "single build",
             "cmd": "gcc ${file}"
         },
         {
-            "name": "run",
+            "name": "single build run",
+            "cwd": "${lsp_root}",
+            "cmd": "gcc ${file} && ./a.out"
+        },
+        {
+            "name": "single run",
             "cmd": "./a.out"
         },
         {
-            "name": "run sec",
+            "name": "single build run sec",
             "cmd": "gcc -fsanitize=leak -fsanitize=address -Wall -Werror ${file} && ./a.out"
         }
     ]

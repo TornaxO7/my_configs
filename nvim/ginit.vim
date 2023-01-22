@@ -1,15 +1,17 @@
 " -----------------
 "  GUI - Settings
 " -----------------
-let s:guifontsize=8
+let s:guifontsize=5
 let s:guifont="Fira\\ Code\\ SemiBold"
 
-if hostname() =~ 'TORNAX-ARCH'
-    set guifont=Fira\ Code\ SemiBold:h13
-    let s:guifontsize = 13
-else
-    set guifont=Fira\ Code\ SemiBold:h9
-endif
+" if hostname() =~ 'TORNAX-ARCH'
+"     set guifont=Fira\ Code\ SemiBold:h13
+"     let s:guifontsize = 13
+" else
+"     set guifont=Fira\ Code\ SemiBold:h5
+" endif
+
+set guifont=Fira\ Code\ SemiBold:h5
 
 
 let g:neovide_refresh_rate=60

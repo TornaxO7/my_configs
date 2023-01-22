@@ -1,0 +1,14 @@
+{
+    "tasks": [
+        {
+            "name": "riscv32-elf-as",
+            "cwd": "${lsp_root}",
+            "cmd": "riscv32-elf-as ${file}"
+        },
+        {
+            "name": "make",
+            "cwd": "${win_cwd}",
+            "cmd": "make"
+        }
+    ]
+}

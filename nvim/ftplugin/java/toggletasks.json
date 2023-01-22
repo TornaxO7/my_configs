@@ -1,0 +1,14 @@
+{
+    "tasks": [
+        {
+            "name": "build",
+            "cwd": "${win_cwd}",
+            "cmd": "javac **/*.java -d out/"
+        },
+        {
+            "name": "run",
+            "cwd": "${win_cwd}",
+            "cmd": "java out/${file:t:r}"
+        }
+    ]
+}

@@ -1,11 +1,10 @@
 set autowrite
 set backup
-set backupcopy=no
+set backupcopy=auto
 set backupdir=~/.config/nvim/backups/
 set backupext=.bak
-set cindent
 set clipboard=unnamedplus
-set cmdheight=2
+set cmdheight=1
 set colorcolumn=+1
 set completeopt=menuone,preview,noinsert,noselect
 set concealcursor="nvic"
@@ -13,14 +12,15 @@ set conceallevel=0
 set cursorline
 set encoding=utf-8
 set expandtab
+
 set foldnestmax=2
 set foldtext=MyFoldText()
+
 set grepprg=rg\ --vimgrep\ --no-heading
 set icon
 set inccommand=nosplit
-set lazyredraw
 set linebreak
-set lisp
+set breakindent
 set hidden
 set mouse=a
 set nosmarttab
@@ -41,7 +41,7 @@ set synmaxcol=10000
 set tabstop=4
 set termguicolors
 set textwidth=80
-set timeoutlen=0
+set timeoutlen=300
 set updatetime=100
 set wrap
 

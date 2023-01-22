@@ -1,0 +1,8 @@
+{
+    "tasks": [
+        {
+            "name": "sioyek",
+            "cmd": "sioyek --new-window ${file:p:r}.pdf"
+        }
+    ]
+}

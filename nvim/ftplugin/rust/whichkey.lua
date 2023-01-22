@@ -1,8 +1,0 @@
--- local wk = require("which-key")
---
--- wk.register({
---     ["C"] = {"clippy"},
---     ["b"] = {"cargo build"},
---     ["r"] = {"cargo run"},
---     ["c"] = {"cargo check"},
--- }, {prefix = "<localleader>"})

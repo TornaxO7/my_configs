@@ -1,4 +1,4 @@
-command! CopyPath let @+=expand('%:p')
+command! Cp let @+=expand('%:p')
 command! FilePath :echo expand("%:p")
 command! CmpStop lua require('cmp').setup.buffer { enabled = false }
 command! CmpStart lua require('cmp').setup.buffer { enabled = true }

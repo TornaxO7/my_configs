@@ -42,10 +42,10 @@ set concealcursor="nc"
 let g:vimtex_log_verbose = 1
 
 " pdf-viewer (zathura)
-let g:livepreview_previewer = 'zathura'
-let g:vimtex_view_method = "zathura"
+" let g:livepreview_previewer = 'zathura'
+" let g:vimtex_view_method = "zathura"
 
-" let g:vimtex_view_method = 'sioyek'
+let g:vimtex_view_method = 'sioyek'
 
 " autocompiling
 let g:livepreview_cursorhold_recompile = 0

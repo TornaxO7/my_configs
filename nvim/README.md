@@ -3,7 +3,8 @@
 
 # Dependencies
 - Neovim nightly
-- vim-plug
+
+Yeah, I think that's all you'll need
 
 # Repository structure
 ```
